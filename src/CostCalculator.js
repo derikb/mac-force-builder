@@ -1,0 +1,53 @@
+const getClassCost = function (mClass) {
+    const costs = {
+        1: 12,
+        2: 16,
+        3: 20,
+    };
+    return costs[mClass] ?? 0;
+}
+
+/**
+ * @param {MAC} mac
+ * @param {Force} force
+ */
+const calcMACCost = function (mac, force) {
+    if (!mac) {
+        return 0;
+    }
+    let total = getClassCost(mac.mClass);
+
+    // @todo if modules has a Frame in it reduce cost by 1
+    return total;
+};
+
+const calcAuxUnitCost = function (auxunit, force) {
+    if (!auxunit) {
+        return 0;
+    }
+    let total = 1;
+    total += auxunit.hardware.length;
+    // @todo map weapon class and sum
+    return total;
+};
+
+/**
+ * @param {Force} force
+ * @returns {Number}
+ */
+const calcForceCost = function (force) {
+    let total = 0;
+    force.macs.forEach((c) => {
+        total += calcMACCost(c, force);
+    });
+    force.aus.forEach((a) => {
+        total += calcAuxUnitCost(a, force);
+    });
+    return total;
+};
+
+export {
+    calcMACCost,
+    calcForceCost,
+    calcAuxUnitCost,
+};

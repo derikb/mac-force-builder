@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" media="screen" href="./style.css" type="text/css" />
+        <style>
+            body {
+                margin: 0;
+                padding: 0;
+            }
+
+            body,
+            html,
+            .container {
+                height: 100%;
+                max-height: 100%;
+            }
+            header {
+            padding: 1rem 2rem;
+            }
+            .container {
+            display: flex;
+            }
+            .container {
+            flex-direction: column;
+            }
+
+            h1 {
+                margin: 0;
+                padding: 0;
+                font-size: 1.5rem;
+            }
+
+            .alert {
+                font-size: 1rem;
+            }
+
+            .container > header {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+            }
+            header a {
+                font-size: 1.125rem;
+            }
+
+            @media(width <= 1000px) {
+                body,
+                html,
+                .container {
+                    height: auto;
+                    max-height: auto;
+                }
+
+                .container > header {
+                    flex-direction: column;
+                    align-items: start;
+                    gap: 1rem;
+                }
+
+                h1 {
+                    font-size: 1.25rem;
+                }
+                .alert {
+                    font-size: .9rem;
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <header>
+                <h1>MAC Attack Force Builder</h1>
+                <div class="alert alert-info">Warning: This app is still in beta, please backup frequently.</div>
+                <div>
+                    <a href="#" class="btn-help">About / Help</a>
+                </div>
+            </header>
+            <mac-force-page></mac-force-page>
+        </div>
+        <script type="module" src="./index.js"></script>
+        <template id="help-general">
+            <div>
+                <h3>About</h3>
+                <p>A web app (coded by me, Derik Badman) for creating forces for <a href="https://chrismcdee.itch.io/mac-attack" target="_blank">MAC Attack</a>, a tabletop miniature game by Chris McDowall.</p>
+                <h3>Help</h3>
+                <ul>
+                    <li>Data is stored on your current/local browser. As such there is no guarantee of it sticking around from one use to the next.</li>
+                    <li>EXPORT YOUR FORCES if you want to assure you can keep them.</li>
+                </ul>
+                <p>You can report any bugs to Derik Badman's email at: first name . last name AT gmail dot com (no spaces, all lower-case).</p>
+            </div>
+        </template>
+    </body>
+</html>

@@ -1,0 +1,26 @@
+{
+  "name": "mac-force-builder",
+  "version": "0.0.1",
+  "description": "Force builder for the MAC Attack tabletop miniatures game.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "serve": "",
+    "start": "esbuild --serve=8087 --servedir=./www ./src/index.js --outdir=./www --loader:.svg=dataurl --loader:.html=file --bundle",
+    "build": "esbuild ./src/index.js --outdir=./www --loader:.svg=dataurl --loader:.html=file --minify --sourcemap --bundle",
+    "release": "commit-and-tag-version -a"
+  },
+  "author": "Derik A Badman",
+  "license": "ISC",
+  "dependencies": {
+    "lit": "^3.3.2",
+    "rpg-table-randomizer": "^1.5.2"
+  },
+  "devDependencies": {
+    "@stylistic/eslint-plugin-js": "^4.4.1",
+    "bootstrap": "^5.3.8",
+    "esbuild": "^0.27.4",
+    "eslint": "^10.1.0",
+    "globals": "^17.4.0"
+  }
+}

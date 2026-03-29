@@ -1,0 +1,240 @@
+import { removeForceLocal, saveForce, emitter, validateForce } from '../services/ForceService.js';
+import { html, css } from 'lit';
+import { unsafeHTML } from 'lit/directives/unsafe-html.js';
+import MAC from '../models/MAC.js';
+import CharacterEdit from './MACEdit.js';
+import MACList from './MACList.js';
+import BaseElement from './BaseElement.js';
+import { calcMACCost, calcForceCost } from '../CostCalculator.js';
+
+export default class ForceEdit extends BaseElement {
+    static styles = [
+        super.styles,
+        css``
+    ];
+
+    #unsaved = false;
+    // cost for new weapons/equipment to existing characters
+    #pendingCost = 0;
+    // cost for new hires to existing force
+    #pendingCharacters = {};
+    #errors = '';
+
+    constructor ({
+        force = null
+    }) {
+        super();
+        this.force = force;
+        this.characterUpdateHandler = this.#characterUpdated.bind(this);
+        this.animalUpdateHandler = this.#animalUpdated.bind(this);
+        this.pendingCostHandler = this.#pendingCostUpdated.bind(this);
+    }
+
+    connectedCallback () {
+        super.connectedCallback();
+
+        emitter.on('mac:update', this.characterUpdateHandler);
+        emitter.on('animal:update', this.animalUpdateHandler);
+        emitter.on('cost:update', this.pendingCostHandler);
+    }
+
+    disconnectedCallback () {
+        super.disconnectedCallback();
+
+        emitter.off('mac:update', this.characterUpdateHandler);
+        emitter.off('animal:update', this.animalUpdateHandler);
+        emitter.off('cost:update', this.pendingCostHandler);
+    }
+
+    #characterUpdated ({ id = 0, isNew = false }) {
+        this.#unsaved = true;
+        if (isNew) {
+            const newCharCost = calcMACCost(this.force.getCharacter(id), this.force);
+            this.#pendingCharacters[id] = newCharCost;
+        }
+        this.requestUpdate();
+    }
+
+    #animalUpdated ({ id = 0 }) {
+        this.#unsaved = true;
+        this.requestUpdate();
+    }
+
+    #pendingCostUpdated ({ cost = 0 }) {
+        if (this.force.draft) {
+            return;
+        }
+        this.#pendingCost += cost;
+        this.requestUpdate();
+    }
+
+    save (ev) {
+        ev.preventDefault();
+        this.#errors = '';
+        const formData = new FormData(ev.target);
+        this.force.name = formData.get('g-name').toString();
+        this.force.player_name = formData.get('g-player_name').toString();
+        this.force.cash = Number(formData.get('g-cash') || 0);
+        const newDraftStatus = Number(formData.get('g-draft') || 0) > 0;
+        let newCost = 0;
+        if (this.force.draft) {
+            newCost = calcForceCost(this.force);
+        } else {
+            const newCharCost = Object.values(this.#pendingCharacters).reduce((a, b) => a + b, 0);
+            newCost = this.#pendingCost + newCharCost;
+        }
+        try {
+            // Confirm new cost won't mean cash goes below zero
+            // And a few other things.
+            validateForce(this.force, newCost);
+            // If validation passes now we can adjust draft/cash values.
+            this.force.draft = newDraftStatus;
+            if (!this.force.draft) {
+                this.force.cash = this.force.cash - newCost;
+            }
+            saveForce(this.force);
+            this.#unsaved = false;
+            this.#pendingCost = 0;
+            this.#pendingCharacters = { };
+            // refresh character edit if open...
+        } catch (err) {
+            this.#errors = err.message;
+        }
+        this.requestUpdate();
+    }
+
+    close () {
+        document.querySelector('mac-force-page')?.clearColumns();
+        this.remove();
+    }
+
+    deleteForce () {
+        if (!confirm('Are you sure?')) {
+            return;
+        }
+        removeForceLocal(this.force.uuid);
+        this.close();
+    }
+
+    addMac () {
+        const mac = new MAC({});
+        this.force.addMac(mac);
+        this.#unsaved = true;
+        this.requestUpdate();
+
+        const page = document.querySelector('mac-force-page');
+        if (page) {
+            page.clearColumns(true, true);
+            page.fillColumn(
+                new CharacterEdit({ mac, force: this.force }),
+                2,
+                'Mac'
+            );
+        }
+    }
+
+    deleteMac (ev) {
+        const uuid = ev.detail?.uuid || 0;
+        if (uuid > 0) {
+            this.force.removeMac(uuid);
+            this.#unsaved = true;
+            this.requestUpdate();
+            emitter.trigger('mac:remove', { uuid });
+        }
+    }
+
+    addAnimal () {
+        // const animal = addAnimal(this.force);
+        // this.#unsaved = true;
+        // this.requestUpdate();
+
+        const page = document.querySelector('mac-force-page');
+        if (page) {
+            // page.clearColumns(true, true);
+            // page.fillColumn(
+            //     new AnimalEdit({ animal, force: this.force }),
+            //     2,
+            //     'Animal'
+            // );
+        }
+    }
+
+    deleteAux (ev) {
+        const uuid = ev.detail?.id || '';
+        if (uuid !== '') {
+            this.force.removeAux(uuid);
+            this.#unsaved = true;
+            this.requestUpdate();
+            emitter.trigger('aux:remove', { uuid });
+        }
+    }
+
+    #dirty (ev) {
+        const input = ev.target;
+        const name = input.name.replace('g-', '');
+        if (this.force[name] !== input.value) {
+            this.#unsaved = true;
+            this.force[name] = name === 'points' ? Number(input.value) : input.value;
+            this.requestUpdate();
+        }
+    }
+
+    render () {
+        return html`<div class="d-flex justify-content-between align-items-center mb-3">
+            <h2>Edit Force</h2>
+            <button type="button" class="btn btn-secondary btn-sm" @click=${this.close}>Close</button>
+        </div>
+        <div class="card mt-4">
+        <div class="card-body">
+            <form @submit="${this.save}" class="mb-4">
+                <div class="row mb-3">
+                    <label for="g-name" class="col-sm-4 col-form-label">Force Name</label>
+                    <div class="col">
+                    <input type="text" id="g-name" name="g-name" class="form-control" value="${this.force.name}" @blur=${this.#dirty} />
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <label for="g-player_name" class="col-sm-4 col-form-label">Player Name</label>
+                    <div class="col">
+                    <input type="text" id="g-player_name" name="g-player_name" class="form-control" value="${this.force.player_name}" @blur=${this.#dirty} />
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <label for="g-points" class="col-auto col-form-label">Points</label>
+                    <div class="col-sm-2">
+                        <input type="text" id="g-points" name="g-points" readonly class="col form-control-plaintext" .value="${this.force.points}" />
+                    </div>
+                </div>
+                ${this.#errors !== '' ? html`<p class="alert alert-danger">${unsafeHTML(this.#errors)}</p>` : ''}
+                ${this.#unsaved ? html`<p class="alert alert-danger">Unsaved Changes</p>` : ''}
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <button type="submit" class="btn btn-primary">Save</button>
+                    <div>
+                        <button type="button" class="btn btn-danger btn-sm" @click=${this.deleteForce}>Delete</button>
+                    </div>
+                </div>
+            </form>
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h3>MACs</h3>
+                <button type="button" class="btn btn-primary btn-sm" @click=${this.addMac}>Add MAC</button>
+            </div>
+            <ul id="macs" class="list-group mb-3" @macdelete=${this.deleteMac}>
+                ${this.force.macs.map((mac) => new MACList({ mac, force: this.force }))}
+            </ul>
+
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h3>Auxiliary Units</h3>
+                <button type="button" class="btn btn-primary btn-sm" @click=${this.addAu}>Add AU</button>
+            </div>
+            <ul id="auxs" class="list-group" @auxdelete=${this.deleteAux}>
+                ${this.force.aus.map((au) => {
+                    // new AnimalList({ animal, force: this.force })
+                })}
+            </ul>
+        </div></div>`;
+    }
+}
+
+if (!window.customElements.get('mac-force-edit')) {
+    window.customElements.define('mac-force-edit', ForceEdit);
+}
