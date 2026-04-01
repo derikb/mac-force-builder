@@ -3,7 +3,6 @@ import { emitter } from '../services/ForceService.js';
 import HardwareList from './HardwareList.js';
 import { calcMACCost } from '../CostCalculator.js';
 import BaseElement from './BaseElement.js';
-import { getWeapon, getWeaponCost } from '../services/WeaponService.js';
 import { getName } from '../services/NameService.js';
 
 export default class MACEdit extends BaseElement {

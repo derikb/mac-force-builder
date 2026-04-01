@@ -1,6 +1,5 @@
 import { html, css } from 'lit';
 import BaseElement from './BaseElement.js';
-import { getWeapon } from '../services/WeaponService.js';
 
 export default class MACPrint extends BaseElement {
     static styles = [
@@ -104,17 +103,6 @@ export default class MACPrint extends BaseElement {
         this.force = force;
     }
 
-    #weaponList (weaponId) {
-        const weapon = getWeapon(weaponId);
-        return html`<tr>
-        <td>${weapon.name}</td>
-        <td>${weapon.fullRange}</td>
-        <td>${weapon.damage}</td>
-        <td>${weapon.ammo}</td>
-        <td>${weapon.tags.join('; ')}</td>
-        </tr>`;
-    }
-
     render () {
         return html`<div class="grid-col-2">
             <div>
@@ -125,7 +113,7 @@ export default class MACPrint extends BaseElement {
                         </tr>
                     </thead>
                     <tbody>
-                    ${this.mac.weapons.map((id) => this.#weaponList(id))}
+                    Module list here?
                     </tbody>
                 </table>
             </div>

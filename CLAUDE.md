@@ -24,7 +24,7 @@ Single-page app built with **Lit web components** + **Bootstrap 5** + **esbuild*
 
 **EventEmitter** (`src/models/EventEmitter.js`) — Singleton pub-sub bus used instead of a state store. Components communicate exclusively through events (e.g., `force:show:edit`, `mac:module:update`). The emitter instance is imported and shared across the app.
 
-**Services** (`src/services/`) — Business logic layer. `ForceService` is the central orchestrator: Force CRUD, import/export from JSON, validation. `WeaponService` / `HardwareService` wrap the static game data in `src/data/`.
+**Services** (`src/services/`) — Business logic layer. `ForceService` is the central orchestrator: Force CRUD, import/export from JSON, validation. `HardwareService` wrap the static game data in `src/data/`.
 
 **Models** (`src/models/`) — Plain JS classes: `Force` (root aggregate) → contains `MAC[]` + `AuxUnit[]`. Each `MAC` has 6 `Module` slots; each module holds a `Weapon` or `Hardware`.
 
@@ -54,5 +54,4 @@ This is a force builder for the **MAC Attack** tabletop miniature game. Key conc
 ## Incomplete areas
 
 - `ForcePlay` and `ForcePrint` components exist but are not wired up in `src/index.js`
-- `WeaponService` has an empty `models` array (weapon data not imported)
 - `AuxUnit` weapon/hardware instantiation is commented out
