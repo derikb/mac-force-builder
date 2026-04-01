@@ -62,7 +62,7 @@ export default class MACEdit extends BaseElement {
             return;
         }
         const module = this.mac.getModule(moduleId);
-        module.name = hardware?.name ?? weapon?.name ?? '';
+        module.name = hardware?.name ?? weapon?.label ?? '';
         module.type = weapon ? 1 : 0;
         module.hardware_id = hardware?.id ?? 0;
         module.weapon = weapon;
@@ -93,7 +93,7 @@ export default class MACEdit extends BaseElement {
         ev.preventDefault();
         const moduleId = Number(ev.target.dataset.mid ?? 0);
         document.querySelector('mac-force-page')?.fillColumn(
-            new HardwareList({ macUuid: this.mac.uuid, moduleId, module: this.mac.getModule(moduleId), mClass: this.mac.mClass }),
+            new HardwareList({ mac: this.mac, moduleId }),
             3,
             'Hardware'
         );
@@ -117,7 +117,7 @@ export default class MACEdit extends BaseElement {
         return html`<li>
         <div class="input-group">
             <span class="input-group-text">${id}</span>
-            <span class="input-group-text module-name">${module.name ? module.name : '[Empty]'}</span>
+            <span class="input-group-text module-name">${module.label ? module.label : '[Empty]'}</span>
             <button type="button" class="btn btn-outline-secondary" data-mid="${id}" @click=${this.showHardware}>Edit</button>
         </div>
         </li>`;

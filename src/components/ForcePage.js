@@ -139,7 +139,7 @@ export default class ForcePage extends BaseElement {
             this.clearColumns();
         });
         emitter.on('mac:remove', ({ uuid }) => {
-            this.#removeCharacter(uuid);
+            this.#removeMAC(uuid);
         });
         emitter.on('animal:remove', ({ id }) => {
             this.#removeAnimal(id);
@@ -241,10 +241,10 @@ export default class ForcePage extends BaseElement {
         this.clearColumns(true, true);
     }
 
-    #removeCharacter (uuid) {
-        const char = this.renderRoot.querySelector(`#col-2 mac-character-edit[data-uuid="${uuid}"]`);
-        if (char) {
-            char.remove();
+    #removeMAC (uuid) {
+        const mac = this.renderRoot.querySelector(`#col-2 mac-mac-edit[data-uuid="${uuid}"]`);
+        if (mac) {
+            mac.remove();
         }
     }
 

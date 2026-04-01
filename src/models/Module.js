@@ -1,3 +1,5 @@
+import Weapon from './Weapon.js';
+
 export default class Module {
     // 1 - 6 location on MAC
     id = 0;
@@ -17,6 +19,13 @@ export default class Module {
         this.name = name;
         this.type = type;
         this.hardware_id = hardware_id;
-        this.weapon = weapon;
+        this.weapon = weapon ? new Weapon(weapon) : null;
+    }
+
+    get label() {
+        if (this.weapon) {
+            return this.weapon.label;
+        }
+        return this.name;
     }
 };

@@ -34,7 +34,13 @@ export default class MAC {
     }
 
     setModule(module) {
-        this.modules.push(module);
+        const id = module.id;
+        const index = this.modules.findIndex((m) => m.id === id);
+        if (index > -1) {
+            this.modules[index] = module;
+        } else {
+            this.modules.push(module);
+        }
         this.modules.sort((a, b) => {
             return a.id - b.id;
         });
