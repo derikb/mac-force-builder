@@ -33,7 +33,7 @@ export default class Weapon {
     }
 
     get label() {
-        return `${this.range}${this.type}${this.power}${this.subtype !== '' || this.expendable ? '-' : ''}${this.subtype}${this.expendable ? 'X' : ''} ${this.name}${this.brawl ? ' (Brawl)' : ''}`;
+        return `${this.range ?? ''}${this.type}${this.power}${this.subtype !== '' || this.expendable ? '-' : ''}${this.subtype}${this.expendable ? 'X' : ''} ${this.name}${this.brawl ? ' (Brawl)' : ''}`;
     }
 
     fromForm(data) {

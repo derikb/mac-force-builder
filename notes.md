@@ -55,4 +55,4 @@ Play info:
 
 
 TODO:
-- WeaponDetails needs validation for 2 brawl weapons max and that all brawl are power 2.
+-
