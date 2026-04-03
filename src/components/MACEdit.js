@@ -43,14 +43,6 @@ export default class MACEdit extends BaseElement {
         emitter.off('mac:module:update', this.moduleHandler);
     }
 
-    // For existing macs (buy/sell weapons/equipment)
-    updatePendingCost (cost) {
-        if (this.force.draft || this.mac.isNew) {
-            return;
-        }
-        emitter.trigger('cost:update', { cost });
-    }
-
     #triggerMacUpdate () {
         emitter.trigger('mac:update', { uuid: this.mac.uuid, isNew: this.mac.isNew });
     }

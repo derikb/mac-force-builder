@@ -23,15 +23,22 @@ export default class WeaponDetails extends BaseElement {
     };
 
     constructor ({
-        mac,
-        moduleId,
+        mac = null,
+        auxunit = null,
+        moduleId = 0,
         selected = false,
     }) {
         super();
         this.mac = mac;
+        this.auxunit = auxunit;
         this.moduleId = moduleId;
-        const module = this.mac.getModule(moduleId);
-        this.weapon = module.weapon ?? new Weapon({});
+        if (this.mac) {
+            const module = this.mac.getModule(moduleId);
+            this.weapon = module.weapon ?? new Weapon({});
+        }
+        if (this.auxunit) {
+            this.weapon = this.auxunit.weapons[this.moduleId] ?? new Weapon({});
+        }
         this.selected = selected;
         this._isBrawl = this.weapon.brawl;
         if (this.selected) {
@@ -53,7 +60,12 @@ export default class WeaponDetails extends BaseElement {
                 this.weapon.expendable = existingBrawl.expendable;
             }
         }
-        emitter.trigger('mac:module:update', { weapon: this.weapon, macUuid: this.mac.uuid, moduleId: this.moduleId });
+        if (this.mac) {
+            emitter.trigger('mac:module:update', { weapon: this.weapon, macUuid: this.mac.uuid, moduleId: this.moduleId });
+        }
+        if (this.auxunit) {
+            emitter.trigger('auxunit:weapon:update', { weapon: this.weapon, auUuid: this.auxunit.uuid, moduleId: this.moduleId });
+        }
     }
 
     handleBrawlChange (ev) {
@@ -61,18 +73,32 @@ export default class WeaponDetails extends BaseElement {
     }
 
     #countOtherBrawlWeapons() {
+        if (this.auxunit) {
+            return this.auxunit.weapons.filter((weapon, id) => id !== this.moduleId && weapon?.brawl).length;
+        }
         return this.mac.modules.filter((m) => m.id !== this.moduleId && m.weapon?.brawl).length;
     }
 
     #getExistingBrawlWeapon() {
+        if (this.auxunit) {
+            return this.auxunit.weapons.find((weapon, id) => id !== this.moduleId && weapon?.brawl) ?? null;
+        }
         return this.mac.modules.find((m) => m.id !== this.moduleId && m.weapon?.brawl)?.weapon ?? null;
     }
 
     #calcWeaponPowerOptions() {
-        const mClass = this.mac.mClass;
-        const maxPower = this.moduleId === 1
-            ? mClass + 1
-            : mClass;
+        let maxPower = 0;
+        if (this.mac) {
+            const mClass = this.mac.mClass;
+            maxPower = this.moduleId === 1
+                ? mClass + 1
+                : mClass;
+        }
+        if (this.auxunit) {
+            maxPower = this.auxunit.type === 'I'
+                ? 1
+                : 2;
+        }
         return Array.from({ length: maxPower }, (_, i) => i + 1);
     }
 

@@ -1,10 +1,12 @@
+import Weapon from './Weapon.js';
+
 export default class AuxUnit {
     uuid = '';
     name = '';
-    type = '';
+    type = 'I';
     /** @var {Array<Weapon>} */
     weapons = [];
-    /** @var {Array<Hardware>} */
+    /** @var {Array<Number> hardware ids} */
     hardware = [];
 
     constructor ({
@@ -22,10 +24,8 @@ export default class AuxUnit {
         this.name = name;
         this.type = type;
         this.weapons = weapons.map((obj) => {
-            // return new Weapon(obj);
+            return new Weapon(obj);
         });
-        this.hardware = hardware.map((obj) => {
-            // return new Hardware(obj);
-        });
+        this.hardware = hardware;
     }
 }

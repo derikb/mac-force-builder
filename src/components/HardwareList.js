@@ -52,14 +52,6 @@ export default class HardwareList extends BaseElement {
         });
     }
 
-    #calcWeaponPowerOptions() {
-        const mClass = this.mac.mClass;
-        const maxPower = this.moduleId === 1
-            ? mClass + 1
-            : mClass;
-        return Array.from({ length: maxPower }, (_, i) => i + 1);
-    }
-
     render () {
         return html`<div class="d-flex justify-content-between align-items-center mb-3">
             <h3>Choose Weapon/Hardware</h3>

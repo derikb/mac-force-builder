@@ -50,6 +50,10 @@ export default class Force {
         }
     }
 
+    addAuxUnit(au) {
+        this.aus.push(au);
+    }
+
     removeAux (uuid) {
         const index = this.aus.findIndex(
             (a) => {

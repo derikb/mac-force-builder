@@ -2,8 +2,10 @@ import { removeForceLocal, saveForce, emitter, validateForce } from '../services
 import { html, css } from 'lit';
 import { unsafeHTML } from 'lit/directives/unsafe-html.js';
 import MAC from '../models/MAC.js';
-import CharacterEdit from './MACEdit.js';
+import MACEdit from './MACEdit.js';
 import MACList from './MACList.js';
+import AuxUnit from '../models/AuxUnit.js';
+import AuxUnitEdit from './AuxUnitEdit.js';
 import BaseElement from './BaseElement.js';
 import { calcMACCost, calcForceCost } from '../CostCalculator.js';
 
@@ -126,7 +128,7 @@ export default class ForceEdit extends BaseElement {
         if (page) {
             page.clearColumns(true, true);
             page.fillColumn(
-                new CharacterEdit({ mac, force: this.force }),
+                new MACEdit({ mac, force: this.force }),
                 2,
                 'Mac'
             );
@@ -143,19 +145,20 @@ export default class ForceEdit extends BaseElement {
         }
     }
 
-    addAnimal () {
-        // const animal = addAnimal(this.force);
-        // this.#unsaved = true;
-        // this.requestUpdate();
+    addAuxUnit () {
+        const auxunit = new AuxUnit({});
+        this.force.addAuxUnit(auxunit);
+        this.#unsaved = true;
+        this.requestUpdate();
 
         const page = document.querySelector('mac-force-page');
         if (page) {
-            // page.clearColumns(true, true);
-            // page.fillColumn(
-            //     new AnimalEdit({ animal, force: this.force }),
-            //     2,
-            //     'Animal'
-            // );
+            page.clearColumns(true, true);
+            page.fillColumn(
+                new AuxUnitEdit({ auxunit, force: this.force }),
+                2,
+                'Aux Unit'
+            );
         }
     }
 
@@ -224,7 +227,7 @@ export default class ForceEdit extends BaseElement {
 
             <div class="d-flex justify-content-between align-items-center mb-4">
                 <h3>Auxiliary Units</h3>
-                <button type="button" class="btn btn-primary btn-sm" @click=${this.addAu}>Add AU</button>
+                <button type="button" class="btn btn-primary btn-sm" @click=${this.addAuxUnit}>Add AU</button>
             </div>
             <ul id="auxs" class="list-group" @auxdelete=${this.deleteAux}>
                 ${this.force.aus.map((au) => {
