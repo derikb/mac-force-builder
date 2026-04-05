@@ -16,8 +16,10 @@ const calcMACCost = function (mac, force) {
         return 0;
     }
     let total = getClassCost(mac.mClass);
-
-    // @todo if modules has a Frame in it reduce cost by 1
+    let frameworks = mac.modules.filter((m) => {
+        return m.hardware_id === 15; // frame
+    })
+    total = total - frameworks.length;
     return total;
 };
 
