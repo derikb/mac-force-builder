@@ -47,7 +47,7 @@ export default class HardwareDetails extends BaseElement {
     render () {
         return html`<li class="list-group-item" @click=${this.handleSelect}>
             <h4>${this.hardware.name} (${this.hardware.type.join(', ')})</h4>
-            ${this.hardware.description !== '' ? `<p>Description: ${this.hardware.description}</p>` : ''}
+            ${this.hardware.description !== '' ? html`<p>${this.hardware.description}</p>` : ''}
         </li>`;
     }
 }

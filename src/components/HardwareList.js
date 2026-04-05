@@ -4,7 +4,6 @@ import { getAllHardware } from '../services/HardwareService.js';
 import BaseElement from './BaseElement.js';
 import { emitter } from '../services/ForceService.js';
 import WeaponDetails from './WeaponDetails.js';
-import Hardware from '../models/Hardware.js';
 
 export default class HardwareList extends BaseElement {
     constructor ({
