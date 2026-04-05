@@ -4,6 +4,7 @@ import { unsafeHTML } from 'lit/directives/unsafe-html.js';
 import MAC from '../models/MAC.js';
 import MACEdit from './MACEdit.js';
 import MACList from './MACList.js';
+import AuxUnitList from './AuxUnitList.js';
 import AuxUnit from '../models/AuxUnit.js';
 import AuxUnitEdit from './AuxUnitEdit.js';
 import BaseElement from './BaseElement.js';
@@ -16,10 +17,6 @@ export default class ForceEdit extends BaseElement {
     ];
 
     #unsaved = false;
-    // cost for new weapons/equipment to existing characters
-    #pendingCost = 0;
-    // cost for new hires to existing force
-    #pendingCharacters = {};
     #errors = '';
 
     constructor ({
@@ -27,46 +24,31 @@ export default class ForceEdit extends BaseElement {
     }) {
         super();
         this.force = force;
-        this.characterUpdateHandler = this.#characterUpdated.bind(this);
-        this.animalUpdateHandler = this.#animalUpdated.bind(this);
-        this.pendingCostHandler = this.#pendingCostUpdated.bind(this);
+        this.macUpdateHandler = this.#macUpdated.bind(this);
+        this.auUpdateHandler = this.#auUpdated.bind(this);
     }
 
     connectedCallback () {
         super.connectedCallback();
 
-        emitter.on('mac:update', this.characterUpdateHandler);
-        emitter.on('animal:update', this.animalUpdateHandler);
-        emitter.on('cost:update', this.pendingCostHandler);
+        emitter.on('mac:update', this.macUpdateHandler);
+        emitter.on('auxunit:update', this.auUpdateHandler);
     }
 
     disconnectedCallback () {
         super.disconnectedCallback();
 
-        emitter.off('mac:update', this.characterUpdateHandler);
-        emitter.off('animal:update', this.animalUpdateHandler);
-        emitter.off('cost:update', this.pendingCostHandler);
+        emitter.off('mac:update', this.macUpdateHandler);
+        emitter.off('auxunit:update', this.auUpdateHandler);
     }
 
-    #characterUpdated ({ id = 0, isNew = false }) {
-        this.#unsaved = true;
-        if (isNew) {
-            const newCharCost = calcMACCost(this.force.getCharacter(id), this.force);
-            this.#pendingCharacters[id] = newCharCost;
-        }
-        this.requestUpdate();
-    }
-
-    #animalUpdated ({ id = 0 }) {
+    #macUpdated ({ uuid = '' }) {
         this.#unsaved = true;
         this.requestUpdate();
     }
 
-    #pendingCostUpdated ({ cost = 0 }) {
-        if (this.force.draft) {
-            return;
-        }
-        this.#pendingCost += cost;
+    #auUpdated ({ uuid = '' }) {
+        this.#unsaved = true;
         this.requestUpdate();
     }
 
@@ -82,8 +64,6 @@ export default class ForceEdit extends BaseElement {
         if (this.force.draft) {
             newCost = calcForceCost(this.force);
         } else {
-            const newCharCost = Object.values(this.#pendingCharacters).reduce((a, b) => a + b, 0);
-            newCost = this.#pendingCost + newCharCost;
         }
         try {
             // Confirm new cost won't mean cash goes below zero
@@ -96,9 +76,6 @@ export default class ForceEdit extends BaseElement {
             }
             saveForce(this.force);
             this.#unsaved = false;
-            this.#pendingCost = 0;
-            this.#pendingCharacters = { };
-            // refresh character edit if open...
         } catch (err) {
             this.#errors = err.message;
         }
@@ -136,8 +113,8 @@ export default class ForceEdit extends BaseElement {
     }
 
     deleteMac (ev) {
-        const uuid = ev.detail?.uuid || 0;
-        if (uuid > 0) {
+        const uuid = ev.detail?.uuid || '';
+        if (uuid !== '') {
             this.force.removeMac(uuid);
             this.#unsaved = true;
             this.requestUpdate();
@@ -163,7 +140,7 @@ export default class ForceEdit extends BaseElement {
     }
 
     deleteAux (ev) {
-        const uuid = ev.detail?.id || '';
+        const uuid = ev.detail?.uuid || '';
         if (uuid !== '') {
             this.force.removeAux(uuid);
             this.#unsaved = true;
@@ -177,7 +154,7 @@ export default class ForceEdit extends BaseElement {
         const name = input.name.replace('g-', '');
         if (this.force[name] !== input.value) {
             this.#unsaved = true;
-            this.force[name] = name === 'points' ? Number(input.value) : input.value;
+            this.force[name] = input.value;
             this.requestUpdate();
         }
     }
@@ -205,7 +182,7 @@ export default class ForceEdit extends BaseElement {
                 <div class="row mb-3">
                     <label for="g-points" class="col-auto col-form-label">Points</label>
                     <div class="col-sm-2">
-                        <input type="text" id="g-points" name="g-points" readonly class="col form-control-plaintext" .value="${this.force.points}" />
+                        <input type="text" id="g-points" name="g-points" readonly class="col form-control-plaintext" .value="${calcForceCost(this.force)}" />
                     </div>
                 </div>
                 ${this.#errors !== '' ? html`<p class="alert alert-danger">${unsafeHTML(this.#errors)}</p>` : ''}
@@ -230,9 +207,7 @@ export default class ForceEdit extends BaseElement {
                 <button type="button" class="btn btn-primary btn-sm" @click=${this.addAuxUnit}>Add AU</button>
             </div>
             <ul id="auxs" class="list-group" @auxdelete=${this.deleteAux}>
-                ${this.force.aus.map((au) => {
-                    // new AnimalList({ animal, force: this.force })
-                })}
+                ${this.force.aus.map((auxunit) => new AuxUnitList({ auxunit, force: this.force }))}
             </ul>
         </div></div>`;
     }

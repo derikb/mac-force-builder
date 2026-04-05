@@ -6,6 +6,8 @@ export default class MAC {
     mClass = 1;
     /** @var {Array<Module>} */
     modules = [];
+    division = '';
+    destroyed = false;
 
     constructor ({
         uuid = '',
@@ -44,5 +46,9 @@ export default class MAC {
         this.modules.sort((a, b) => {
             return a.id - b.id;
         });
+    }
+
+    getPlayLabel() {
+        return `${this.division !== '' ? `${this.division} ` : ''}${this.name}`;
     }
 }

@@ -35,6 +35,12 @@ export default class Force {
         this.points = points;
     }
 
+    getMac(id) {
+        return this.mac.find((mac) => {
+            return mac.uuid === id;
+        });
+    }
+
     addMac (mac) {
         this.macs.push(mac);
     }
@@ -48,6 +54,12 @@ export default class Force {
         if (index > -1) {
             this.macs.splice(index, 1);
         }
+    }
+
+    getAuxUnit(id) {
+        return this.aus.find((au) => {
+            return au.uuid === id;
+        });
     }
 
     addAuxUnit(au) {

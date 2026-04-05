@@ -14,6 +14,15 @@ export default class MACPlay extends BaseElement {
             gap: 1rem;
             margin-bottom: .5rem;
         }
+    .module-list li {
+        margin: 0;
+    }
+    .module-name {
+        flex: 1 1 auto;
+    }
+    .module-name.destroyed {
+        text-decoration: line-through;
+    }
     dl {
         margin:0;
         padding: 0;
@@ -133,25 +142,70 @@ export default class MACPlay extends BaseElement {
         this.force = force;
     }
 
+    #markMACDestroyed(ev) {
+        this.mac.destroyed = ev.target.checked;
+        this.requestUpdate();
+    }
+
+    #markDestroyed(ev) {
+        const moduleId = Number(ev.target.value);
+        const module = this.mac.getModule(moduleId);
+        module.destroyed = ev.target.checked;
+        this.requestUpdate();
+    }
+
+    #getModuleFields() {
+        return [1,2,3,4,5,6].map((id) => {
+        const module = this.mac.getModule(id);
+        return html`<li data-mid="${id}">
+        <div class="input-group">
+            <span class="input-group-text">${id}</span>
+            <span class="input-group-text module-name ${module.destroyed ? 'destroyed' : ''}">${module.label ? module.label : '[Empty]'}</span>
+            <span class="input-group-text">
+                <input class="form-check-input mt-0" type="checkbox" value="1" aria-label="Mark damaged">
+                <input class="form-check-input mt-0 ms-3" type="checkbox" value="${id}" aria-label="Mark destroyed" @click=${this.#markDestroyed}>
+            </span>
+        </div>
+        </li>`;
+        });
+    }
+
+    #getInternalChecks() {
+        const checks = [];
+        for (let i = 1; i <= this.mac.mClass; i++) {
+            const isLast = i === this.mac.mClass;
+            checks.push(html`<span class="input-group-text">
+                <input class="form-check-input mt-0" type="checkbox" value="1" aria-label="Mark ${isLast ? 'destroyed' : 'damaged'}" ${isLast ? `@click=${this.#markMACDestroyed}` : ''} />`);
+        }
+        return checks;
+    }
+
     render () {
         return html`<div class="grid-col-2">
-                <div>
-                ${this._attributeList()}
+            <div class="row mb-3 align-items-center">
+                <div class="col-sm-3"><strong>Class</strong></div>
+                <div class="col-auto">${this.mac.mClass}</div>
+            </div>
+            <div class="row mb-3 align-items-center">
+                <label for="division" class="col-form-label col-auto">Division</label>
+                <div class="col-auto">
+                    <select name="division" class="form-select"><option value="A">A</option><option value="B">B</option><option value="C">C</option></select>
+                </div>
+                <label for="initiative" class="col-form-label col-auto">Initiative</label>
+                <div class="col-auto">
+                    <select name="initiative" class="form-select"><option value="A">A</option><option value="K">K</option><option value="Q">Q</option></select>
                 </div>
             </div>
-            <div>
-                <table class="weapons">
-                    <thead>
-                        <tr>
-                        <th>Weapon</th><th>Range</th><th>Dam.</th><th>Tags</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                    MODULE LIST HERE?
-                    </tbody>
-                </table>
-            </div>
         </div>
+            <div>
+                <ol class="list-unstyled module-list mb-3">
+                    ${this.#getModuleFields()}
+                </ol>
+                <div class="input-group">
+                    <span class="input-group-text">Internal Damage</span>
+                    ${this.#getInternalChecks()}
+                </div>
+            </div>
         `;
     }
 }

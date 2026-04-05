@@ -1,10 +1,9 @@
 import { html, css } from 'lit';
-import AnimalPlay from './AnimalPlay.js';
+// import AuxUnitPlay from './AuxUnitPlay.js';
 import BaseElement from './BaseElement.js';
-import CharacterPlay from './CharacterPlay.js';
-import RivalPlay from './RivalPlay.js';
+import MACPlay from './MACPlay.js';
 
-export default class GangPlay extends BaseElement {
+export default class ForcePlay extends BaseElement {
     static styles = [
         super.styles,
         css`
@@ -117,10 +116,10 @@ export default class GangPlay extends BaseElement {
         `
     ];
 
-    constructor ({ gang }) {
+    constructor ({ force }) {
         super();
         this.setAttribute('role', 'main');
-        this.gang = gang;
+        this.force = force;
     }
 
     connectedCallback () {
@@ -153,39 +152,36 @@ export default class GangPlay extends BaseElement {
         column.classList.add('active');
     }
 
-    #renderCharacter(character) {
-        if (character.rival) {
-            return new RivalPlay({ character, gang: this.gang });
-        }
-        return new CharacterPlay({ character, gang: this.gang });
+    #renderMAC(mac) {
+        return new MACPlay({ mac, force: this.force });
     }
 
-    #renderAnimal(animal) {
-        return new AnimalPlay({ animal, gang: this.gang });
+    #renderAuxUnit(auxunit) {
+        // return new AuxUnitPlay({ auxunit, force: this.force });
     }
 
     render () {
         return html`<div>
         <div class="header">
-        <h1>${this.gang.name}</h1>
+        <h1>${this.force.name}</h1>
         <a href="/index.html">Back</a>
         </div>
         <div class="tabs">
             <ul>
-                ${this.gang.characters.map((char, i) => {
-        return html`<li class="${i === 0 ? 'active' : ''}"><a href="#" data-col=${i} @click=${this.#changeTab}>${char.name}</a></li>`;
+                ${this.force.macs.map((mac, i) => {
+        return html`<li class="${i === 0 ? 'active' : ''}"><a href="#" data-col=${i} @click=${this.#changeTab}>${mac.getPlayLabel()}</a></li>`;
     })}
-                ${this.gang.animals.map((char, i) => {
-        return html`<li class=""><a href="#" data-col="a${i}" @click=${this.#changeTab}>${char.name}</a></li>`;
+                ${this.force.aus.map((au, i) => {
+        return html`<li class=""><a href="#" data-col="a${i}" @click=${this.#changeTab}>${au.name}</a></li>`;
     })}
             </ul>
         </div>
     <main>
-    ${this.gang.characters.map((char, i) => {
-        return html`<div id="col-${i}" class="${i === 0 ? 'active' : ''}">${this.#renderCharacter(char)}</div>`;
+    ${this.force.macs.map((mac, i) => {
+        return html`<div id="col-${i}" class="${i === 0 ? 'active' : ''}">${this.#renderMAC(mac)}</div>`;
     })}
-    ${this.gang.animals.map((char, i) => {
-        return html`<div id="col-a${i}" class="">${this.#renderAnimal(char)}</div>`;
+    ${this.force.aus.map((au, i) => {
+        return html`<div id="col-a${i}" class="">${this.#renderAuxUnit(au)}</div>`;
     })}
     </main>
     </div>`;
@@ -193,5 +189,5 @@ export default class GangPlay extends BaseElement {
 }
 
 if (!window.customElements.get('mac-play-page')) {
-    window.customElements.define('mac-play-page', GangPlay);
+    window.customElements.define('mac-play-page', ForcePlay);
 }

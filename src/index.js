@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-vars */
 import ForcePage from './components/ForcePage.js';
 import ForceList from './components/ForceList.js';
-// import ForcePlay from './components/ForcePlay.js';
+import ForcePlay from './components/ForcePlay.js';
 // import ForcePrint from './components/ForcePrint.js';
 import Modal from './components/Modal.js';
 import { getForce } from './services/ForceService.js';
@@ -15,10 +15,11 @@ if (forceId) {
     // if (isPrint) {
     //     const el = new ForcePrint({ force });
     //     document.querySelector('main').prepend(el);
-    // } else if (isPlay) {
-    //     const el = new ForcePlay({ force });
-    //     document.querySelector('.container').prepend(el);
-    // }
+    // } else
+    if (isPlay) {
+         const el = new ForcePlay({ force });
+         document.querySelector('.container').prepend(el);
+    }
 }
 
 document.querySelector('header a.btn-help')?.addEventListener('click', (ev) => {

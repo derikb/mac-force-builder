@@ -7,6 +7,7 @@ export default class Module {
     type = 0;
     hardware_id = 0;
     weapon = null;
+    destroyed = false;
 
     constructor({
         id = 0,

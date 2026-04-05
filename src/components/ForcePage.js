@@ -141,8 +141,8 @@ export default class ForcePage extends BaseElement {
         emitter.on('mac:remove', ({ uuid }) => {
             this.#removeMAC(uuid);
         });
-        emitter.on('animal:remove', ({ id }) => {
-            this.#removeAnimal(id);
+        emitter.on('aux:remove', ({ uuid }) => {
+            this.#removeAuxUnit(uuid);
         });
     }
 
@@ -248,10 +248,10 @@ export default class ForcePage extends BaseElement {
         }
     }
 
-    #removeAnimal (id) {
-        const animal = this.renderRoot.querySelector(`#col-2 mac-animal-edit[data-id="${id}"]`);
-        if (animal) {
-            animal.remove();
+    #removeAuxUnit (uuid) {
+        const auxunit = this.renderRoot.querySelector(`#col-2 mac-au-edit[data-uuid="${uuid}"]`);
+        if (auxunit) {
+            auxunit.remove();
         }
     }
 
