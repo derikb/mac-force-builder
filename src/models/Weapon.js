@@ -41,7 +41,7 @@ export default class Weapon {
         this.range = data.get('weapon_range');
         this.type = data.get('weapon_type');
         this.subtype = data.get('weapon_subtype');
-        this.power = data.get('weapon_power');
+        this.power = Number(data.get('weapon_power'));
         this.expendable = data.get('weapon_x') === '1';
         this.brawl = data.get('weapon_brawl') === '1';
     }

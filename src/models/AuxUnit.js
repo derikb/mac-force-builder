@@ -12,7 +12,7 @@ export default class AuxUnit {
     constructor ({
         uuid = '',
         name = '',
-        type = '',
+        type = 'I',
         weapons = [],
         hardware = [],
     }) {

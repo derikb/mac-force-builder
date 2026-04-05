@@ -25,9 +25,13 @@ const calcAuxUnitCost = function (auxunit, force) {
     if (!auxunit) {
         return 0;
     }
-    let total = 1;
-    total += auxunit.hardware.length;
-    // @todo map weapon class and sum
+    let total = auxunit.type === 'I' ? 1 : 2;
+    total += auxunit.hardware.reduce((accumulator, hardwareId) => {
+        return accumulator + (hardwareId > 0 ? 1 : 0);
+    }, 0);
+    total += auxunit.weapons.reduce((accumulator, weapon) => {
+        return accumulator + (weapon?.power ?? 0);
+    }, 0);
     return total;
 };
 

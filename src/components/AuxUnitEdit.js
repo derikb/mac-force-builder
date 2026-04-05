@@ -65,15 +65,12 @@ export default class AuxUnitEdit extends BaseElement {
     }
 
     #handleHardwareUpdate ({ auUuid, moduleId, hardware = null }) {
-        console.log(arguments);
         if (auUuid !== this.auxunit.uuid) {
             return;
         }
         this.auxunit.hardware[moduleId] = hardware?.id ?? null;
         this.requestUpdate();
         this.#triggerAuxUnitUpdate();
-
-        // @todo update cost (for that one module that makes a difference)
     }
 
     saveName (ev) {
@@ -103,9 +100,12 @@ export default class AuxUnitEdit extends BaseElement {
 
     showHardware (ev) {
         ev.preventDefault();
-        const moduleId = Number(ev.target.dataset.mid ?? 0);
+        const moduleId = Number(ev.target.dataset.hid ?? 0);
+        if (moduleId < 0) {
+            return;
+        }
         document.querySelector('mac-force-page')?.fillColumn(
-            new HardwareList({ aux: this.auxunit, moduleId }),
+            new HardwareList({ auxunit: this.auxunit, moduleId }),
             3,
             'Hardware'
         );
@@ -142,20 +142,25 @@ export default class AuxUnitEdit extends BaseElement {
         return html`<li>
         <div class="input-group">
             <span class="input-group-text module-name">${name ?? '[Empty]'}</span>
-            <button type="button" class="btn btn-outline-secondary" data-wid="${id}" @click=${this.showHardware}>Edit</button>
+            <button type="button" class="btn btn-outline-secondary" data-hid="${id}" @click=${this.showHardware}>Edit</button>
         </div>
         </li>`;
     }
 
     #getHardwareFields() {
         const hardware = this.auxunit.hardware;
-        return html`${hardware.map((h) => {
-            return this.#hardWareInput(h);
+        if (hardware.length == 0) {
+            hardware.push(null);
+        }
+        return html`${hardware.map((h, id) => {
+            return this.#hardWareInput(id, h);
         })}`;
     }
 
     #addHardware() {
-
+        this.auxunit.hardware.push(null);
+        this.requestUpdate();
+        this.#triggerAuxUnitUpdate();
     }
 
     render () {

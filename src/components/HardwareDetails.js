@@ -21,6 +21,7 @@ export default class HardwareDetails extends BaseElement {
         hardware,
         selected = false,
         macUuid = '',
+        auUuid = '',
         moduleId = 0,
     }) {
         super();
@@ -30,17 +31,23 @@ export default class HardwareDetails extends BaseElement {
             this.setAttribute('selected', 'true');
         }
         this.macUuid = macUuid;
+        this.auUuid = auUuid;
         this.moduleId = moduleId;
     }
 
     handleSelect (ev) {
-        emitter.trigger('mac:module:update', { hardware: this.hardware, macUuid: this.macUuid, moduleId: this.moduleId });
+        if (this.macUuid) {
+            emitter.trigger('mac:module:update', { hardware: this.hardware, macUuid: this.macUuid, moduleId: this.moduleId });
+        }
+        if (this.auUuid) {
+            emitter.trigger('auxunit:hardware:update', { hardware: this.hardware, auUuid: this.auUuid, moduleId: this.moduleId });
+        }
     }
 
     render () {
         return html`<li class="list-group-item" @click=${this.handleSelect}>
             <h4>${this.hardware.name} (${this.hardware.type.join(', ')})</h4>
-            <p>Description: ${this.hardware.description}</p>
+            ${this.hardware.description !== '' ? `<p>Description: ${this.hardware.description}</p>` : ''}
         </li>`;
     }
 }

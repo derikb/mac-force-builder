@@ -1,5 +1,13 @@
 export default [
     {
+        id: 0,
+        name: 'Empty',
+        type: [
+            'I',
+            'V',
+        ],
+    },
+    {
         id: 1,
         name: 'Aerodrive',
         description: '',
