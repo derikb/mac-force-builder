@@ -154,6 +154,10 @@ export default class MACPlay extends BaseElement {
         this.requestUpdate();
     }
 
+    #setInitiative(ev) {
+        this.mac.initiative = ev.target.value;
+    }
+
     #getModuleFields() {
         return [1,2,3,4,5,6].map((id) => {
         const module = this.mac.getModule(id);
@@ -193,7 +197,8 @@ export default class MACPlay extends BaseElement {
                 </div>
                 <label for="initiative" class="col-form-label col-auto">Initiative</label>
                 <div class="col-auto">
-                    <select name="initiative" class="form-select"><option value="A">A</option><option value="K">K</option><option value="Q">Q</option></select>
+                    <select name="initiative" class="form-select" @onchange=${this.#setInitiative}>
+                        ${['A','K','Q','J','10','9','8','7','6','5','4','3','2'].map((v) => html`<option value="${v}" ?selected=${this.mac.initiative === v}>${v}</option>`)}</select>
                 </div>
             </div>
         </div>

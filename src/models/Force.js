@@ -5,6 +5,8 @@ export default class Force {
     uuid = '';
     name = '';
     faction = '';
+    // Not saved, just used during a game.
+    suit = '';
     /** @var {Array<MAC>} */
     macs = [];
     /** @var {Array<AuxUnit>} */

@@ -31,6 +31,12 @@ export default class ForcePlay extends BaseElement {
             margin: 0;
             padding: 0;
         }
+        .header .suit-select {
+            width: auto;
+        }
+        .header .suit-select.red {
+            color: red;
+        }
         .header a {
             display: block;
         }
@@ -152,6 +158,11 @@ export default class ForcePlay extends BaseElement {
         column.classList.add('active');
     }
 
+    #changeSuit (ev) {
+        this.force.suit = ev.target.value;
+        this.requestUpdate();
+    }
+
     #renderMAC(mac) {
         return new MACPlay({ mac, force: this.force });
     }
@@ -164,6 +175,13 @@ export default class ForcePlay extends BaseElement {
         return html`<div>
         <div class="header">
         <h1>${this.force.name}</h1>
+        <select class="form-select form-select-sm suit-select ${['hearts', 'diamonds'].includes(this.force.suit) ? 'red' : ''}" aria-label="Choose initiative card suit" @change=${this.#changeSuit}>
+            <option value="" ?selected=${!this.force.suit}>Initiative suit</option>
+            <option value="spades" ?selected=${this.force.suit === 'spades'}>♠</option>
+            <option value="hearts" ?selected=${this.force.suit === 'hearts'}>♥</option>
+            <option value="diamonds" ?selected=${this.force.suit === 'diamonds'}>♦</option>
+            <option value="clubs" ?selected=${this.force.suit === 'clubs'}>♣   </option>
+        </select>
         <a href="/index.html">Back</a>
         </div>
         <div class="tabs">
