@@ -1,7 +1,9 @@
 import { html, css } from 'lit';
 import BaseElement from './BaseElement.js';
+import AuxUnitTypes from '../data/AuxUnitTypes.js';
+import { getHardware } from '../services/HardwareService.js';
 
-export default class MACPlay extends BaseElement {
+export default class AuxUnitPlay extends BaseElement {
     static styles = [
         super.styles,
         css`
@@ -145,98 +147,107 @@ export default class MACPlay extends BaseElement {
     `
     ];
 
-    /** @prop {MAC} */
-    mac = null;
+    /** @prop {AuxUnit} */
+    auxunit = null;
     constructor ({
-        mac,
+        auxunit,
         force
     }) {
         super();
-        this.mac = mac;
+        this.auxunit = auxunit;
         this.force = force;
-        this.id = this.mac.uuid;
-    }
-
-    #markMACDestroyed(ev) {
-        this.mac.destroyed = ev.target.checked;
-        this.requestUpdate();
+        this.id = this.auxunit.uuid;
     }
 
     #markDestroyed(ev) {
-        const moduleId = Number(ev.target.value);
-        const module = this.mac.getModule(moduleId);
-        module.destroyed = ev.target.checked;
+        this.auxunit.destroyed = ev.target.checked;
         this.requestUpdate();
     }
 
     #setDivision(ev) {
-        this.mac.division = ev.target.value;
+        this.auxunit.division = ev.target.value;
         this.dispatchEvent(new CustomEvent('mac-division-change', { bubbles: true, composed: true }));
     }
 
     #setInitiative(ev) {
-        this.mac.initiative = ev.target.value;
+        this.auxunit.initiative = ev.target.value;
         this.dispatchEvent(new CustomEvent('mac-initiative-change', { bubbles: true, composed: true }));
     }
 
-    #getModuleFields() {
-        return [1,2,3,4,5,6].map((id) => {
-        const module = this.mac.getModule(id);
-        return html`<li data-mid="${id}">
+    #getWeapons() {
+        return this.auxunit.weapons.map((weapon) => {
+        return html`<li>
         <div class="input-group">
-            <span class="input-group-text">${id}</span>
-            <span class="input-group-text module-name ${module.destroyed ? 'destroyed' : ''}">${module.label ? module.label : '[Empty]'}</span>
-            <span class="input-group-text">
-                <input class="form-check-input mt-0" type="checkbox" value="1" aria-label="Mark damaged">
-                <input class="form-check-input mt-0 ms-3" type="checkbox" value="${id}" aria-label="Mark destroyed" @click=${this.#markDestroyed}>
-            </span>
+            <span class="input-group-text module-name">${weapon.label}</span>
         </div>
         </li>`;
         });
     }
 
-    #getInternalChecks() {
+    #getHardware() {
+        return this.auxunit.hardware.map((id) => {
+            const hardware = getHardware(id);
+            if (!hardware) {
+                return '';
+            }
+        return html`<li>
+        <div class="input-group">
+            <span class="input-group-text module-name">${hardware.name}</span>
+        </div>
+        </li>`;
+        });
+    }
+
+    #getUnitChecks() {
         const checks = [];
-        for (let i = 1; i <= this.mac.mClass; i++) {
-            const isLast = i === this.mac.mClass;
+        for (let i = 1; i <= this.auxunit.units; i++) {
+            const isLast = i === this.auxunit.units;
             checks.push(html`<span class="input-group-text">
-                <input class="form-check-input mt-0" type="checkbox" value="1" aria-label="Mark ${isLast ? 'destroyed' : 'damaged'}" ${isLast ? `@click=${this.#markMACDestroyed}` : ''} />`);
+                <input class="form-check-input mt-0" type="checkbox" value="1" aria-label="Mark unit destroyed" ${isLast ? `@click=${this.#markDestroyed}` : ''} />`);
         }
         return checks;
+    }
+
+    #getUnitType() {
+        const type = AuxUnitTypes.find((el) => {
+            return el.id === this.auxunit.type;
+        })
+        return type?.label ?? '--'
     }
 
     render () {
         return html`<div class="grid-col-2">
             <div class="row mb-3 align-items-center">
                 <div class="input-group">
-                    <span class="input-group-text"><strong>Class</strong></span>
-                    <span class="input-group-text">${this.mac.mClass}</span>
+                    <span class="input-group-text"><strong>Type</strong></span>
+                    <span class="input-group-text">${this.#getUnitType()}</span>
                 </div>
                 <div class="input-group">
                     <label for="division" class="input-group-text">Division</label>
                     <select name="division" class="form-select" @change=${this.#setDivision}>
-                        ${['--', 'A','B','C'].map((v) => html`<option value="${v}" ?selected=${this.mac.division === v}>${v}</option>`)}</select>
+                        ${['--', 'A','B','C'].map((v) => html`<option value="${v}" ?selected=${this.auxunit.division === v}>${v}</option>`)}</select>
                 </div>
                 <div class="input-group">
                     <label for="initiative" class="input-group-text">Initiative</label>
                     <select name="initiative" class="form-select" @change=${this.#setInitiative}>
-                        ${['--', 'A','K','Q','J','10','9','8','7','6','5','4','3','2'].map((v) => html`<option value="${v}" ?selected=${this.mac.initiative === v}>${v}</option>`)}</select>
+                        ${['--', 'A','K','Q','J','10','9','8','7','6','5','4','3','2'].map((v) => html`<option value="${v}" ?selected=${this.auxunit.initiative === v}>${v}</option>`)}</select>
                 </div>
             </div>
         </div>
             <div>
                 <ol class="list-unstyled module-list mb-3">
-                    ${this.#getModuleFields()}
+                    ${this.#getWeapons()}
+                    ${this.#getHardware()}
                 </ol>
                 <div class="input-group">
-                    <span class="input-group-text">Internal Damage</span>
-                    ${this.#getInternalChecks()}
+                    <span class="input-group-text">Units</span>
+                    ${this.#getUnitChecks()}
                 </div>
             </div>
         `;
     }
 }
 
-if (!window.customElements.get('mac-mac-play')) {
-    window.customElements.define('mac-mac-play', MACPlay);
+if (!window.customElements.get('mac-au-play')) {
+    window.customElements.define('mac-au-play', AuxUnitPlay);
 }

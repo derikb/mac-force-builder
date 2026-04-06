@@ -1,6 +1,7 @@
 import { html, css } from 'lit';
 // import AuxUnitPlay from './AuxUnitPlay.js';
 import BaseElement from './BaseElement.js';
+import AuxUnitPlay from './AuxUnitPlay.js';
 import MACPlay from './MACPlay.js';
 
 export default class ForcePlay extends BaseElement {
@@ -126,8 +127,12 @@ export default class ForcePlay extends BaseElement {
         super();
         this.setAttribute('role', 'main');
         this.force = force;
-        this.activeTab = 0;
         this._macPlays = force.macs.map((mac) => new MACPlay({ mac, force }));
+        this.force.aus.forEach((auxunit) => {
+            this._macPlays.push(new AuxUnitPlay({ auxunit, force }));
+        });
+        this.activeTab = force.macs.find(() => true).uuid;
+
     }
 
     #onInitiativeChange = () => this.requestUpdate();
@@ -147,7 +152,7 @@ export default class ForcePlay extends BaseElement {
     #changeTab (ev) {
         ev.preventDefault();
         const a = ev.currentTarget;
-        const col = a.dataset.col || 1;
+        const col = a.dataset.col || '';
         this.#switchToTab(col);
     }
 
@@ -161,16 +166,16 @@ export default class ForcePlay extends BaseElement {
         this.requestUpdate();
     }
 
-    #renderMAC(i) {
-        return this._macPlays[i];
-    }
-
-    #renderAuxUnit(auxunit) {
-        // return new AuxUnitPlay({ auxunit, force: this.force });
-    }
-
     #suitSymbol () {
         return { spades: '♠', hearts: '♥', diamonds: '♦', clubs: '♣' }[this.force.suit] ?? '';
+    }
+
+    #renderTabTitle(unit) {
+        const symbol = this.#suitSymbol();
+        const isRed = ['hearts', 'diamonds'].includes(this.force.suit);
+        const card = unit.initiative ? html`<span class="ms-2" style="color:${isRed ? 'red' : 'inherit'}">${symbol}${unit.initiative}</span>` : '';
+        const division = unit.division ? html`<strong class="me-2">${unit.division}</strong> ` : '';
+        return html`${division}${unit.name}${card}`;
     }
 
     render () {
@@ -189,23 +194,16 @@ export default class ForcePlay extends BaseElement {
         <div class="tabs">
             <ul>
                 ${this.force.macs.map((mac, i) => {
-        const symbol = this.#suitSymbol();
-        const isRed = ['hearts', 'diamonds'].includes(this.force.suit);
-        const card = mac.initiative ? html`<span class="ms-1" style="color:${isRed ? 'red' : 'inherit'}">${symbol}${mac.initiative}</span>` : '';
-        const division = mac.division ? html`<strong class="me-2">${mac.division}</strong> ` : '';
-        return html`<li class="${this.activeTab == i ? 'active' : ''}"><a href="#" data-col=${i} @click=${this.#changeTab}>${division}${mac.name}${card}</a></li>`;
-    })}
+                    return html`<li class="${this.activeTab == mac.uuid ? 'active' : ''}"><a href="#" data-col=${mac.uuid} @click=${this.#changeTab}>${this.#renderTabTitle(mac)}</a></li>`;
+                })}
                 ${this.force.aus.map((au, i) => {
-        return html`<li class=""><a href="#" data-col="a${i}" @click=${this.#changeTab}>${au.name}</a></li>`;
-    })}
+                    return html`<li class="${this.activeTab == au.uuid ? 'active' : ''}"><a href="#" data-col="${au.uuid}" @click=${this.#changeTab}>${this.#renderTabTitle(au)}</a></li>`;
+                })}
             </ul>
         </div>
     <main>
-    ${this.force.macs.map((_mac, i) => {
-        return html`<div id="col-${i}" class="${this.activeTab == i ? 'active' : ''}">${this.#renderMAC(i)}</div>`;
-    })}
-    ${this.force.aus.map((au, i) => {
-        return html`<div id="col-a${i}" class="">${this.#renderAuxUnit(au)}</div>`;
+    ${this._macPlays.map((el) => {
+        return html`<div id="col-${el.id}" class="${this.activeTab == el.id ? 'active' : ''}">${el}</div>`;
     })}
     </main>
     </div>`;

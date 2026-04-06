@@ -8,6 +8,10 @@ export default class AuxUnit {
     weapons = [];
     /** @var {Array<Number> hardware ids} */
     hardware = [];
+    units = 1;
+    division = '';
+    initiative = '';
+    destroyed = false;
 
     constructor ({
         uuid = '',
@@ -15,6 +19,7 @@ export default class AuxUnit {
         type = 'I',
         weapons = [],
         hardware = [],
+        units = 1,
     }) {
         if (!uuid) {
             this.uuid = crypto.randomUUID();
@@ -27,5 +32,6 @@ export default class AuxUnit {
             return new Weapon(obj);
         });
         this.hardware = hardware;
+        this.units = units;
     }
 }
