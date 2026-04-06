@@ -126,14 +126,22 @@ export default class ForcePlay extends BaseElement {
         super();
         this.setAttribute('role', 'main');
         this.force = force;
+        this.activeTab = 0;
+        this._macPlays = force.macs.map((mac) => new MACPlay({ mac, force }));
     }
+
+    #onInitiativeChange = () => this.requestUpdate();
 
     connectedCallback () {
         super.connectedCallback();
+        this.addEventListener('mac-initiative-change', this.#onInitiativeChange);
+        this.addEventListener('mac-division-change', this.#onInitiativeChange);
     }
 
     disconnectedCallback () {
         super.disconnectedCallback();
+        this.removeEventListener('mac-initiative-change', this.#onInitiativeChange);
+        this.removeEventListener('mac-division-change', this.#onInitiativeChange);
     }
 
     #changeTab (ev) {
@@ -144,18 +152,8 @@ export default class ForcePlay extends BaseElement {
     }
 
     #switchToTab (which) {
-        const column = this.renderRoot.querySelector(`#col-${which}`);
-        if (!column) {
-            return;
-        }
-        if (column.innerHTML === '') {
-            return;
-        }
-        this.renderRoot.querySelectorAll('li').forEach((el) => el.classList.remove('active'));
-        this.renderRoot.querySelector(`li:has(a[data-col="${which}"])`)?.classList.add('active');
-
-        this.renderRoot.querySelectorAll('main > div').forEach((el) => el.classList.remove('active'));
-        column.classList.add('active');
+        this.activeTab = which;
+        this.requestUpdate();
     }
 
     #changeSuit (ev) {
@@ -163,12 +161,16 @@ export default class ForcePlay extends BaseElement {
         this.requestUpdate();
     }
 
-    #renderMAC(mac) {
-        return new MACPlay({ mac, force: this.force });
+    #renderMAC(i) {
+        return this._macPlays[i];
     }
 
     #renderAuxUnit(auxunit) {
         // return new AuxUnitPlay({ auxunit, force: this.force });
+    }
+
+    #suitSymbol () {
+        return { spades: '♠', hearts: '♥', diamonds: '♦', clubs: '♣' }[this.force.suit] ?? '';
     }
 
     render () {
@@ -187,7 +189,11 @@ export default class ForcePlay extends BaseElement {
         <div class="tabs">
             <ul>
                 ${this.force.macs.map((mac, i) => {
-        return html`<li class="${i === 0 ? 'active' : ''}"><a href="#" data-col=${i} @click=${this.#changeTab}>${mac.getPlayLabel()}</a></li>`;
+        const symbol = this.#suitSymbol();
+        const isRed = ['hearts', 'diamonds'].includes(this.force.suit);
+        const card = mac.initiative ? html`<span class="ms-1" style="color:${isRed ? 'red' : 'inherit'}">${symbol}${mac.initiative}</span>` : '';
+        const division = mac.division ? html`<strong class="me-2">${mac.division}</strong> ` : '';
+        return html`<li class="${this.activeTab == i ? 'active' : ''}"><a href="#" data-col=${i} @click=${this.#changeTab}>${division}${mac.name}${card}</a></li>`;
     })}
                 ${this.force.aus.map((au, i) => {
         return html`<li class=""><a href="#" data-col="a${i}" @click=${this.#changeTab}>${au.name}</a></li>`;
@@ -195,8 +201,8 @@ export default class ForcePlay extends BaseElement {
             </ul>
         </div>
     <main>
-    ${this.force.macs.map((mac, i) => {
-        return html`<div id="col-${i}" class="${i === 0 ? 'active' : ''}">${this.#renderMAC(mac)}</div>`;
+    ${this.force.macs.map((_mac, i) => {
+        return html`<div id="col-${i}" class="${this.activeTab == i ? 'active' : ''}">${this.#renderMAC(i)}</div>`;
     })}
     ${this.force.aus.map((au, i) => {
         return html`<div id="col-a${i}" class="">${this.#renderAuxUnit(au)}</div>`;

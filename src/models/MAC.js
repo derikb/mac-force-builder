@@ -7,6 +7,7 @@ export default class MAC {
     /** @var {Array<Module>} */
     modules = [];
     division = '';
+    initiative = '';
     destroyed = false;
 
     constructor ({

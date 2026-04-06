@@ -23,6 +23,20 @@ export default class MACPlay extends BaseElement {
     .module-name.destroyed {
         text-decoration: line-through;
     }
+
+    label {
+        font-weight: bold;
+    }
+
+    .input-group {
+        width: auto;
+    }
+
+    .input-group > .form-select {
+        width: auto;
+        flex: 0 1 auto;
+    }
+
     dl {
         margin:0;
         padding: 0;
@@ -154,8 +168,14 @@ export default class MACPlay extends BaseElement {
         this.requestUpdate();
     }
 
+    #setDivision(ev) {
+        this.mac.division = ev.target.value;
+        this.dispatchEvent(new CustomEvent('mac-division-change', { bubbles: true, composed: true }));
+    }
+
     #setInitiative(ev) {
         this.mac.initiative = ev.target.value;
+        this.dispatchEvent(new CustomEvent('mac-initiative-change', { bubbles: true, composed: true }));
     }
 
     #getModuleFields() {
@@ -187,17 +207,18 @@ export default class MACPlay extends BaseElement {
     render () {
         return html`<div class="grid-col-2">
             <div class="row mb-3 align-items-center">
-                <div class="col-sm-3"><strong>Class</strong></div>
-                <div class="col-auto">${this.mac.mClass}</div>
-            </div>
-            <div class="row mb-3 align-items-center">
-                <label for="division" class="col-form-label col-auto">Division</label>
-                <div class="col-auto">
-                    <select name="division" class="form-select"><option value="A">A</option><option value="B">B</option><option value="C">C</option></select>
+                <div class="input-group">
+                    <span class="input-group-text"><strong>Class</strong></span>
+                    <span class="input-group-text">${this.mac.mClass}</span>
                 </div>
-                <label for="initiative" class="col-form-label col-auto">Initiative</label>
-                <div class="col-auto">
-                    <select name="initiative" class="form-select" @onchange=${this.#setInitiative}>
+                <div class="input-group">
+                    <label for="division" class="input-group-text">Division</label>
+                    <select name="division" class="form-select" @change=${this.#setDivision}>
+                        ${['--', 'A','B','C'].map((v) => html`<option value="${v}" ?selected=${this.mac.division === v}>${v}</option>`)}</select>
+                </div>
+                <div class="input-group">
+                    <label for="initiative" class="input-group-text">Initiative</label>
+                    <select name="initiative" class="form-select" @change=${this.#setInitiative}>
                         ${['A','K','Q','J','10','9','8','7','6','5','4','3','2'].map((v) => html`<option value="${v}" ?selected=${this.mac.initiative === v}>${v}</option>`)}</select>
                 </div>
             </div>
