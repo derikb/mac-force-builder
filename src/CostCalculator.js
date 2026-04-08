@@ -34,7 +34,7 @@ const calcAuxUnitCost = function (auxunit, force) {
     total += auxunit.weapons.reduce((accumulator, weapon) => {
         return accumulator + (weapon?.power ?? 0);
     }, 0);
-    return total;
+    return total * auxunit.units;
 };
 
 /**

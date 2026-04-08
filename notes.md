@@ -55,5 +55,5 @@ Play info:
 
 
 TODO:
-- add unit number to aux edit
 - validation of aux stuff
+- add tooltips for modules/hardware?

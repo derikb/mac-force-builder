@@ -80,6 +80,14 @@ export default class AuxUnitEdit extends BaseElement {
 
     saveType (ev) {
         this.auxunit.type = ev.target.value;
+        // reset units since it could now be invalid
+        this.auxunit.units = 1;
+        this.requestUpdate();
+        this.#triggerAuxUnitUpdate();
+    }
+
+    #saveUnits (ev) {
+        this.auxunit.units = Number(ev.target.value);
         this.requestUpdate();
         this.#triggerAuxUnitUpdate();
     }
@@ -120,6 +128,15 @@ export default class AuxUnitEdit extends BaseElement {
         const options = AuxUnitTypes.map(({ id, label }) => {
             return html`<option value="${id}" ?selected=${this.auxunit.type == id}>${label}</option>`;
         });
+        return options;
+    }
+
+    #getUnitOptions() {
+        const type = AuxUnitTypes.find((t) => t.id === this.auxunit.type);
+        const options = [];
+        for (let i = 1; i <= type.maxunits; i++) {
+            options.push(html`<option value="${i}" ?selected=${this.auxunit.units == i}>${i}</option>`);
+        }
         return options;
     }
 
@@ -178,14 +195,21 @@ export default class AuxUnitEdit extends BaseElement {
         </div>
 
         <div class="row mb-3 align-items-center">
-            <div class="col-sm-3"><strong>Type</strong></div>
-            <div class="col-sm-6">
+            <div class="col-sm-2"><strong>Type</strong></div>
+            <div class="col-sm-3">
                 <select class="form-select" @change=${this.saveType}>
                     ${this.#getTypeOptions()}
                 </select>
             </div>
 
-            <div class="col-sm-3"><strong>Points</strong> ${calcAuxUnitCost(this.auxunit, this.force)}</div>
+            <div class="col-sm-2"><strong># Units</strong></div>
+            <div class="col-sm-3">
+                <select class="form-select" @change=${this.#saveUnits}>
+                    ${this.#getUnitOptions()}
+                </select>
+            </div>
+
+            <div class="col-sm-2"><strong>Points</strong> ${calcAuxUnitCost(this.auxunit, this.force)}</div>
             </div>
         </div>
 
