@@ -2,7 +2,7 @@
 import ForcePage from './components/ForcePage.js';
 import ForceList from './components/ForceList.js';
 import ForcePlay from './components/ForcePlay.js';
-// import ForcePrint from './components/ForcePrint.js';
+import ForcePrint from './components/ForcePrint.js';
 import Modal from './components/Modal.js';
 import { getForce } from './services/ForceService.js';
 
@@ -12,13 +12,12 @@ if (forceId) {
     const force = getForce(forceId);
     const isPrint = window.location.pathname.match(/print/);
     const isPlay = window.location.pathname.match(/play/);
-    // if (isPrint) {
-    //     const el = new ForcePrint({ force });
-    //     document.querySelector('main').prepend(el);
-    // } else
-    if (isPlay) {
-         const el = new ForcePlay({ force });
-         document.querySelector('.container').prepend(el);
+    if (isPrint) {
+        const el = new ForcePrint({ force });
+        document.querySelector('main').prepend(el);
+    } else if (isPlay) {
+        const el = new ForcePlay({ force });
+        document.querySelector('.container').prepend(el);
     }
 }
 

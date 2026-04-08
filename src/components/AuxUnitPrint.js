@@ -1,7 +1,9 @@
 import { html, css } from 'lit';
 import BaseElement from './BaseElement.js';
+import AuxUnitTypes from '../data/AuxUnitTypes.js';
+import { getHardware } from '../services/HardwareService.js';
 
-export default class MACPrint extends BaseElement {
+export default class AuxUnitPrint extends BaseElement {
     static styles = [
         css`
         :host {
@@ -92,36 +94,51 @@ export default class MACPrint extends BaseElement {
     `
     ];
 
-    /** @prop {MAC} */
-    mac = null;
+    /** @prop {AuxUnit} */
+    auxunit = null;
     constructor ({
-        mac,
+        auxunit,
         force
     }) {
         super();
-        this.mac = mac;
+        this.auxunit = auxunit;
         this.force = force;
     }
 
-    #getModuleFields() {
-        return [1,2,3,4,5,6].map((id) => {
-        const module = this.mac.getModule(id);
-        return html`<li data-mid="${id}">
+    #getUnitType() {
+        const type = AuxUnitTypes.find((el) => {
+            return el.id === this.auxunit.type;
+        })
+        return type?.label ?? '--'
+    }
+
+    #getWeapons() {
+        return this.auxunit.weapons.map((weapon) => {
+        return html`<li>
         <div class="input-group">
-            <span class="input-group-text">${id}</span>
-            <span class="input-group-text module-name ${module.destroyed ? 'destroyed' : ''}">${module.label ? module.label : '[Empty]'}</span>
-            <span class="input-group-text">
-                <input class="form-check-input mt-0" type="checkbox" value="1" aria-label="Mark damaged">
-                <input class="form-check-input mt-0 ms-3" type="checkbox" value="${id}">
-            </span>
+            <span class="input-group-text module-name">${weapon.label}</span>
         </div>
         </li>`;
         });
     }
 
-    #getInternalChecks() {
+    #getHardware() {
+        return this.auxunit.hardware.map((id) => {
+            const hardware = getHardware(id);
+            if (!hardware) {
+                return '';
+            }
+        return html`<li>
+        <div class="input-group">
+            <span class="input-group-text module-name">${hardware.name}</span>
+        </div>
+        </li>`;
+        });
+    }
+
+    #getUnitChecks() {
         const checks = [];
-        for (let i = 1; i <= this.mac.mClass; i++) {
+        for (let i = 1; i <= this.auxunit.units; i++) {
             checks.push(html`<span class="input-group-text">
                 <input class="form-check-input mt-0" type="checkbox" value="1" />`);
         }
@@ -132,8 +149,8 @@ export default class MACPrint extends BaseElement {
         return html`<div class="grid-col-2">
             <div class="row mb-3 align-items-center">
                 <div class="input-group">
-                    <span class="input-group-text"><strong>Class</strong></span>
-                    <span class="input-group-text">${this.mac.mClass}</span>
+                    <span class="input-group-text"><strong>Type</strong></span>
+                    <span class="input-group-text">${this.#getUnitType()}</span>
                 </div>
                 <div class="input-group">
                     <label for="division" class="input-group-text">Division</label>
@@ -146,11 +163,12 @@ export default class MACPrint extends BaseElement {
             </div>
             <div>
                 <ol class="list-unstyled module-list mb-3">
-                    ${this.#getModuleFields()}
+                    ${this.#getWeapons()}
+                    ${this.#getHardware()}
                 </ol>
                 <div class="input-group">
-                    <span class="input-group-text">Internal Damage</span>
-                    ${this.#getInternalChecks()}
+                    <span class="input-group-text">Units</span>
+                    ${this.#getUnitChecks()}
                 </div>
             </div>
         </div>
@@ -158,6 +176,6 @@ export default class MACPrint extends BaseElement {
     }
 }
 
-if (!window.customElements.get('mac-mac-print')) {
-    window.customElements.define('mac-mac-print', MACPrint);
+if (!window.customElements.get('mac-au-print')) {
+    window.customElements.define('mac-au-print', AuxUnitPrint);
 }

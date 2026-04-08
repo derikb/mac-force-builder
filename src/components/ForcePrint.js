@@ -1,15 +1,14 @@
 import { html, css } from 'lit';
-import AnimalPrint from './AnimalPrint.js';
-import CharacterPrint from './CharacterPrint.js';
-import RivalPrint from './RivalPrint.js';
+import AuxUnitPrint from './AuxUnitPrint.js';
+import MACPrint from './MACPrint.js';
 import BaseElement from './BaseElement.js';
-import { calcGangCost } from '../CostCalculator.js';
+import { calcForceCost } from '../CostCalculator.js';
 
-export default class GangPrint extends BaseElement {
+export default class ForcePrint extends BaseElement {
     static styles = [
         super.styles,
         css`
-        .character-list {
+        .mac-list {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: .5rem;
@@ -17,36 +16,31 @@ export default class GangPrint extends BaseElement {
     ];
 
     constructor ({
-        gang = null
+        force = null
     }) {
         super();
-        this.gang = gang;
+        this.force = force;
     }
 
     render () {
         return html`<div class="d-flex justify-content-between mb-1">
-            <div><strong>Gang Name</strong> ${this.gang.name}</div>
-            ${this.gang.rival
-        ? ''
-        : html`<div><strong>Player Name</strong> ${this.gang.player_name}</div>
-            <div><strong>Cost</strong> ${calcGangCost(this.gang)}</div>
-            <div><strong>Cache</strong> ${this.gang.cash}</div>`}
-
+            <div><strong>Force Name</strong> ${this.force.name}</div>
+            <div><strong>Player Name</strong> ${this.force.player_name}</div>
+            <div><strong>Points</strong> ${calcForceCost(this.force)}</div>
         </div>
-        <div class="character-list">
-        ${this.gang.characters.map((character) => {
-        if (character.rival) {
-            return new RivalPrint({ character, gang: this.gang });
-        }
-        return new CharacterPrint({ character, gang: this.gang });
-    })}
+        <div class="mac-list">
+        ${this.force.macs.map((mac) => {
+            return new MACPrint({ mac, force: this.force });
+        })}
+        ${this.force.aus.map((au) => {
+            return new AuxUnitPrint({ auxunit: au, force: this.force });
+        })}
         <div>
-        ${this.gang.animals.map((animal) => new AnimalPrint({ animal, gang: this.gang }))}
         </div>
         `;
     }
 }
 
-if (!window.customElements.get('mac-gang-print')) {
-    window.customElements.define('mac-gang-print', GangPrint);
+if (!window.customElements.get('mac-force-print')) {
+    window.customElements.define('mac-force-print', ForcePrint);
 }
