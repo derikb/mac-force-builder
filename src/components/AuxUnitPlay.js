@@ -1,5 +1,6 @@
 import { html, css } from 'lit';
 import BaseElement from './BaseElement.js';
+import { INITIATIVE_VALUES } from '../data/initiatives.js';
 import AuxUnitTypes from '../data/AuxUnitTypes.js';
 import { getHardware } from '../services/HardwareService.js';
 
@@ -230,7 +231,7 @@ export default class AuxUnitPlay extends BaseElement {
                 <div class="input-group">
                     <label for="initiative" class="input-group-text">Initiative</label>
                     <select name="initiative" class="form-select" @change=${this.#setInitiative}>
-                        ${['--', 'A','K','Q','J','10','9','8','7','6','5','4','3','2'].map((v) => html`<option value="${v}" ?selected=${this.auxunit.initiative === v}>${v}</option>`)}</select>
+                        ${['--', ...INITIATIVE_VALUES].map((v) => html`<option value="${v}" ?selected=${this.auxunit.initiative === v}>${v}</option>`)}</select>
                 </div>
             </div>
         </div>

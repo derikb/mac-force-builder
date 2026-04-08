@@ -3,6 +3,7 @@ import { html, css } from 'lit';
 import BaseElement from './BaseElement.js';
 import AuxUnitPlay from './AuxUnitPlay.js';
 import MACPlay from './MACPlay.js';
+import { INITIATIVE_VALUES } from '../data/initiatives.js';
 
 export default class ForcePlay extends BaseElement {
     static styles = [
@@ -133,6 +134,10 @@ export default class ForcePlay extends BaseElement {
         });
         this.activeTab = force.macs.find(() => true).uuid;
 
+        const initiatives = INITIATIVE_VALUES;
+        [...force.macs, ...force.aus].forEach((unit, i) => {
+            unit.initiative = initiatives[i] ?? '';
+        });
     }
 
     #onInitiativeChange = () => this.requestUpdate();
