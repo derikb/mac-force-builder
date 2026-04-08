@@ -201,7 +201,8 @@ export default class MACPlay extends BaseElement {
         for (let i = 1; i <= this.mac.mClass; i++) {
             const isLast = i === this.mac.mClass;
             checks.push(html`<span class="input-group-text">
-                <input class="form-check-input mt-0" type="checkbox" value="1" aria-label="Mark ${isLast ? 'destroyed' : 'damaged'}" ${isLast ? `@click=${this.#markMACDestroyed}` : ''} />`);
+                <input class="form-check-input mt-0" type="checkbox" value="1" aria-label="Mark ${isLast ? 'destroyed' : 'damaged'}" ${isLast ? `@click=${this.#markMACDestroyed}` : ''} />
+            </span>`);
         }
         return checks;
     }

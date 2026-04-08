@@ -3,68 +3,46 @@ import BaseElement from './BaseElement.js';
 
 export default class MACPrint extends BaseElement {
     static styles = [
+        super.styles,
         css`
         :host {
             border: 2px solid black;
             padding: 1rem;
         }
+        .input-group {
+            position: relative;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: stretch;
+            width: auto;
+        }
+        .input-group-text {
+            display: flex;
+            align-items: center;
+            padding: 0.375rem 0.75rem;
+            font-size: 1rem;
+            font-weight: 400;
+            line-height: 1.5;
+            color: black;
+            text-align: center;
+            white-space: nowrap;
+            background-color: var(--bs-tertiary-bg);
+            border: var(--bs-border-width) solid var(--bs-border-color);
+            border-radius: var(--bs-border-radius);
+        }
+        .empty-fill {
+            width: 4rem;
+        }
+        .module-name {
+            flex: 1 1 auto;
+        }
+
         .grid-col-2 {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 1rem;
             margin-bottom: .5rem;
         }
-    dl {
-        margin:0;
-        padding: 0;
-    }
-    dl.attributes {
-        display: grid;
-        grid-template-columns: 1fr 1fr 4fr;
-        gap: .5rem;
-        align-items: top;
-    }
-    dl.attributes dt {
-        font-weight: bold;
-    }
-    dl.attributes dd {
-        margin: 0;
-        grid-column: 2 / span 2
-    }
-    #attr-luck, #attr-handed {
-        grid-column: 2;
-    }
-    #attr-luck-check {
-        grid-column: 3;
-        grid-row: span 2;
-
-    }
-
-
-    input[type="checkbox"] {
-        margin-inline: 1px;
-    }
-
-    table.weapons {
-        border: 1px solid black;
-        border-collapse: collapse;
-        width: 100%;
-        text-align: left;
-        margin-bottom: .5rem;
-    }
-    table.weapons th, table.weapons td{
-        border: 1px solid black;
-        padding: 0 .25rem;
-    }
-
-    h3 {
-        font-size: 1rem;
-        margin: 0;
-        padding: 0;
-        margin-bottom: .5rem;
-    }
-    ul, ol { margin: 0; padding: 0; }
-    li { margin: 0; padding: 0; margin-left: 1rem;}
 
     .fill-in-box {
         display: inline-block;
@@ -73,22 +51,10 @@ export default class MACPrint extends BaseElement {
         border: 1px solid black;
         text-align: center;
     }
-
-    .small { font-size: .8rem; }
-
-    .hit-locations {
-        display: grid;
-        grid-template-columns: 1fr 1fr 5fr;
-        gap: .5rem;
-        align-items: center;
-    }
-    .location {
-        white-space: nowrap;
+    .fill-in-box + .fill-in-box {
+        margin-inline-start: 1rem;
     }
 
-    .equipment-list:has(ul:empty) h3 {
-        display: none;
-    }
     `
     ];
 
@@ -111,8 +77,8 @@ export default class MACPrint extends BaseElement {
             <span class="input-group-text">${id}</span>
             <span class="input-group-text module-name ${module.destroyed ? 'destroyed' : ''}">${module.label ? module.label : '[Empty]'}</span>
             <span class="input-group-text">
-                <input class="form-check-input mt-0" type="checkbox" value="1" aria-label="Mark damaged">
-                <input class="form-check-input mt-0 ms-3" type="checkbox" value="${id}">
+                <div class="fill-in-box"></div>
+                <div class="fill-in-box"></div>
             </span>
         </div>
         </li>`;
@@ -123,35 +89,35 @@ export default class MACPrint extends BaseElement {
         const checks = [];
         for (let i = 1; i <= this.mac.mClass; i++) {
             checks.push(html`<span class="input-group-text">
-                <input class="form-check-input mt-0" type="checkbox" value="1" />`);
+                <div class="fill-in-box"></div>
+            </span>`);
         }
         return checks;
     }
 
     render () {
-        return html`<div class="grid-col-2">
-            <div class="row mb-3 align-items-center">
-                <div class="input-group">
-                    <span class="input-group-text"><strong>Class</strong></span>
-                    <span class="input-group-text">${this.mac.mClass}</span>
-                </div>
-                <div class="input-group">
-                    <label for="division" class="input-group-text">Division</label>
-                    <span class="input-group-text">&nbsp;</span>
-                </div>
-                <div class="input-group">
-                    <label for="initiative" class="input-group-text">Initiative</label>
-                    <span class="input-group-text">&nbsp;</span>
-                </div>
+        return html`
+        <div class="row mb-3 align-items-center justify-content-between">
+            <div class="input-group">
+                <span class="input-group-text"><strong>Class</strong></span>
+                <span class="input-group-text">${this.mac.mClass}</span>
             </div>
-            <div>
-                <ol class="list-unstyled module-list mb-3">
-                    ${this.#getModuleFields()}
-                </ol>
-                <div class="input-group">
-                    <span class="input-group-text">Internal Damage</span>
-                    ${this.#getInternalChecks()}
-                </div>
+            <div class="input-group">
+                <label for="division" class="input-group-text"><strong>Division</strong></label>
+                <span class="input-group-text empty-fill">&nbsp;</span>
+            </div>
+            <div class="input-group">
+                <label for="initiative" class="input-group-text"><strong>Initiative</strong></label>
+                <span class="input-group-text empty-fill">&nbsp;</span>
+            </div>
+        </div>
+        <div>
+            <ol class="list-unstyled module-list mb-3">
+                ${this.#getModuleFields()}
+            </ol>
+            <div class="input-group">
+                <span class="input-group-text"><strong>Internal Damage</strong></span>
+                ${this.#getInternalChecks()}
             </div>
         </div>
         `;
