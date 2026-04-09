@@ -75,7 +75,7 @@ export default class ForceList extends BaseElement {
             ${force.name}
             <div>
                 <button type="button" class="btn btn-secondary btn-sm me-2" @click="${this.showEdit}">Edit</button>
-                <a href="/print.html?force_id=${force.uuid}" class="btn btn-secondary btn-sm me-2" target="_blank">Print</a>
+                <!-- <a href="/print.html?force_id=${force.uuid}" class="btn btn-secondary btn-sm me-2" target="_blank">Print</a> -->
                 <a href="/play.html?force_id=${force.uuid}" class="btn btn-secondary btn-sm me-2" target="_blank">Play</a>
             </div>
         </li>`;

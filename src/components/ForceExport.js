@@ -2,7 +2,7 @@ import { html, css } from 'lit';
 import BaseElement from './BaseElement.js';
 import { exportForces, getAllForcesLocal } from '../services/ForceService.js';
 
-export default class GangExport extends BaseElement {
+export default class ForceExport extends BaseElement {
     static styles = [
         super.styles,
         css`
@@ -17,7 +17,7 @@ export default class GangExport extends BaseElement {
 
     constructor () {
         super();
-        this.gangs = getAllForcesLocal();
+        this.forces = getAllForcesLocal();
     }
     close () {
         document.querySelector('mac-force-page')?.clearColumns();
@@ -31,26 +31,26 @@ export default class GangExport extends BaseElement {
         }, 0);
     }
 
-    #exportGangs (ev) {
+    #exportForces (ev) {
         ev.preventDefault();
         const form = ev.target;
         const formData = new FormData(form);
         const format = formData.get('format').toString();
-        const uuids = formData.getAll('gangs');
+        const uuids = formData.getAll('forces');
         const data = exportForces(uuids, format);
         const nameList = data.map((g) => g.name).join(', ');
 
         if (format === 'email') {
             const date = new Date();
-            const body = `Below is the backup data for your gangs: ${nameList}.
+            const body = `Below is the backup data for your forces: ${nameList}.
 
-To use this data, go to: ${window.location.href} and click the "Import Gang" button. Then paste the text below into the box.
+To use this data, go to: ${window.location.href} and click the "Import" button. Then paste the text below into the box.
 
 ---
 
 ${JSON.stringify(data)}`;
 
-            const url = `mailto:?subject=${encodeURIComponent(`Gang backup: ${nameList} (${date.toLocaleString()})`)}&body=${encodeURIComponent(body)}`;
+            const url = `mailto:?subject=${encodeURIComponent(`Force backup: ${nameList} (${date.toLocaleString()})`)}&body=${encodeURIComponent(body)}`;
 
             this.#emailLink = url;
         } else if (format === 'paste' || typeof window.Blob !== 'function') {
@@ -62,11 +62,11 @@ ${JSON.stringify(data)}`;
         this.requestUpdate();
     }
 
-    #renderGangItem (gang) {
+    #renderForceItem (force) {
         return html`<div class="form-check">
-        <input class="form-check-input" type="checkbox" name="gangs" value="${gang.uuid}" id="gang_${gang.uuid}">
-        <label class="form-check-label" for="gang_${gang.uuid}">
-          ${gang.name}
+        <input class="form-check-input" type="checkbox" name="forces" value="${force.uuid}" id="force_${force.uuid}">
+        <label class="form-check-label" for="force_${force.uuid}">
+          ${force.name}
         </label>
       </div>`;
     }
@@ -76,11 +76,11 @@ ${JSON.stringify(data)}`;
             return '';
         }
         return html`
-        <form id="form_backup" target="_self" @submit=${this.#exportGangs}>
+        <form id="form_backup" target="_self" @submit=${this.#exportForces}>
             <fieldset>
-                <legend tabindex="-1">Pick gangs</legend>
-                <ul class="gang_downloads">
-                ${this.gangs.map(this.#renderGangItem.bind(this))}
+                <legend tabindex="-1">Pick forces</legend>
+                <ul class="force_downloads">
+                ${this.forces.map(this.#renderForceItem.bind(this))}
                 </ul>
             </fieldset>
             <fieldset class="mb-3">
@@ -113,7 +113,7 @@ ${JSON.stringify(data)}`;
         if (this.#fileLink) {
             const date = new Date();
             return html`<p>
-            <a href="${this.#fileLink}" download="deadbylead_${date.getFullYear()}_${date.getMonth() + 1}_${date.getDate()}" @click=${this.#handleFileLink}>Download Export</a>
+            <a href="${this.#fileLink}" download="macattack_${date.getFullYear()}_${date.getMonth() + 1}_${date.getDate()}" @click=${this.#handleFileLink}>Download Export</a>
             </p>`;
         }
         if (this.#emailLink) {
@@ -129,13 +129,13 @@ ${JSON.stringify(data)}`;
     }
 
     render () {
-        return html`<h2>Export Gangs</h2>
+        return html`<h2>Export Forces</h2>
             ${this.#renderForm()}
             ${this.#renderLinks()}
         `;
     }
 }
 
-if (!window.customElements.get('mac-gang-export')) {
-    window.customElements.define('mac-gang-export', GangExport);
+if (!window.customElements.get('mac-force-export')) {
+    window.customElements.define('mac-force-export', ForceExport);
 }

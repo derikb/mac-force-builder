@@ -123,9 +123,6 @@ const validateMac = function (mac) {
 };
 
 const validateForce = function (force) {
-    if (force.rival) {
-        return;
-    }
     let errors = [];
     if (!force.name) {
         errors.push('Force must have a name.');
@@ -197,7 +194,7 @@ const importForces = function (data) {
             const existingForce = getForce(force_obj.uuid);
             if (existingForce && existingForce.name !== '' && existingForce.name !== newForce.name) {
                 // existing key but different name
-                alert(`You have a force with that unique id but a different name then "${newForce.name}". Import aborted. Edit the uuid in the import or rename/delete the existing Force`);
+                alert(`You have a force with that unique id but a different name than "${newForce.name}". Import aborted. Edit the uuid in the import or rename/delete the existing Force`);
                 return;
             }
             saveForce(newForce);

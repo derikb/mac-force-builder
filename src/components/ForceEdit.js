@@ -8,7 +8,7 @@ import AuxUnitList from './AuxUnitList.js';
 import AuxUnit from '../models/AuxUnit.js';
 import AuxUnitEdit from './AuxUnitEdit.js';
 import BaseElement from './BaseElement.js';
-import { calcMACCost, calcForceCost } from '../CostCalculator.js';
+import { calcForceCost } from '../CostCalculator.js';
 
 export default class ForceEdit extends BaseElement {
     static styles = [
@@ -56,9 +56,7 @@ export default class ForceEdit extends BaseElement {
         ev.preventDefault();
         this.#errors = '';
         const formData = new FormData(ev.target);
-        this.force.name = formData.get('g-name').toString();
-        this.force.player_name = formData.get('g-player_name').toString();
-        this.force.cash = Number(formData.get('g-cash') || 0);
+        this.force.name = formData.get('force-name').toString();
         const newDraftStatus = Number(formData.get('g-draft') || 0) > 0;
         let newCost = 0;
         if (this.force.draft) {
@@ -168,15 +166,9 @@ export default class ForceEdit extends BaseElement {
         <div class="card-body">
             <form @submit="${this.save}" class="mb-4">
                 <div class="row mb-3">
-                    <label for="g-name" class="col-sm-4 col-form-label">Force Name</label>
+                    <label for="force-name" class="col-sm-4 col-form-label">Force Name</label>
                     <div class="col">
-                    <input type="text" id="g-name" name="g-name" class="form-control" value="${this.force.name}" @blur=${this.#dirty} />
-                    </div>
-                </div>
-                <div class="row mb-3">
-                    <label for="g-player_name" class="col-sm-4 col-form-label">Player Name</label>
-                    <div class="col">
-                    <input type="text" id="g-player_name" name="g-player_name" class="form-control" value="${this.force.player_name}" @blur=${this.#dirty} />
+                    <input type="text" id="force-name" name="force-name" class="form-control" value="${this.force.name}" @blur=${this.#dirty} />
                     </div>
                 </div>
                 <div class="row mb-3">

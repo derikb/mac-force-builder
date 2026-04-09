@@ -2,13 +2,13 @@ import { html } from 'lit';
 import BaseElement from './BaseElement.js';
 import { importForces } from '../services/ForceService.js';
 
-export default class GangImport extends BaseElement {
+export default class ForceImport extends BaseElement {
     close () {
         document.querySelector('mac-force-page')?.clearColumns();
         this.remove();
     }
 
-    #importGang (ev) {
+    #importForce (ev) {
         ev.preventDefault();
         const form = ev.target;
         const input_file = form.querySelector('input[type=file]');
@@ -31,9 +31,9 @@ export default class GangImport extends BaseElement {
     }
 
     render () {
-        return html`<h3>Import Gangs</h3>
-        <p>Importing data with identical unique id and name to a Gang you already have saved will overwrite the saved Gang's data.</p>
-        <form id="form_backup_restore" target="_self" @submit=${this.#importGang}>
+        return html`<h3>Import Forces</h3>
+        <p>Importing data with identical unique id and name to a Force you already have saved will overwrite the saved Force's data.</p>
+        <form id="form_backup_restore" target="_self" @submit=${this.#importForce}>
             <div class="row mb-3">
                 <label for="g-files" class="col-sm-4 col-form-label">Restore from File</label>
                 <div class="col">
@@ -55,6 +55,6 @@ export default class GangImport extends BaseElement {
     }
 }
 
-if (!window.customElements.get('mac-gang-import')) {
-    window.customElements.define('mac-gang-import', GangImport);
+if (!window.customElements.get('mac-force-import')) {
+    window.customElements.define('mac-force-import', ForceImport);
 }

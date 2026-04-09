@@ -25,7 +25,6 @@ export default class ForcePrint extends BaseElement {
     render () {
         return html`<div class="d-flex justify-content-between mb-1">
             <div><strong>Force Name</strong> ${this.force.name}</div>
-            <div><strong>Player Name</strong> ${this.force.player_name}</div>
             <div><strong>Points</strong> ${calcForceCost(this.force)}</div>
         </div>
         <div class="mac-list">

@@ -191,7 +191,7 @@ export default class ForcePage extends BaseElement {
         this.#switchToTab(2);
     }
 
-    fillColumn (el, which = 2, title = 'Character') {
+    fillColumn (el, which = 2, title = '') {
         this.clearColumns(which === 2, which === 3);
         this.renderRoot.querySelector(`#col-${which}`)?.append(el);
         this.renderRoot.querySelector(`a[data-col="${which}"]`).innerText = title;
@@ -260,7 +260,7 @@ export default class ForcePage extends BaseElement {
         <div>
             <ul>
                 <li class="active"><a href="#" data-col=1 @click=${this.#changeTab}>Forces</a></li>
-                <li><a href="#" data-col=2 @click=${this.#changeTab}>Character</a></li>
+                <li><a href="#" data-col=2 @click=${this.#changeTab}>MAC</a></li>
                 <li><a href="#" data-col=3 @click=${this.#changeTab}>XXX</a></li>
             </ul>
         </div>
