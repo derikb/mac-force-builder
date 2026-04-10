@@ -1,6 +1,4 @@
 import { html } from 'lit';
-import HardwareDetails from './HardwareDetails.js';
-import { getAllHardware } from '../services/HardwareService.js';
 import BaseElement from './BaseElement.js';
 import { emitter } from '../services/ForceService.js';
 import WeaponDetails from './WeaponDetails.js';
@@ -13,28 +11,18 @@ export default class WeaponAUPane extends BaseElement {
         super();
         this.auxunit = auxunit;
         this.moduleId = moduleId;
-
-        this.handleUpdate = this.#handleUpdate.bind(this);
     }
 
     connectedCallback () {
         super.connectedCallback();
-
-        // @todo think there's a better way to do that
-        emitter.on('auxunit:weapon:update', this.handleUpdate);
     }
 
     disconnectedCallback () {
         super.disconnectedCallback();
-        emitter.off('auxunit:weapon:update', this.handleUpdate);
     }
 
     close () {
         this.getRootNode().host?.clearColumns(false, true);
-    }
-
-    #handleUpdate ({ weapon, auUuid, moduleId }) {
-
     }
 
     render () {

@@ -60,8 +60,6 @@ export default class AuxUnitEdit extends BaseElement {
         this.auxunit.weapons[moduleId] = weapon;
         this.requestUpdate();
         this.#triggerAuxUnitUpdate();
-
-        // @todo update cost (for that one module that makes a difference)
     }
 
     #handleHardwareUpdate ({ auUuid, moduleId, hardware = null }) {
@@ -120,8 +118,9 @@ export default class AuxUnitEdit extends BaseElement {
     }
 
     #createName () {
-        const name = getName();
-        this.renderRoot.querySelector('input[name="c-name"]').value = name;
+        this.auxunit.name = getName();
+        this.requestUpdate();
+        this.#triggerAuxUnitUpdate();
     }
 
     #getTypeOptions () {
@@ -187,9 +186,9 @@ export default class AuxUnitEdit extends BaseElement {
         </div>
 
         <div class="row mb-3 align-items-center">
-            <label for="c-name" class="col-sm-3 col-form-label">Name</label>
+            <label for="auname" class="col-sm-3 col-form-label">Name</label>
             <div class="input-group col-sm-9">
-                <input type="text" id="c-name" name="c-name" class="form-control" value="${this.auxunit.name}" @blur=${this.saveName} />
+                <input type="text" id="auname" name="auname" class="form-control" value="${this.auxunit.name}" @blur=${this.saveName} />
                 <button type="button" class="btn btn-secondary btn-sm" @click=${this.#createName}>Generate Name</button>
             </div>
         </div>

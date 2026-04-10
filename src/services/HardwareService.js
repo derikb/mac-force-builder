@@ -11,8 +11,19 @@ const getHardware = function (id) {
     });
 };
 
-const getAllHardware = function () {
-    return models;
+/**
+ * Get all hardware optionally filtered by mac or au type
+ */
+const getAllHardware = function ({ mac = null, auxunit = null }) {
+    return models.filter((hw) => {
+        if (mac) {
+            return hw.type.includes('M') || hw.type.includes('A');
+        }
+        if (auxunit) {
+            return hw.type.includes(auxunit.type) || hw.type.includes('A');
+        }
+        return true;
+    });
 };
 
 const getHardwareName = function (id) {

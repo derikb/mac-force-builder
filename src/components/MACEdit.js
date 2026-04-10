@@ -54,14 +54,11 @@ export default class MACEdit extends BaseElement {
         }
         const module = this.mac.getModule(moduleId);
         module.name = hardware?.name ?? weapon?.label ?? '';
-        module.type = weapon ? 1 : 0;
         module.hardware_id = hardware?.id ?? 0;
         module.weapon = weapon;
         this.mac.setModule(module);
         this.requestUpdate();
         this.#triggerMacUpdate();
-
-        // @todo update cost (for that one module that makes a difference)
     }
 
     saveName (ev) {
@@ -92,7 +89,9 @@ export default class MACEdit extends BaseElement {
 
     #createName () {
         const name = getName();
-        this.renderRoot.querySelector('input[name="c-name"]').value = name;
+        this.mac.name = getName();
+        this.requestUpdate();
+        this.#triggerMacUpdate();
     }
 
     #getClassOptions () {
@@ -122,9 +121,9 @@ export default class MACEdit extends BaseElement {
         </div>
 
         <div class="row mb-3 align-items-center">
-            <label for="c-name" class="col-sm-3 col-form-label">Name</label>
+            <label for="macname" class="col-sm-3 col-form-label">Name</label>
             <div class="input-group col-sm-9">
-                <input type="text" id="c-name" name="c-name" class="form-control" value="${this.mac.name}" @blur=${this.saveName} />
+                <input type="text" id="macname" name="macname" class="form-control" value="${this.mac.name}" @blur=${this.saveName} />
                 <button type="button" class="btn btn-secondary btn-sm" @click=${this.#createName}>Generate Name</button>
             </div>
         </div>

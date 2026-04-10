@@ -3,7 +3,6 @@ import ForcePage from './components/ForcePage.js';
 import ForceList from './components/ForceList.js';
 import ForcePlay from './components/ForcePlay.js';
 import ForcePrint from './components/ForcePrint.js';
-import Modal from './components/Modal.js';
 import { getForce } from './services/ForceService.js';
 
 const query = new URLSearchParams(window.location.search);
@@ -24,12 +23,6 @@ if (forceId) {
 document.querySelector('header a.btn-help')?.addEventListener('click', (ev) => {
     ev.preventDefault();
 
-    const helpModal = new Modal();
-    document.body.append(helpModal);
-
-    helpModal.hidden = true;
-    helpModal.header = 'About / Help';
     const t = document.getElementById('help-general');
-    helpModal.content = t.innerHTML;
-    helpModal.open();
+    t.showModal();
 });

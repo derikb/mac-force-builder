@@ -22,8 +22,6 @@ export default class HardwareList extends BaseElement {
 
     connectedCallback () {
         super.connectedCallback();
-
-        // @todo think there's a better way to do that
         emitter.on('mac:module:update', this.handleUpdate);
         emitter.on('auxunit:hardware:update', this.handleUpdate);
     }
@@ -64,15 +62,7 @@ export default class HardwareList extends BaseElement {
     }
 
     #getHardwareOptions() {
-        const allHardware = getAllHardware();
-        const filteredHardware = allHardware.filter((hw) => {
-            if (this.mac) {
-                return hw.type.includes('M') || hw.type.includes('A');
-            }
-            if (this.auxunit) {
-                return hw.type.includes(this.auxunit.type) || hw.type.includes('A');
-            }
-        });
+        const filteredHardware = getAllHardware({ mac: this.mac, auxunit: this.auxunit });
         return filteredHardware.map((hw) => {
             return new HardwareDetails({ hardware: hw, selected: hw.id == this.#getCurrentHardwareId(), macUuid: this.mac?.uuid, moduleId: this.moduleId, auUuid: this.auxunit?.uuid });
         });

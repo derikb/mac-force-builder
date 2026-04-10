@@ -34,26 +34,6 @@ label {
     font-weight: normal;
 }
 
-dl.attributes {
-    display: flex;
-    gap: 1rem;
-    margin-bottom: 1rem;
-    align-items: center;
-}
-.align-items-center > dl.attributes {
-    margin-bottom: 0;
-}
-dl.attributes dt {
-    font-weight: bold;
-}
-dl.attributes dd {
-    margin: 0;
-}
-
-.list-group-item dl.attributes {
-    margin-bottom: 0;
-}
-
 p:last-child {
     margin-bottom: 0;
 }
@@ -67,8 +47,6 @@ p.small {
 .align-items-center:has(h3 + div, h3 + button) h3 {
     margin-bottom: 0;
 }
-
-
 `;
 
 const bootstrap = unsafeCSS(bootstrapCss + localCss);

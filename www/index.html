@@ -1,7 +1,8 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
     <head>
         <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>MAC Attack Force Builder</title>
         <link rel="stylesheet" media="screen" href="./style.css" type="text/css" />
         <style>
             body {
@@ -44,6 +45,18 @@
                 font-size: 1.125rem;
             }
 
+            #modal-label {
+                font-weight: bold;
+                font-size: 1.25rem;
+                line-height: 1.75rem;
+                margin: 0rem 0 1.25rem 0;
+            }
+            /* Close button */
+            button.close {
+                float: right;
+                margin: 1rem 0 0 1rem;
+            }
+
             @media(width <= 1000px) {
                 body,
                 html,
@@ -73,13 +86,14 @@
                 <h1>MAC Attack Force Builder</h1>
                 <div class="alert alert-info">Warning: This app is still in beta, please backup frequently.</div>
                 <div>
-                    <a href="#" class="btn-help">About / Help</a>
+                    <a href="#" class="btn-help" command="show-modal" commandfor="help-general">About / Help</a>
                 </div>
             </header>
             <mac-force-page></mac-force-page>
         </div>
         <script type="module" src="./index.js"></script>
-        <template id="help-general">
+        <dialog id="help-general" closedby="any">
+            <h2 id="modal-label">About / Help</h2>
             <div>
                 <h3>About</h3>
                 <p>A web app (coded by me, Derik Badman) for creating forces for <a href="https://chrismcdee.itch.io/mac-attack" target="_blank">MAC Attack</a>, a tabletop miniature game by Chris McDowall.</p>
@@ -90,6 +104,7 @@
                 </ul>
                 <p>You can report any bugs to Derik Badman's email at: first name . last name AT gmail dot com (no spaces, all lower-case).</p>
             </div>
-        </template>
+            <button type="button" class="btn btn-secondary close" command="close" commandfor="help-general">Close</button>
+        </dialog>
     </body>
 </html>

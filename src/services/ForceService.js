@@ -82,7 +82,6 @@ const importForce = function (force_obj) {
         throw new Error(`Data appears to be invalid. Try removing any text that isn't part of the backup (i.e. email introduction).`);
     }
     const newForce = setForceModel(force_obj);
-    // do we have this char uuid already
     const existingForce = getForce(force_obj.uuid);
     if (existingForce && existingForce.name !== '' && existingForce.name !== newForce.name) {
         // existing uuid but different name
@@ -122,6 +121,12 @@ const validateMac = function (mac) {
     return errors;
 };
 
+const validateAuxUnit = function (auxunit) {
+    const errors = [];
+    // @todo validate auxunit
+    return errors;
+};
+
 const validateForce = function (force) {
     let errors = [];
     if (!force.name) {
@@ -130,7 +135,9 @@ const validateForce = function (force) {
     force.macs.forEach((mac) => {
         errors = errors.concat(validateMac(mac));
     });
-    // @todo validate AuxUnits
+    force.aus.forEach((auxunit) => {
+        errors = errors.concat(validateAuxUnit(auxunit));
+    });
     if (errors.length > 0) {
         throw new Error(errors.join('<br/>'));
     }

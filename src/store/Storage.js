@@ -75,11 +75,11 @@ const Storage = {
         const keys = this.getAllKeys();
         const objects = [];
         keys.forEach((key) => {
-            const char_obj = Storage.get(key);
-            if (!char_obj || !char_obj.uuid) {
+            const obj = Storage.get(key);
+            if (!obj || !obj.uuid) {
                 return;
             }
-            objects.push(char_obj);
+            objects.push(obj);
         });
         return objects;
     }

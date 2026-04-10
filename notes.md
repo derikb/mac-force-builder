@@ -58,3 +58,5 @@ TODO:
 - validation of aux stuff
 - add tooltips for modules/hardware?
 - improve name generator to add letter/number combos
+- add weapon name generator
+- add factions
