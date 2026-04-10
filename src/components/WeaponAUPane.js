@@ -21,16 +21,8 @@ export default class WeaponAUPane extends BaseElement {
         super.disconnectedCallback();
     }
 
-    close () {
-        this.getRootNode().host?.clearColumns(false, true);
-    }
-
     render () {
-        return html`<div class="d-flex justify-content-between align-items-center mb-3">
-            <h3>Choose Weapon</h3>
-            <button type="button" class="btn btn-secondary btn-sm" @click=${this.close}>Close</button>
-        </div>
-        <ul class="list-group">
+        return html`<ul class="list-group">
             ${new WeaponDetails({ auxunit: this.auxunit, moduleId: this.moduleId })}
         </ul>`;
     }

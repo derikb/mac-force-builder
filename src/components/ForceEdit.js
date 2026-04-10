@@ -171,15 +171,13 @@ export default class ForceEdit extends BaseElement {
                     <input type="text" id="force-name" name="force-name" class="form-control" value="${this.force.name}" @blur=${this.#dirty} />
                     </div>
                 </div>
-                <div class="row mb-3">
+                ${this.#errors !== '' ? html`<p class="alert alert-danger">${unsafeHTML(this.#errors)}</p>` : ''}
+                ${this.#unsaved ? html`<p class="alert alert-danger">Unsaved Changes</p>` : ''}
+                <div class="d-flex justify-content-between align-items-center mb-3">
                     <label for="g-points" class="col-auto col-form-label">Points</label>
                     <div class="col-sm-2">
                         <input type="text" id="g-points" name="g-points" readonly class="col form-control-plaintext" .value="${calcForceCost(this.force)}" />
                     </div>
-                </div>
-                ${this.#errors !== '' ? html`<p class="alert alert-danger">${unsafeHTML(this.#errors)}</p>` : ''}
-                ${this.#unsaved ? html`<p class="alert alert-danger">Unsaved Changes</p>` : ''}
-                <div class="d-flex justify-content-between align-items-center mb-3">
                     <button type="submit" class="btn btn-primary">Save</button>
                     <div>
                         <button type="button" class="btn btn-danger btn-sm" @click=${this.deleteForce}>Delete</button>

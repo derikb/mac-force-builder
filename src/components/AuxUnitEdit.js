@@ -180,12 +180,7 @@ export default class AuxUnitEdit extends BaseElement {
     }
 
     render () {
-        return html`<div class="d-flex justify-content-between align-items-center mb-3">
-            <h2>Edit AuxUnit</h2>
-            <button type="button" class="btn btn-secondary btn-sm" @click=${this.close}>Close</button>
-        </div>
-
-        <div class="row mb-3 align-items-center">
+        return html`<div class="row mb-3 align-items-center">
             <label for="auname" class="col-sm-3 col-form-label">Name</label>
             <div class="input-group col-sm-9">
                 <input type="text" id="auname" name="auname" class="form-control" value="${this.auxunit.name}" @blur=${this.saveName} />
@@ -225,7 +220,8 @@ export default class AuxUnitEdit extends BaseElement {
                 ${this.#getHardwareFields()}
             </ol>
             <button type="button" class="btn btn-secondary" @click=${this.#addHardware}>Add Hardware</button>
-        </div>`;
+        </div>
+        <button type="button" class="btn btn-secondary btn-sm" @click=${this.close}>Close</button>`;
     }
 }
 

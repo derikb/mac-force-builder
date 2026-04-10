@@ -69,14 +69,11 @@ export default class HardwareList extends BaseElement {
     }
 
     render () {
-        return html`<div class="d-flex justify-content-between align-items-center mb-3">
-            <h3>${this.mac ? 'Choose Weapon/Hardware' : 'Choose Hardware'}</h3>
-            <button type="button" class="btn btn-secondary btn-sm" @click=${this.close}>Close</button>
-        </div>
-        <ul class="list-group">
+        return html`<ul class="list-group">
             ${this.mac ? new WeaponDetails({ mac: this.mac, moduleId: this.moduleId, selected: this.module.weapon }) : ''}
             ${this.#getHardwareOptions()}
-        </ul>`;
+        </ul>
+        <button type="button" class="btn btn-secondary btn-sm mt-3" @click=${this.close}>Close</button>`;
     }
 }
 

@@ -83,7 +83,7 @@ export default class MACEdit extends BaseElement {
         document.querySelector('mac-force-page')?.fillColumn(
             new HardwareList({ mac: this.mac, moduleId }),
             3,
-            'Hardware'
+            'Hardware/Weapons'
         );
     }
 
@@ -115,12 +115,7 @@ export default class MACEdit extends BaseElement {
     }
 
     render () {
-        return html`<div class="d-flex justify-content-between align-items-center mb-3">
-            <h2>Edit Mac</h2>
-            <button type="button" class="btn btn-secondary btn-sm" @click=${this.close}>Close</button>
-        </div>
-
-        <div class="row mb-3 align-items-center">
+        return html`<div class="row mb-3 align-items-center">
             <label for="macname" class="col-sm-3 col-form-label">Name</label>
             <div class="input-group col-sm-9">
                 <input type="text" id="macname" name="macname" class="form-control" value="${this.mac.name}" @blur=${this.saveName} />
@@ -145,7 +140,8 @@ export default class MACEdit extends BaseElement {
             <ol class="list-unstyled">
                 ${this.#getModuleFields()}
             </ol>
-        </div>`;
+        </div>
+        <button type="button" class="btn btn-secondary btn-sm" @click=${this.close}>Close</button>`;
     }
 }
 

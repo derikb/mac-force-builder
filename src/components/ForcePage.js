@@ -66,7 +66,7 @@ export default class ForcePage extends BaseElement {
             border-width: 1px 1px 0px 1px;
             border-radius: .5rem .5rem 0 0;
             background-color: #eee;
-
+            display: flex;
         }
         li.active {
             background-color: white;
@@ -80,6 +80,11 @@ export default class ForcePage extends BaseElement {
             display: inline-block;
             width: 100%;
             color: inherit;
+        }
+        li > a + a {
+            flex: 0 10 auto;
+            border-inline-start: 1px solid grey;
+            border-color: inherit;
         }
         li.active a {
             color: black;
@@ -97,6 +102,10 @@ export default class ForcePage extends BaseElement {
             border-color: transparent;
             color: transparent;
             pointer-events: none;
+        }
+
+        main:has(mac-force-edit) mac-force-list {
+            display: none;
         }
 
         @media(width <= 1000px) {
@@ -175,6 +184,18 @@ export default class ForcePage extends BaseElement {
 
         this.renderRoot.querySelectorAll('main > div').forEach((el) => el.classList.remove('active'));
         column.classList.add('active');
+    }
+
+    #closeTab(ev) {
+        ev.preventDefault();
+        const a = ev.currentTarget;
+        const col = Number(a.dataset.col || 1);
+        if (col === 2) {
+            this.clearColumns(true, true);
+        }
+        if (col === 3) {
+            this.clearColumns(false, true);
+        }
     }
 
     clearColumns (col2 = true, col3 = true) {
@@ -260,8 +281,14 @@ export default class ForcePage extends BaseElement {
         <div>
             <ul>
                 <li class="active"><a href="#" data-col=1 @click=${this.#changeTab}>Forces</a></li>
-                <li><a href="#" data-col=2 @click=${this.#changeTab}>MAC</a></li>
-                <li><a href="#" data-col=3 @click=${this.#changeTab}>XXX</a></li>
+                <li>
+                    <a href="#" data-col=2 @click=${this.#changeTab}>MAC</a>
+                    <a href="#" data-col=2 @click=${this.#closeTab}>X</a>
+                </li>
+                <li>
+                    <a href="#" data-col=3 @click=${this.#changeTab}>XXX</a>
+                    <a href="#" data-col=3 @click=${this.#closeTab}>X</a>
+                </li>
             </ul>
         </div>
     <main>
