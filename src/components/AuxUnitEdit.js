@@ -50,7 +50,7 @@ export default class AuxUnitEdit extends BaseElement {
     }
 
     #triggerAuxUnitUpdate () {
-        emitter.trigger('auxunit:update', { uuid: this.auxunit.uuid, isNew: this.auxunit.isNew });
+        emitter.trigger('auxunit:update', { uuid: this.auxunit.uuid });
     }
 
     #handleWeaponUpdate ({ auUuid, moduleId, weapon }) {

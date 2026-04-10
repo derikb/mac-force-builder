@@ -44,7 +44,7 @@ export default class MACEdit extends BaseElement {
     }
 
     #triggerMacUpdate () {
-        emitter.trigger('mac:update', { uuid: this.mac.uuid, isNew: this.mac.isNew });
+        emitter.trigger('mac:update', { uuid: this.mac.uuid  });
     }
 
     #handleModuleUpdate ({ macUuid, moduleId, type, hardware = null, weapon = null}) {
