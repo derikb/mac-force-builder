@@ -53,5 +53,4 @@ This is a force builder for the **MAC Attack** tabletop miniature game. Key conc
 
 ## Incomplete areas
 
-- `ForcePlay` and `ForcePrint` components exist but are not wired up in `src/index.js`
-- `AuxUnit` weapon/hardware instantiation is commented out
+- `ForcePrint` components exist but are not wired up in `src/index.js`

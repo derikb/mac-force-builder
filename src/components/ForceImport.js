@@ -17,7 +17,7 @@ export default class ForceImport extends BaseElement {
             Array.from(input_file.files).forEach((f) => {
                 const reader = new FileReader();
                 // Closure to capture the file information.
-                reader.onload = ((theFile) => {
+                reader.onload = (() => {
                     return (e) => {
                         importForces(e.target.result);
                     };

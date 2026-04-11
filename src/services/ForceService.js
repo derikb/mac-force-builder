@@ -1,6 +1,8 @@
 import Storage from '../store/Storage.js';
 import EventEmitter from '../models/EventEmitter.js';
 import Force from '../models/Force.js';
+import { getHardware } from './HardwareService.js';
+import AuxUnitTypes from '../data/AuxUnitTypes.js';
 
 const appVersion = '1.0';
 
@@ -123,7 +125,45 @@ const validateMac = function (mac) {
 
 const validateAuxUnit = function (auxunit) {
     const errors = [];
-    // @todo validate auxunit
+    const maxPower = auxunit.type === 'I' ? 1 : 2;
+    const typeName = auxunit.type === 'I' ? 'Infantry' : 'Vehicle';
+
+    const actualWeapons = auxunit.weapons.filter((w) => w?.type);
+    if (actualWeapons.length > 2) {
+        errors.push('Max 2 weapons allowed.');
+    }
+
+    actualWeapons.forEach((w) => {
+        if (w.power > maxPower) {
+            errors.push(`Weapon "${w.label}" exceeds max Power ${maxPower} for ${typeName}.`);
+        }
+    });
+
+    const hwCounts = {};
+    auxunit.hardware.forEach((id) => {
+        if (id == null) { return; }
+        hwCounts[id] = (hwCounts[id] ?? 0) + 1;
+    });
+    Object.entries(hwCounts).forEach(([id, count]) => {
+        if (count > 2) {
+            const hw = getHardware(Number(id));
+            errors.push(`Cannot have more than 2 of "${hw?.name ?? id}".`);
+        }
+    });
+
+    auxunit.hardware.forEach((id) => {
+        if (id == null) { return; }
+        const hw = getHardware(id);
+        if (hw && !hw.type.includes(auxunit.type) && !hw.type.includes('A')) {
+            errors.push(`Hardware "${hw.name}" is not compatible with ${typeName}.`);
+        }
+    });
+
+    const typeData = AuxUnitTypes.find((t) => t.id === auxunit.type);
+    if (typeData && auxunit.units > typeData.maxunits) {
+        errors.push(`${typeData.label} max formation size is ${typeData.maxunits}.`);
+    }
+
     return errors;
 };
 
@@ -218,6 +258,7 @@ export {
     getForce,
     saveForce,
     validateForce,
+    validateAuxUnit,
     removeForceLocal,
     getAllForcesLocal,
     importForce,

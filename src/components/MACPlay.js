@@ -182,17 +182,17 @@ export default class MACPlay extends BaseElement {
 
     #getModuleFields() {
         return [1,2,3,4,5,6].map((id) => {
-        const module = this.mac.getModule(id);
-        return html`<li data-mid="${id}">
-        <div class="input-group">
-            <span class="input-group-text">${id}</span>
-            <span class="input-group-text module-name ${module.destroyed ? 'destroyed' : ''}">${module.label ? module.label : '[Empty]'}</span>
-            <span class="input-group-text">
-                <input class="form-check-input mt-0" type="checkbox" value="1" aria-label="Mark damaged">
-                <input class="form-check-input mt-0 ms-3" type="checkbox" value="${id}" aria-label="Mark destroyed" @click=${this.#markDestroyed}>
-            </span>
-        </div>
-        </li>`;
+            const module = this.mac.getModule(id);
+            return html`<li data-mid="${id}">
+            <div class="input-group">
+                <span class="input-group-text">${id}</span>
+                <span class="input-group-text module-name ${module.destroyed ? 'destroyed' : ''}">${module.label ? module.label : '[Empty]'}</span>
+                <span class="input-group-text">
+                    <input class="form-check-input mt-0" type="checkbox" value="1" aria-label="Mark damaged">
+                    <input class="form-check-input mt-0 ms-3" type="checkbox" value="${id}" aria-label="Mark destroyed" @click=${this.#markDestroyed}>
+                </span>
+            </div>
+            </li>`;
         });
     }
 

@@ -5,25 +5,25 @@ const getClassCost = function (mClass) {
         3: 20,
     };
     return costs[mClass] ?? 0;
-}
+};
 
 /**
  * @param {MAC} mac
  * @param {Force} force
  */
-const calcMACCost = function (mac, force) {
+const calcMACCost = function (mac) {
     if (!mac) {
         return 0;
     }
     let total = getClassCost(mac.mClass);
-    let frameworks = mac.modules.filter((m) => {
+    const frameworks = mac.modules.filter((m) => {
         return m.hardware_id === 15; // frame
-    })
+    });
     total = total - frameworks.length;
     return total;
 };
 
-const calcAuxUnitCost = function (auxunit, force) {
+const calcAuxUnitCost = function (auxunit) {
     if (!auxunit) {
         return 0;
     }

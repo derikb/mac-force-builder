@@ -230,17 +230,16 @@ export default class ForcePage extends BaseElement {
     #showCreate ({ uuid = '' }) {
         this.clearColumns(true, true);
         this.clearFirstColumn();
-        let force = null;
+        let force;
         if (uuid === '') {
-            force = new Force({ cash: 100 });
+            force = new Force({});
         } else {
             force = getForce(uuid);
             if (!force) {
                 return;
             }
         }
-        let form = null;
-        form = new ForceEdit({ force });
+        const form = new ForceEdit({ force });
         this.fillFirstColumn(form);
     }
 

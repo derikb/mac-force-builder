@@ -1,4 +1,4 @@
-import { unsafeCSS, css } from 'lit';
+import { unsafeCSS } from 'lit';
 
 // import bootstrapCss from '../node_modules/bootstrap/dist/css/bootstrap.min.css';
 

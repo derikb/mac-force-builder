@@ -121,10 +121,10 @@ export default class WeaponDetails extends BaseElement {
                     <div class="col-sm-4">
                         <select id="weapon_power" name="weapon_power" class="form-select" ?disabled=${this._isBrawl}>
                             ${this._isBrawl
-                                ? html`<option value="2" selected>2</option>`
-                                : this.#calcWeaponPowerOptions().map((p) => {
-                                    return html`<option value="${p}" ?selected=${this.weapon.power == p}>${p}</option>`;
-                                })
+                                    ? html`<option value="2" selected>2</option>`
+                                    : this.#calcWeaponPowerOptions().map((p) => {
+                                        return html`<option value="${p}" ?selected=${this.weapon.power == p}>${p}</option>`;
+                                    })
                             }
                         </select>
                     </div>

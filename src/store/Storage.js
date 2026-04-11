@@ -22,7 +22,7 @@ const Storage = {
         try {
             const txt = localStorage.getItem(`${this.prefix}${key}`);
             return (txt !== null) ? JSON.parse(txt) : null;
-        } catch (e) {
+        } catch {
             return null;
         }
     },

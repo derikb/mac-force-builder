@@ -36,7 +36,7 @@ export default class HardwareList extends BaseElement {
         this.getRootNode().host?.clearColumns(false, true);
     }
 
-    #handleUpdate ({ hardware, weapon, macUuid, moduleId }) {
+    #handleUpdate ({ hardware, weapon }) {
         this.renderRoot.querySelectorAll('mac-hardware-details, mac-weapon-details').forEach((el) => {
             if (el.tagName === 'MAC-WEAPON-DETAILS') {
                 if (weapon) {

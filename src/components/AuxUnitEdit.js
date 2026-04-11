@@ -1,5 +1,5 @@
 import { html, css } from 'lit';
-import { emitter } from '../services/ForceService.js';
+import { emitter, validateAuxUnit } from '../services/ForceService.js';
 import HardwareList from './HardwareList.js';
 import WeaponAUPane from './WeaponAUPane.js';
 import { calcAuxUnitCost } from '../CostCalculator.js';
@@ -139,17 +139,25 @@ export default class AuxUnitEdit extends BaseElement {
         return options;
     }
 
+    #getErrors() {
+        const errors = validateAuxUnit(this.auxunit);
+        if (errors.length === 0) { return ''; }
+        return html`<ul class="alert alert-danger mb-3">
+            ${errors.map((e) => html`<li>${e}</li>`)}
+        </ul>`;
+    }
+
     #getWeaponFields() {
         const weapons = this.auxunit.weapons;
         return [0, 1].map((id) => {
-        const weapon = weapons[id];
-        return html`<li>
-        <div class="input-group">
-            <span class="input-group-text">${id + 1}</span>
-            <span class="input-group-text module-name">${weapon?.label ?? '[Empty]'}</span>
-            <button type="button" class="btn btn-outline-secondary" data-wid="${id}" @click=${this.showWeapon}>Edit</button>
-        </div>
-        </li>`;
+            const weapon = weapons[id];
+            return html`<li>
+            <div class="input-group">
+                <span class="input-group-text">${id + 1}</span>
+                <span class="input-group-text module-name">${weapon?.label ?? '[Empty]'}</span>
+                <button type="button" class="btn btn-outline-secondary" data-wid="${id}" @click=${this.showWeapon}>Edit</button>
+            </div>
+            </li>`;
         });
     }
 
@@ -207,6 +215,7 @@ export default class AuxUnitEdit extends BaseElement {
             </div>
         </div>
 
+        ${this.#getErrors()}
         <div class="mb-4">
             <h3>Weapons</h3>
             <ol class="list-unstyled">

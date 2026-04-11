@@ -1,17 +1,13 @@
 
 MACS:
-- class 1 (12pt), 2 (16pt), 3 (20pt)
-- 1-Main gun (max class + 1)
-- 2-6  (max 3 of same) (other guns <= class)
-- max 2 brawl weapons must be same
+- Modules:
+  - 1-Main gun (max class + 1)
+  - 2-6  (max 3 of same hardware) (other guns <= class in power)
+  - max 2 brawl weapons must be same
 
-
-
-AU:
-- 1pt + #hardware + weapon class total per unit
-- # in formation
+AuxUnits:
 - 2 max weapons
-- max 2 dupes of same
+- max 2 dupes of same hardware
 - Infantry
   - can have Power 1 weapons
   - formations 1-5 units
@@ -55,7 +51,6 @@ Play info:
 
 
 TODO:
-- validation of aux stuff
 - add tooltips for modules/hardware?
 - improve name generator to add letter/number combos
 - add weapon name generator

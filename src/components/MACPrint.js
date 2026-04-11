@@ -71,17 +71,17 @@ export default class MACPrint extends BaseElement {
 
     #getModuleFields() {
         return [1,2,3,4,5,6].map((id) => {
-        const module = this.mac.getModule(id);
-        return html`<li data-mid="${id}">
-        <div class="input-group">
-            <span class="input-group-text">${id}</span>
-            <span class="input-group-text module-name ${module.destroyed ? 'destroyed' : ''}">${module.label ? module.label : '[Empty]'}</span>
-            <span class="input-group-text">
-                <div class="fill-in-box"></div>
-                <div class="fill-in-box"></div>
-            </span>
-        </div>
-        </li>`;
+            const module = this.mac.getModule(id);
+            return html`<li data-mid="${id}">
+            <div class="input-group">
+                <span class="input-group-text">${id}</span>
+                <span class="input-group-text module-name ${module.destroyed ? 'destroyed' : ''}">${module.label ? module.label : '[Empty]'}</span>
+                <span class="input-group-text">
+                    <div class="fill-in-box"></div>
+                    <div class="fill-in-box"></div>
+                </span>
+            </div>
+            </li>`;
         });
     }
 

@@ -42,12 +42,12 @@ export default class ForceEdit extends BaseElement {
         emitter.off('auxunit:update', this.auUpdateHandler);
     }
 
-    #macUpdated ({ uuid = '' }) {
+    #macUpdated () {
         this.#unsaved = true;
         this.requestUpdate();
     }
 
-    #auUpdated ({ uuid = '' }) {
+    #auUpdated () {
         this.#unsaved = true;
         this.requestUpdate();
     }
@@ -57,21 +57,10 @@ export default class ForceEdit extends BaseElement {
         this.#errors = '';
         const formData = new FormData(ev.target);
         this.force.name = formData.get('force-name').toString();
-        const newDraftStatus = Number(formData.get('g-draft') || 0) > 0;
-        let newCost = 0;
-        if (this.force.draft) {
-            newCost = calcForceCost(this.force);
-        } else {
-        }
         try {
             // Confirm new cost won't mean cash goes below zero
             // And a few other things.
-            validateForce(this.force, newCost);
-            // If validation passes now we can adjust draft/cash values.
-            this.force.draft = newDraftStatus;
-            if (!this.force.draft) {
-                this.force.cash = this.force.cash - newCost;
-            }
+            validateForce(this.force);
             saveForce(this.force);
             this.#unsaved = false;
         } catch (err) {

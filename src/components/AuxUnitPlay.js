@@ -177,11 +177,11 @@ export default class AuxUnitPlay extends BaseElement {
 
     #getWeapons() {
         return this.auxunit.weapons.map((weapon) => {
-        return html`<li>
-        <div class="input-group">
-            <span class="input-group-text module-name">${weapon.label}</span>
-        </div>
-        </li>`;
+            return html`<li>
+            <div class="input-group">
+                <span class="input-group-text module-name">${weapon.label}</span>
+            </div>
+            </li>`;
         });
     }
 
@@ -191,11 +191,11 @@ export default class AuxUnitPlay extends BaseElement {
             if (!hardware) {
                 return '';
             }
-        return html`<li>
-        <div class="input-group">
-            <span class="input-group-text module-name">${hardware.name}</span>
-        </div>
-        </li>`;
+            return html`<li>
+            <div class="input-group">
+                <span class="input-group-text module-name">${hardware.name}</span>
+            </div>
+            </li>`;
         });
     }
 
@@ -212,8 +212,8 @@ export default class AuxUnitPlay extends BaseElement {
     #getUnitType() {
         const type = AuxUnitTypes.find((el) => {
             return el.id === this.auxunit.type;
-        })
-        return type?.label ?? '--'
+        });
+        return type?.label ?? '--';
     }
 
     render () {

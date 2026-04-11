@@ -198,10 +198,10 @@ export default class ForcePlay extends BaseElement {
         </div>
         <div class="tabs">
             <ul>
-                ${this.force.macs.map((mac, i) => {
+                ${this.force.macs.map((mac) => {
                     return html`<li class="${this.activeTab == mac.uuid ? 'active' : ''}"><a href="#" data-col=${mac.uuid} @click=${this.#changeTab}>${this.#renderTabTitle(mac)}</a></li>`;
                 })}
-                ${this.force.aus.map((au, i) => {
+                ${this.force.aus.map((au) => {
                     return html`<li class="${this.activeTab == au.uuid ? 'active' : ''}"><a href="#" data-col="${au.uuid}" @click=${this.#changeTab}>${this.#renderTabTitle(au)}</a></li>`;
                 })}
             </ul>

@@ -24,7 +24,7 @@ export default class ForceExport extends BaseElement {
         this.remove();
     }
 
-    #handleFileLink (ev) {
+    #handleFileLink () {
         setTimeout(() => {
             window.URL.revokeObjectURL(this.#fileLink);
             this.close();

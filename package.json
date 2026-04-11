@@ -8,7 +8,8 @@
     "serve": "",
     "start": "esbuild --serve=8087 --servedir=./www ./src/index.js --outdir=./www --loader:.svg=dataurl --loader:.html=file --bundle",
     "build": "esbuild ./src/index.js --outdir=./www --loader:.svg=dataurl --loader:.html=file --minify --sourcemap --bundle",
-    "release": "commit-and-tag-version -a"
+    "release": "commit-and-tag-version -a",
+    "lint": "eslint"
   },
   "author": "Derik A Badman",
   "license": "ISC",
@@ -17,10 +18,11 @@
     "rpg-table-randomizer": "^1.5.2"
   },
   "devDependencies": {
-    "@stylistic/eslint-plugin-js": "^4.4.1",
+    "@eslint/js": "^10.0.1",
+    "@stylistic/eslint-plugin": "^5.10.0",
     "bootstrap": "^5.3.8",
-    "esbuild": "^0.27.4",
-    "eslint": "^10.1.0",
+    "esbuild": "^0.28.0",
+    "eslint": "^10.2.0",
     "globals": "^17.4.0"
   }
 }

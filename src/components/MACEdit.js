@@ -47,7 +47,7 @@ export default class MACEdit extends BaseElement {
         emitter.trigger('mac:update', { uuid: this.mac.uuid  });
     }
 
-    #handleModuleUpdate ({ macUuid, moduleId, type, hardware = null, weapon = null}) {
+    #handleModuleUpdate ({ macUuid, moduleId, hardware = null, weapon = null}) {
         console.log(arguments);
         if (macUuid !== this.mac.uuid) {
             return;
@@ -88,7 +88,6 @@ export default class MACEdit extends BaseElement {
     }
 
     #createName () {
-        const name = getName();
         this.mac.name = getName();
         this.requestUpdate();
         this.#triggerMacUpdate();
@@ -103,14 +102,14 @@ export default class MACEdit extends BaseElement {
 
     #getModuleFields() {
         return [1,2,3,4,5,6].map((id) => {
-        const module = this.mac.getModule(id);
-        return html`<li>
-        <div class="input-group">
-            <span class="input-group-text">${id}</span>
-            <span class="input-group-text module-name">${module.label ? module.label : '[Empty]'}</span>
-            <button type="button" class="btn btn-outline-secondary" data-mid="${id}" @click=${this.showHardware}>Edit</button>
-        </div>
-        </li>`;
+            const module = this.mac.getModule(id);
+            return html`<li>
+            <div class="input-group">
+                <span class="input-group-text">${id}</span>
+                <span class="input-group-text module-name">${module.label ? module.label : '[Empty]'}</span>
+                <button type="button" class="btn btn-outline-secondary" data-mid="${id}" @click=${this.showHardware}>Edit</button>
+            </div>
+            </li>`;
         });
     }
 

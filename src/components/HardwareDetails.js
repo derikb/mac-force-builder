@@ -35,7 +35,7 @@ export default class HardwareDetails extends BaseElement {
         this.moduleId = moduleId;
     }
 
-    handleSelect (ev) {
+    handleSelect () {
         if (this.macUuid) {
             emitter.trigger('mac:module:update', { hardware: this.hardware, macUuid: this.macUuid, moduleId: this.moduleId });
         }
