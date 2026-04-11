@@ -10,61 +10,11 @@ export default class AuxUnitPrint extends BaseElement {
             border: 2px solid black;
             padding: 1rem;
         }
-        .grid-col-2 {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 1rem;
-            margin-bottom: .5rem;
-        }
-    dl {
-        margin:0;
-        padding: 0;
-    }
-    dl.attributes {
-        display: grid;
-        grid-template-columns: 1fr 1fr 4fr;
-        gap: .5rem;
-        align-items: top;
-    }
-    dl.attributes dt {
-        font-weight: bold;
-    }
-    dl.attributes dd {
-        margin: 0;
-        grid-column: 2 / span 2
-    }
-    #attr-luck, #attr-handed {
-        grid-column: 2;
-    }
-    #attr-luck-check {
-        grid-column: 3;
-        grid-row: span 2;
-
-    }
-
 
     input[type="checkbox"] {
         margin-inline: 1px;
     }
 
-    table.weapons {
-        border: 1px solid black;
-        border-collapse: collapse;
-        width: 100%;
-        text-align: left;
-        margin-bottom: .5rem;
-    }
-    table.weapons th, table.weapons td{
-        border: 1px solid black;
-        padding: 0 .25rem;
-    }
-
-    h3 {
-        font-size: 1rem;
-        margin: 0;
-        padding: 0;
-        margin-bottom: .5rem;
-    }
     ul, ol { margin: 0; padding: 0; }
     li { margin: 0; padding: 0; margin-left: 1rem;}
 
@@ -74,22 +24,6 @@ export default class AuxUnitPrint extends BaseElement {
         width: 1.5rem;
         border: 1px solid black;
         text-align: center;
-    }
-
-    .small { font-size: .8rem; }
-
-    .hit-locations {
-        display: grid;
-        grid-template-columns: 1fr 1fr 5fr;
-        gap: .5rem;
-        align-items: center;
-    }
-    .location {
-        white-space: nowrap;
-    }
-
-    .equipment-list:has(ul:empty) h3 {
-        display: none;
     }
     `
     ];
@@ -146,7 +80,7 @@ export default class AuxUnitPrint extends BaseElement {
     }
 
     render () {
-        return html`<div class="grid-col-2">
+        return html`<div>
             <div class="row mb-3 align-items-center">
                 <div class="input-group">
                     <span class="input-group-text"><strong>Type</strong></span>

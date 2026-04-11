@@ -37,13 +37,6 @@ export default class MACPrint extends BaseElement {
             flex: 1 1 auto;
         }
 
-        .grid-col-2 {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 1rem;
-            margin-bottom: .5rem;
-        }
-
     .fill-in-box {
         display: inline-block;
         height: 1.5rem;

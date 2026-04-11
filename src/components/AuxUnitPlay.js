@@ -11,12 +11,7 @@ export default class AuxUnitPlay extends BaseElement {
         :host {
             padding: 0;
         }
-        .grid-col-2 {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 1rem;
-            margin-bottom: .5rem;
-        }
+
     .module-list li {
         margin: 0;
     }
@@ -25,10 +20,6 @@ export default class AuxUnitPlay extends BaseElement {
     }
     .module-name.destroyed {
         text-decoration: line-through;
-    }
-
-    label {
-        font-weight: bold;
     }
 
     .input-group {
@@ -40,110 +31,26 @@ export default class AuxUnitPlay extends BaseElement {
         flex: 0 1 auto;
     }
 
-    dl {
-        margin:0;
-        padding: 0;
-    }
-    dl.attributes {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: .5rem;
-        align-items: center;
-    }
-    dl.attributes dt {
-        font-weight: bold;
-    }
-    dl.attributes dd {
-        margin: 0;
-    }
-    #attr-luck-check, dl.attributes hr {
-        grid-column: span 2;
-    }
-    dl.attributes hr {
-        margin: 0.25rem 0;
-    }
-
     input[type="checkbox"] {
         font-size: 2rem;
         height: 2rem;
         width: 2rem;
     }
 
-    table.weapons {
-        border: 1px solid black;
-        border-collapse: collapse;
-        width: 100%;
-        text-align: left;
-        margin-bottom: .5rem;
-    }
-    table.weapons th, table.weapons td{
-        border: 1px solid black;
-        padding: 0 .25rem;
-    }
-
-    h3 {
-        font-size: 1rem;
-        margin: 0;
-        padding: 0;
-        margin-bottom: .5rem;
-    }
     ul, ol { margin: 0; padding: 0; }
     li { margin: 0; padding: 0; margin-left: 1rem;}
 
-    .fill-in-box {
-        display: inline-block;
-        height: 2rem;
-        width: 2rem;
-        border: 1px solid black;
-        text-align: center;
-        font-size: 1.5rem;
-        line-height: 2rem;
-        border-radius: 1rem;
-    }
-
-    input[type="number"] {
-        width: 100%;
-        height: 2rem;
-        font-size: 1.5rem;
-        border: 1px solid black;
-        text-align: center;
-        border-radius: 5px;
-        max-width: 10rem;
-    }
-
-    .small { font-size: .8rem; }
-
-    .hit-locations {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: .25rem;
-        align-items: center;
-    }
-    .location {
-        white-space: nowrap;
-    }
-    .location strong {
-        font-size: 1.25rem;
-    }
-    .hit-locations .small {
-        grid-column: span 2;
-        padding-left: .25rem;
-        text-align: right;
-    }
-    .hit-locations .small.highlight {
-        color: red;
-    }
-    .hit-locations .wounds {
-        text-align: right;
-    }
-
-    .equipment-list:has(ul:empty) h3 {
-        display: none;
-    }
-
-    .boxes-checks {
-        gap: 1rem;
-        flex-wrap: wrap;
+    [popover] {
+        inset: unset;
+        margin: 0;
+        margin-inline-end: 4px;
+        position-area: left center;
+        border: 1px solid #ccc;
+        border-radius: .375rem;
+        padding: .5rem .75rem;
+        max-width: 20rem;
+        box-shadow: 0 4px 12px rgba(0,0,0,.15);
+        font-size: .875rem;
     }
     `
     ];
@@ -186,14 +93,19 @@ export default class AuxUnitPlay extends BaseElement {
     }
 
     #getHardware() {
-        return this.auxunit.hardware.map((id) => {
+        return this.auxunit.hardware.map((id, index) => {
             const hardware = getHardware(id);
             if (!hardware) {
                 return '';
             }
+            const popoverId = `au-${this.auxunit.uuid}-hw-${index}-popover`;
             return html`<li>
             <div class="input-group">
                 <span class="input-group-text module-name">${hardware.name}</span>
+                ${hardware.description ? html`
+                    <button class="btn btn-outline-secondary px-4" type="button" popovertarget="${popoverId}" style="anchor-name: --${popoverId}" aria-label="Show ${hardware.name} description">?</button>
+                    <div id="${popoverId}" popover style="position-anchor: --${popoverId}">${hardware.description}</div>
+                ` : ''}
             </div>
             </li>`;
         });
@@ -217,7 +129,7 @@ export default class AuxUnitPlay extends BaseElement {
     }
 
     render () {
-        return html`<div class="grid-col-2">
+        return html`<div>
             <div class="row mb-3 align-items-center">
                 <div class="input-group">
                     <span class="input-group-text"><strong>Type</strong></span>
