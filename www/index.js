@@ -1,6 +1,6 @@
-(()=>{var ht=globalThis,vt=ht.ShadowRoot&&(ht.ShadyCSS===void 0||ht.ShadyCSS.nativeShadow)&&"adoptedStyleSheets"in Document.prototype&&"replace"in CSSStyleSheet.prototype,Ct=Symbol(),Yt=new WeakMap,at=class{constructor(t,r,o){if(this._$cssResult$=!0,o!==Ct)throw Error("CSSResult is not constructable. Use `unsafeCSS` or `css` instead.");this.cssText=t,this.t=r}get styleSheet(){let t=this.o,r=this.t;if(vt&&t===void 0){let o=r!==void 0&&r.length===1;o&&(t=Yt.get(r)),t===void 0&&((this.o=t=new CSSStyleSheet).replaceSync(this.cssText),o&&Yt.set(r,t))}return t}toString(){return this.cssText}},xt=e=>new at(typeof e=="string"?e:e+"",void 0,Ct),p=(e,...t)=>{let r=e.length===1?e[0]:t.reduce((o,a,i)=>o+(n=>{if(n._$cssResult$===!0)return n.cssText;if(typeof n=="number")return n;throw Error("Value passed to 'css' function must be a 'css' function result: "+n+". Use 'unsafeCSS' to pass non-literal values, but take care to ensure page security.")})(a)+e[i+1],e[0]);return new at(r,e,Ct)},Kt=(e,t)=>{if(vt)e.adoptedStyleSheets=t.map(r=>r instanceof CSSStyleSheet?r:r.styleSheet);else for(let r of t){let o=document.createElement("style"),a=ht.litNonce;a!==void 0&&o.setAttribute("nonce",a),o.textContent=r.cssText,e.appendChild(o)}},jt=vt?e=>e:e=>e instanceof CSSStyleSheet?(t=>{let r="";for(let o of t.cssRules)r+=o.cssText;return xt(r)})(e):e;var{is:Tr,defineProperty:Ir,getOwnPropertyDescriptor:Nr,getOwnPropertyNames:Hr,getOwnPropertySymbols:Lr,getPrototypeOf:Pr}=Object,wt=globalThis,Qt=wt.trustedTypes,qr=Qt?Qt.emptyScript:"",Fr=wt.reactiveElementPolyfillSupport,it=(e,t)=>e,St={toAttribute(e,t){switch(t){case Boolean:e=e?qr:null;break;case Object:case Array:e=e==null?e:JSON.stringify(e)}return e},fromAttribute(e,t){let r=e;switch(t){case Boolean:r=e!==null;break;case Number:r=e===null?null:Number(e);break;case Object:case Array:try{r=JSON.parse(e)}catch{r=null}}return r}},tr=(e,t)=>!Tr(e,t),Zt={attribute:!0,type:String,converter:St,reflect:!1,useDefault:!1,hasChanged:tr};Symbol.metadata??=Symbol("metadata"),wt.litPropertyMetadata??=new WeakMap;var w=class extends HTMLElement{static addInitializer(t){this._$Ei(),(this.l??=[]).push(t)}static get observedAttributes(){return this.finalize(),this._$Eh&&[...this._$Eh.keys()]}static createProperty(t,r=Zt){if(r.state&&(r.attribute=!1),this._$Ei(),this.prototype.hasOwnProperty(t)&&((r=Object.create(r)).wrapped=!0),this.elementProperties.set(t,r),!r.noAccessor){let o=Symbol(),a=this.getPropertyDescriptor(t,o,r);a!==void 0&&Ir(this.prototype,t,a)}}static getPropertyDescriptor(t,r,o){let{get:a,set:i}=Nr(this.prototype,t)??{get(){return this[r]},set(n){this[r]=n}};return{get:a,set(n){let d=a?.call(this);i?.call(this,n),this.requestUpdate(t,d,o)},configurable:!0,enumerable:!0}}static getPropertyOptions(t){return this.elementProperties.get(t)??Zt}static _$Ei(){if(this.hasOwnProperty(it("elementProperties")))return;let t=Pr(this);t.finalize(),t.l!==void 0&&(this.l=[...t.l]),this.elementProperties=new Map(t.elementProperties)}static finalize(){if(this.hasOwnProperty(it("finalized")))return;if(this.finalized=!0,this._$Ei(),this.hasOwnProperty(it("properties"))){let r=this.properties,o=[...Hr(r),...Lr(r)];for(let a of o)this.createProperty(a,r[a])}let t=this[Symbol.metadata];if(t!==null){let r=litPropertyMetadata.get(t);if(r!==void 0)for(let[o,a]of r)this.elementProperties.set(o,a)}this._$Eh=new Map;for(let[r,o]of this.elementProperties){let a=this._$Eu(r,o);a!==void 0&&this._$Eh.set(a,r)}this.elementStyles=this.finalizeStyles(this.styles)}static finalizeStyles(t){let r=[];if(Array.isArray(t)){let o=new Set(t.flat(1/0).reverse());for(let a of o)r.unshift(jt(a))}else t!==void 0&&r.push(jt(t));return r}static _$Eu(t,r){let o=r.attribute;return o===!1?void 0:typeof o=="string"?o:typeof t=="string"?t.toLowerCase():void 0}constructor(){super(),this._$Ep=void 0,this.isUpdatePending=!1,this.hasUpdated=!1,this._$Em=null,this._$Ev()}_$Ev(){this._$ES=new Promise(t=>this.enableUpdating=t),this._$AL=new Map,this._$E_(),this.requestUpdate(),this.constructor.l?.forEach(t=>t(this))}addController(t){(this._$EO??=new Set).add(t),this.renderRoot!==void 0&&this.isConnected&&t.hostConnected?.()}removeController(t){this._$EO?.delete(t)}_$E_(){let t=new Map,r=this.constructor.elementProperties;for(let o of r.keys())this.hasOwnProperty(o)&&(t.set(o,this[o]),delete this[o]);t.size>0&&(this._$Ep=t)}createRenderRoot(){let t=this.shadowRoot??this.attachShadow(this.constructor.shadowRootOptions);return Kt(t,this.constructor.elementStyles),t}connectedCallback(){this.renderRoot??=this.createRenderRoot(),this.enableUpdating(!0),this._$EO?.forEach(t=>t.hostConnected?.())}enableUpdating(t){}disconnectedCallback(){this._$EO?.forEach(t=>t.hostDisconnected?.())}attributeChangedCallback(t,r,o){this._$AK(t,o)}_$ET(t,r){let o=this.constructor.elementProperties.get(t),a=this.constructor._$Eu(t,o);if(a!==void 0&&o.reflect===!0){let i=(o.converter?.toAttribute!==void 0?o.converter:St).toAttribute(r,o.type);this._$Em=t,i==null?this.removeAttribute(a):this.setAttribute(a,i),this._$Em=null}}_$AK(t,r){let o=this.constructor,a=o._$Eh.get(t);if(a!==void 0&&this._$Em!==a){let i=o.getPropertyOptions(a),n=typeof i.converter=="function"?{fromAttribute:i.converter}:i.converter?.fromAttribute!==void 0?i.converter:St;this._$Em=a;let d=n.fromAttribute(r,i.type);this[a]=d??this._$Ej?.get(a)??d,this._$Em=null}}requestUpdate(t,r,o,a=!1,i){if(t!==void 0){let n=this.constructor;if(a===!1&&(i=this[t]),o??=n.getPropertyOptions(t),!((o.hasChanged??tr)(i,r)||o.useDefault&&o.reflect&&i===this._$Ej?.get(t)&&!this.hasAttribute(n._$Eu(t,o))))return;this.C(t,r,o)}this.isUpdatePending===!1&&(this._$ES=this._$EP())}C(t,r,{useDefault:o,reflect:a,wrapped:i},n){o&&!(this._$Ej??=new Map).has(t)&&(this._$Ej.set(t,n??r??this[t]),i!==!0||n!==void 0)||(this._$AL.has(t)||(this.hasUpdated||o||(r=void 0),this._$AL.set(t,r)),a===!0&&this._$Em!==t&&(this._$Eq??=new Set).add(t))}async _$EP(){this.isUpdatePending=!0;try{await this._$ES}catch(r){Promise.reject(r)}let t=this.scheduleUpdate();return t!=null&&await t,!this.isUpdatePending}scheduleUpdate(){return this.performUpdate()}performUpdate(){if(!this.isUpdatePending)return;if(!this.hasUpdated){if(this.renderRoot??=this.createRenderRoot(),this._$Ep){for(let[a,i]of this._$Ep)this[a]=i;this._$Ep=void 0}let o=this.constructor.elementProperties;if(o.size>0)for(let[a,i]of o){let{wrapped:n}=i,d=this[a];n!==!0||this._$AL.has(a)||d===void 0||this.C(a,void 0,i,d)}}let t=!1,r=this._$AL;try{t=this.shouldUpdate(r),t?(this.willUpdate(r),this._$EO?.forEach(o=>o.hostUpdate?.()),this.update(r)):this._$EM()}catch(o){throw t=!1,this._$EM(),o}t&&this._$AE(r)}willUpdate(t){}_$AE(t){this._$EO?.forEach(r=>r.hostUpdated?.()),this.hasUpdated||(this.hasUpdated=!0,this.firstUpdated(t)),this.updated(t)}_$EM(){this._$AL=new Map,this.isUpdatePending=!1}get updateComplete(){return this.getUpdateComplete()}getUpdateComplete(){return this._$ES}shouldUpdate(t){return!0}update(t){this._$Eq&&=this._$Eq.forEach(r=>this._$ET(r,this[r])),this._$EM()}updated(t){}firstUpdated(t){}};w.elementStyles=[],w.shadowRootOptions={mode:"open"},w[it("elementProperties")]=new Map,w[it("finalized")]=new Map,Fr?.({ReactiveElement:w}),(wt.reactiveElementVersions??=[]).push("2.1.2");var Nt=globalThis,rr=e=>e,yt=Nt.trustedTypes,or=yt?yt.createPolicy("lit-html",{createHTML:e=>e}):void 0,lr="$lit$",z=`lit$${Math.random().toFixed(9).slice(2)}$`,dr="?"+z,Dr=`<${dr}>`,B=document,st=()=>B.createComment(""),lt=e=>e===null||typeof e!="object"&&typeof e!="function",Ht=Array.isArray,Or=e=>Ht(e)||typeof e?.[Symbol.iterator]=="function",Ut=`[ 	
+(()=>{var ht=globalThis,vt=ht.ShadowRoot&&(ht.ShadyCSS===void 0||ht.ShadyCSS.nativeShadow)&&"adoptedStyleSheets"in Document.prototype&&"replace"in CSSStyleSheet.prototype,Ct=Symbol(),Yt=new WeakMap,at=class{constructor(t,r,o){if(this._$cssResult$=!0,o!==Ct)throw Error("CSSResult is not constructable. Use `unsafeCSS` or `css` instead.");this.cssText=t,this.t=r}get styleSheet(){let t=this.o,r=this.t;if(vt&&t===void 0){let o=r!==void 0&&r.length===1;o&&(t=Yt.get(r)),t===void 0&&((this.o=t=new CSSStyleSheet).replaceSync(this.cssText),o&&Yt.set(r,t))}return t}toString(){return this.cssText}},xt=e=>new at(typeof e=="string"?e:e+"",void 0,Ct),p=(e,...t)=>{let r=e.length===1?e[0]:t.reduce((o,a,i)=>o+(n=>{if(n._$cssResult$===!0)return n.cssText;if(typeof n=="number")return n;throw Error("Value passed to 'css' function must be a 'css' function result: "+n+". Use 'unsafeCSS' to pass non-literal values, but take care to ensure page security.")})(a)+e[i+1],e[0]);return new at(r,e,Ct)},Kt=(e,t)=>{if(vt)e.adoptedStyleSheets=t.map(r=>r instanceof CSSStyleSheet?r:r.styleSheet);else for(let r of t){let o=document.createElement("style"),a=ht.litNonce;a!==void 0&&o.setAttribute("nonce",a),o.textContent=r.cssText,e.appendChild(o)}},jt=vt?e=>e:e=>e instanceof CSSStyleSheet?(t=>{let r="";for(let o of t.cssRules)r+=o.cssText;return xt(r)})(e):e;var{is:Tr,defineProperty:Ir,getOwnPropertyDescriptor:Nr,getOwnPropertyNames:Hr,getOwnPropertySymbols:Lr,getPrototypeOf:Pr}=Object,wt=globalThis,Qt=wt.trustedTypes,Fr=Qt?Qt.emptyScript:"",Dr=wt.reactiveElementPolyfillSupport,it=(e,t)=>e,St={toAttribute(e,t){switch(t){case Boolean:e=e?Fr:null;break;case Object:case Array:e=e==null?e:JSON.stringify(e)}return e},fromAttribute(e,t){let r=e;switch(t){case Boolean:r=e!==null;break;case Number:r=e===null?null:Number(e);break;case Object:case Array:try{r=JSON.parse(e)}catch{r=null}}return r}},tr=(e,t)=>!Tr(e,t),Zt={attribute:!0,type:String,converter:St,reflect:!1,useDefault:!1,hasChanged:tr};Symbol.metadata??=Symbol("metadata"),wt.litPropertyMetadata??=new WeakMap;var y=class extends HTMLElement{static addInitializer(t){this._$Ei(),(this.l??=[]).push(t)}static get observedAttributes(){return this.finalize(),this._$Eh&&[...this._$Eh.keys()]}static createProperty(t,r=Zt){if(r.state&&(r.attribute=!1),this._$Ei(),this.prototype.hasOwnProperty(t)&&((r=Object.create(r)).wrapped=!0),this.elementProperties.set(t,r),!r.noAccessor){let o=Symbol(),a=this.getPropertyDescriptor(t,o,r);a!==void 0&&Ir(this.prototype,t,a)}}static getPropertyDescriptor(t,r,o){let{get:a,set:i}=Nr(this.prototype,t)??{get(){return this[r]},set(n){this[r]=n}};return{get:a,set(n){let d=a?.call(this);i?.call(this,n),this.requestUpdate(t,d,o)},configurable:!0,enumerable:!0}}static getPropertyOptions(t){return this.elementProperties.get(t)??Zt}static _$Ei(){if(this.hasOwnProperty(it("elementProperties")))return;let t=Pr(this);t.finalize(),t.l!==void 0&&(this.l=[...t.l]),this.elementProperties=new Map(t.elementProperties)}static finalize(){if(this.hasOwnProperty(it("finalized")))return;if(this.finalized=!0,this._$Ei(),this.hasOwnProperty(it("properties"))){let r=this.properties,o=[...Hr(r),...Lr(r)];for(let a of o)this.createProperty(a,r[a])}let t=this[Symbol.metadata];if(t!==null){let r=litPropertyMetadata.get(t);if(r!==void 0)for(let[o,a]of r)this.elementProperties.set(o,a)}this._$Eh=new Map;for(let[r,o]of this.elementProperties){let a=this._$Eu(r,o);a!==void 0&&this._$Eh.set(a,r)}this.elementStyles=this.finalizeStyles(this.styles)}static finalizeStyles(t){let r=[];if(Array.isArray(t)){let o=new Set(t.flat(1/0).reverse());for(let a of o)r.unshift(jt(a))}else t!==void 0&&r.push(jt(t));return r}static _$Eu(t,r){let o=r.attribute;return o===!1?void 0:typeof o=="string"?o:typeof t=="string"?t.toLowerCase():void 0}constructor(){super(),this._$Ep=void 0,this.isUpdatePending=!1,this.hasUpdated=!1,this._$Em=null,this._$Ev()}_$Ev(){this._$ES=new Promise(t=>this.enableUpdating=t),this._$AL=new Map,this._$E_(),this.requestUpdate(),this.constructor.l?.forEach(t=>t(this))}addController(t){(this._$EO??=new Set).add(t),this.renderRoot!==void 0&&this.isConnected&&t.hostConnected?.()}removeController(t){this._$EO?.delete(t)}_$E_(){let t=new Map,r=this.constructor.elementProperties;for(let o of r.keys())this.hasOwnProperty(o)&&(t.set(o,this[o]),delete this[o]);t.size>0&&(this._$Ep=t)}createRenderRoot(){let t=this.shadowRoot??this.attachShadow(this.constructor.shadowRootOptions);return Kt(t,this.constructor.elementStyles),t}connectedCallback(){this.renderRoot??=this.createRenderRoot(),this.enableUpdating(!0),this._$EO?.forEach(t=>t.hostConnected?.())}enableUpdating(t){}disconnectedCallback(){this._$EO?.forEach(t=>t.hostDisconnected?.())}attributeChangedCallback(t,r,o){this._$AK(t,o)}_$ET(t,r){let o=this.constructor.elementProperties.get(t),a=this.constructor._$Eu(t,o);if(a!==void 0&&o.reflect===!0){let i=(o.converter?.toAttribute!==void 0?o.converter:St).toAttribute(r,o.type);this._$Em=t,i==null?this.removeAttribute(a):this.setAttribute(a,i),this._$Em=null}}_$AK(t,r){let o=this.constructor,a=o._$Eh.get(t);if(a!==void 0&&this._$Em!==a){let i=o.getPropertyOptions(a),n=typeof i.converter=="function"?{fromAttribute:i.converter}:i.converter?.fromAttribute!==void 0?i.converter:St;this._$Em=a;let d=n.fromAttribute(r,i.type);this[a]=d??this._$Ej?.get(a)??d,this._$Em=null}}requestUpdate(t,r,o,a=!1,i){if(t!==void 0){let n=this.constructor;if(a===!1&&(i=this[t]),o??=n.getPropertyOptions(t),!((o.hasChanged??tr)(i,r)||o.useDefault&&o.reflect&&i===this._$Ej?.get(t)&&!this.hasAttribute(n._$Eu(t,o))))return;this.C(t,r,o)}this.isUpdatePending===!1&&(this._$ES=this._$EP())}C(t,r,{useDefault:o,reflect:a,wrapped:i},n){o&&!(this._$Ej??=new Map).has(t)&&(this._$Ej.set(t,n??r??this[t]),i!==!0||n!==void 0)||(this._$AL.has(t)||(this.hasUpdated||o||(r=void 0),this._$AL.set(t,r)),a===!0&&this._$Em!==t&&(this._$Eq??=new Set).add(t))}async _$EP(){this.isUpdatePending=!0;try{await this._$ES}catch(r){Promise.reject(r)}let t=this.scheduleUpdate();return t!=null&&await t,!this.isUpdatePending}scheduleUpdate(){return this.performUpdate()}performUpdate(){if(!this.isUpdatePending)return;if(!this.hasUpdated){if(this.renderRoot??=this.createRenderRoot(),this._$Ep){for(let[a,i]of this._$Ep)this[a]=i;this._$Ep=void 0}let o=this.constructor.elementProperties;if(o.size>0)for(let[a,i]of o){let{wrapped:n}=i,d=this[a];n!==!0||this._$AL.has(a)||d===void 0||this.C(a,void 0,i,d)}}let t=!1,r=this._$AL;try{t=this.shouldUpdate(r),t?(this.willUpdate(r),this._$EO?.forEach(o=>o.hostUpdate?.()),this.update(r)):this._$EM()}catch(o){throw t=!1,this._$EM(),o}t&&this._$AE(r)}willUpdate(t){}_$AE(t){this._$EO?.forEach(r=>r.hostUpdated?.()),this.hasUpdated||(this.hasUpdated=!0,this.firstUpdated(t)),this.updated(t)}_$EM(){this._$AL=new Map,this.isUpdatePending=!1}get updateComplete(){return this.getUpdateComplete()}getUpdateComplete(){return this._$ES}shouldUpdate(t){return!0}update(t){this._$Eq&&=this._$Eq.forEach(r=>this._$ET(r,this[r])),this._$EM()}updated(t){}firstUpdated(t){}};y.elementStyles=[],y.shadowRootOptions={mode:"open"},y[it("elementProperties")]=new Map,y[it("finalized")]=new Map,Dr?.({ReactiveElement:y}),(wt.reactiveElementVersions??=[]).push("2.1.2");var Nt=globalThis,rr=e=>e,yt=Nt.trustedTypes,or=yt?yt.createPolicy("lit-html",{createHTML:e=>e}):void 0,lr="$lit$",A=`lit$${Math.random().toFixed(9).slice(2)}$`,dr="?"+A,qr=`<${dr}>`,B=document,st=()=>B.createComment(""),lt=e=>e===null||typeof e!="object"&&typeof e!="function",Ht=Array.isArray,Or=e=>Ht(e)||typeof e?.[Symbol.iterator]=="function",Ut=`[ 	
 \f\r]`,nt=/<(?:(!--|\/[^a-zA-Z])|(\/?[a-zA-Z][^>\s]*)|(\/?$))/g,er=/-->/g,ar=/>/g,M=RegExp(`>|${Ut}(?:([^\\s"'>=/]+)(${Ut}*=${Ut}*(?:[^ 	
-\f\r"'\`<>=]|("|')|))|$)`,"g"),ir=/'/g,nr=/"/g,mr=/^(?:script|style|textarea|title)$/i,Lt=e=>(t,...r)=>({_$litType$:e,strings:t,values:r}),s=Lt(1),po=Lt(2),co=Lt(3),y=Symbol.for("lit-noChange"),u=Symbol.for("lit-nothing"),sr=new WeakMap,R=B.createTreeWalker(B,129);function br(e,t){if(!Ht(e)||!e.hasOwnProperty("raw"))throw Error("invalid template strings array");return or!==void 0?or.createHTML(t):t}var Gr=(e,t)=>{let r=e.length-1,o=[],a,i=t===2?"<svg>":t===3?"<math>":"",n=nt;for(let d=0;d<r;d++){let m=e[d],g,f,c=-1,x=0;for(;x<m.length&&(n.lastIndex=x,f=n.exec(m),f!==null);)x=n.lastIndex,n===nt?f[1]==="!--"?n=er:f[1]!==void 0?n=ar:f[2]!==void 0?(mr.test(f[2])&&(a=RegExp("</"+f[2],"g")),n=M):f[3]!==void 0&&(n=M):n===M?f[0]===">"?(n=a??nt,c=-1):f[1]===void 0?c=-2:(c=n.lastIndex-f[2].length,g=f[1],n=f[3]===void 0?M:f[3]==='"'?nr:ir):n===nr||n===ir?n=M:n===er||n===ar?n=nt:(n=M,a=void 0);let $=n===M&&e[d+1].startsWith("/>")?" ":"";i+=n===nt?m+Dr:c>=0?(o.push(g),m.slice(0,c)+lr+m.slice(c)+z+$):m+z+(c===-2?d:$)}return[br(e,i+(e[r]||"<?>")+(t===2?"</svg>":t===3?"</math>":"")),o]},dt=class e{constructor({strings:t,_$litType$:r},o){let a;this.parts=[];let i=0,n=0,d=t.length-1,m=this.parts,[g,f]=Gr(t,r);if(this.el=e.createElement(g,o),R.currentNode=this.el.content,r===2||r===3){let c=this.el.content.firstChild;c.replaceWith(...c.childNodes)}for(;(a=R.nextNode())!==null&&m.length<d;){if(a.nodeType===1){if(a.hasAttributes())for(let c of a.getAttributeNames())if(c.endsWith(lr)){let x=f[n++],$=a.getAttribute(c).split(z),ft=/([.?@])?(.*)/.exec(x);m.push({type:1,index:i,name:ft[2],strings:$,ctor:ft[1]==="."?Rt:ft[1]==="?"?Bt:ft[1]==="@"?Tt:P}),a.removeAttribute(c)}else c.startsWith(z)&&(m.push({type:6,index:i}),a.removeAttribute(c));if(mr.test(a.tagName)){let c=a.textContent.split(z),x=c.length-1;if(x>0){a.textContent=yt?yt.emptyScript:"";for(let $=0;$<x;$++)a.append(c[$],st()),R.nextNode(),m.push({type:2,index:++i});a.append(c[x],st())}}}else if(a.nodeType===8)if(a.data===dr)m.push({type:2,index:i});else{let c=-1;for(;(c=a.data.indexOf(z,c+1))!==-1;)m.push({type:7,index:i}),c+=z.length-1}i++}}static createElement(t,r){let o=B.createElement("template");return o.innerHTML=t,o}};function L(e,t,r=e,o){if(t===y)return t;let a=o!==void 0?r._$Co?.[o]:r._$Cl,i=lt(t)?void 0:t._$litDirective$;return a?.constructor!==i&&(a?._$AO?.(!1),i===void 0?a=void 0:(a=new i(e),a._$AT(e,r,o)),o!==void 0?(r._$Co??=[])[o]=a:r._$Cl=a),a!==void 0&&(t=L(e,a._$AS(e,t.values),a,o)),t}var Mt=class{constructor(t,r){this._$AV=[],this._$AN=void 0,this._$AD=t,this._$AM=r}get parentNode(){return this._$AM.parentNode}get _$AU(){return this._$AM._$AU}u(t){let{el:{content:r},parts:o}=this._$AD,a=(t?.creationScope??B).importNode(r,!0);R.currentNode=a;let i=R.nextNode(),n=0,d=0,m=o[0];for(;m!==void 0;){if(n===m.index){let g;m.type===2?g=new mt(i,i.nextSibling,this,t):m.type===1?g=new m.ctor(i,m.name,m.strings,this,t):m.type===6&&(g=new It(i,this,t)),this._$AV.push(g),m=o[++d]}n!==m?.index&&(i=R.nextNode(),n++)}return R.currentNode=B,a}p(t){let r=0;for(let o of this._$AV)o!==void 0&&(o.strings!==void 0?(o._$AI(t,o,r),r+=o.strings.length-2):o._$AI(t[r])),r++}},mt=class e{get _$AU(){return this._$AM?._$AU??this._$Cv}constructor(t,r,o,a){this.type=2,this._$AH=u,this._$AN=void 0,this._$AA=t,this._$AB=r,this._$AM=o,this.options=a,this._$Cv=a?.isConnected??!0}get parentNode(){let t=this._$AA.parentNode,r=this._$AM;return r!==void 0&&t?.nodeType===11&&(t=r.parentNode),t}get startNode(){return this._$AA}get endNode(){return this._$AB}_$AI(t,r=this){t=L(this,t,r),lt(t)?t===u||t==null||t===""?(this._$AH!==u&&this._$AR(),this._$AH=u):t!==this._$AH&&t!==y&&this._(t):t._$litType$!==void 0?this.$(t):t.nodeType!==void 0?this.T(t):Or(t)?this.k(t):this._(t)}O(t){return this._$AA.parentNode.insertBefore(t,this._$AB)}T(t){this._$AH!==t&&(this._$AR(),this._$AH=this.O(t))}_(t){this._$AH!==u&&lt(this._$AH)?this._$AA.nextSibling.data=t:this.T(B.createTextNode(t)),this._$AH=t}$(t){let{values:r,_$litType$:o}=t,a=typeof o=="number"?this._$AC(t):(o.el===void 0&&(o.el=dt.createElement(br(o.h,o.h[0]),this.options)),o);if(this._$AH?._$AD===a)this._$AH.p(r);else{let i=new Mt(a,this),n=i.u(this.options);i.p(r),this.T(n),this._$AH=i}}_$AC(t){let r=sr.get(t.strings);return r===void 0&&sr.set(t.strings,r=new dt(t)),r}k(t){Ht(this._$AH)||(this._$AH=[],this._$AR());let r=this._$AH,o,a=0;for(let i of t)a===r.length?r.push(o=new e(this.O(st()),this.O(st()),this,this.options)):o=r[a],o._$AI(i),a++;a<r.length&&(this._$AR(o&&o._$AB.nextSibling,a),r.length=a)}_$AR(t=this._$AA.nextSibling,r){for(this._$AP?.(!1,!0,r);t!==this._$AB;){let o=rr(t).nextSibling;rr(t).remove(),t=o}}setConnected(t){this._$AM===void 0&&(this._$Cv=t,this._$AP?.(t))}},P=class{get tagName(){return this.element.tagName}get _$AU(){return this._$AM._$AU}constructor(t,r,o,a,i){this.type=1,this._$AH=u,this._$AN=void 0,this.element=t,this.name=r,this._$AM=a,this.options=i,o.length>2||o[0]!==""||o[1]!==""?(this._$AH=Array(o.length-1).fill(new String),this.strings=o):this._$AH=u}_$AI(t,r=this,o,a){let i=this.strings,n=!1;if(i===void 0)t=L(this,t,r,0),n=!lt(t)||t!==this._$AH&&t!==y,n&&(this._$AH=t);else{let d=t,m,g;for(t=i[0],m=0;m<i.length-1;m++)g=L(this,d[o+m],r,m),g===y&&(g=this._$AH[m]),n||=!lt(g)||g!==this._$AH[m],g===u?t=u:t!==u&&(t+=(g??"")+i[m+1]),this._$AH[m]=g}n&&!a&&this.j(t)}j(t){t===u?this.element.removeAttribute(this.name):this.element.setAttribute(this.name,t??"")}},Rt=class extends P{constructor(){super(...arguments),this.type=3}j(t){this.element[this.name]=t===u?void 0:t}},Bt=class extends P{constructor(){super(...arguments),this.type=4}j(t){this.element.toggleAttribute(this.name,!!t&&t!==u)}},Tt=class extends P{constructor(t,r,o,a,i){super(t,r,o,a,i),this.type=5}_$AI(t,r=this){if((t=L(this,t,r,0)??u)===y)return;let o=this._$AH,a=t===u&&o!==u||t.capture!==o.capture||t.once!==o.once||t.passive!==o.passive,i=t!==u&&(o===u||a);a&&this.element.removeEventListener(this.name,this,o),i&&this.element.addEventListener(this.name,this,t),this._$AH=t}handleEvent(t){typeof this._$AH=="function"?this._$AH.call(this.options?.host??this.element,t):this._$AH.handleEvent(t)}},It=class{constructor(t,r,o){this.element=t,this.type=6,this._$AN=void 0,this._$AM=r,this.options=o}get _$AU(){return this._$AM._$AU}_$AI(t){L(this,t)}};var Wr=Nt.litHtmlPolyfillSupport;Wr?.(dt,mt),(Nt.litHtmlVersions??=[]).push("3.3.2");var pr=(e,t,r)=>{let o=r?.renderBefore??t,a=o._$litPart$;if(a===void 0){let i=r?.renderBefore??null;o._$litPart$=a=new mt(t.insertBefore(st(),i),i,void 0,r??{})}return a._$AI(e),a};var Pt=globalThis,A=class extends w{constructor(){super(...arguments),this.renderOptions={host:this},this._$Do=void 0}createRenderRoot(){let t=super.createRenderRoot();return this.renderOptions.renderBefore??=t.firstChild,t}update(t){let r=this.render();this.hasUpdated||(this.renderOptions.isConnected=this.isConnected),super.update(t),this._$Do=pr(r,this.renderRoot,this.renderOptions)}connectedCallback(){super.connectedCallback(),this._$Do?.setConnected(!0)}disconnectedCallback(){super.disconnectedCallback(),this._$Do?.setConnected(!1)}render(){return y}};A._$litElement$=!0,A.finalized=!0,Pt.litElementHydrateSupport?.({LitElement:A});var Vr=Pt.litElementPolyfillSupport;Vr?.({LitElement:A});(Pt.litElementVersions??=[]).push("4.2.2");var Jr=`
+\f\r"'\`<>=]|("|')|))|$)`,"g"),ir=/'/g,nr=/"/g,mr=/^(?:script|style|textarea|title)$/i,Lt=e=>(t,...r)=>({_$litType$:e,strings:t,values:r}),s=Lt(1),po=Lt(2),co=Lt(3),k=Symbol.for("lit-noChange"),u=Symbol.for("lit-nothing"),sr=new WeakMap,R=B.createTreeWalker(B,129);function br(e,t){if(!Ht(e)||!e.hasOwnProperty("raw"))throw Error("invalid template strings array");return or!==void 0?or.createHTML(t):t}var Gr=(e,t)=>{let r=e.length-1,o=[],a,i=t===2?"<svg>":t===3?"<math>":"",n=nt;for(let d=0;d<r;d++){let m=e[d],g,f,c=-1,w=0;for(;w<m.length&&(n.lastIndex=w,f=n.exec(m),f!==null);)w=n.lastIndex,n===nt?f[1]==="!--"?n=er:f[1]!==void 0?n=ar:f[2]!==void 0?(mr.test(f[2])&&(a=RegExp("</"+f[2],"g")),n=M):f[3]!==void 0&&(n=M):n===M?f[0]===">"?(n=a??nt,c=-1):f[1]===void 0?c=-2:(c=n.lastIndex-f[2].length,g=f[1],n=f[3]===void 0?M:f[3]==='"'?nr:ir):n===nr||n===ir?n=M:n===er||n===ar?n=nt:(n=M,a=void 0);let z=n===M&&e[d+1].startsWith("/>")?" ":"";i+=n===nt?m+qr:c>=0?(o.push(g),m.slice(0,c)+lr+m.slice(c)+A+z):m+A+(c===-2?d:z)}return[br(e,i+(e[r]||"<?>")+(t===2?"</svg>":t===3?"</math>":"")),o]},dt=class e{constructor({strings:t,_$litType$:r},o){let a;this.parts=[];let i=0,n=0,d=t.length-1,m=this.parts,[g,f]=Gr(t,r);if(this.el=e.createElement(g,o),R.currentNode=this.el.content,r===2||r===3){let c=this.el.content.firstChild;c.replaceWith(...c.childNodes)}for(;(a=R.nextNode())!==null&&m.length<d;){if(a.nodeType===1){if(a.hasAttributes())for(let c of a.getAttributeNames())if(c.endsWith(lr)){let w=f[n++],z=a.getAttribute(c).split(A),ft=/([.?@])?(.*)/.exec(w);m.push({type:1,index:i,name:ft[2],strings:z,ctor:ft[1]==="."?Rt:ft[1]==="?"?Bt:ft[1]==="@"?Tt:P}),a.removeAttribute(c)}else c.startsWith(A)&&(m.push({type:6,index:i}),a.removeAttribute(c));if(mr.test(a.tagName)){let c=a.textContent.split(A),w=c.length-1;if(w>0){a.textContent=yt?yt.emptyScript:"";for(let z=0;z<w;z++)a.append(c[z],st()),R.nextNode(),m.push({type:2,index:++i});a.append(c[w],st())}}}else if(a.nodeType===8)if(a.data===dr)m.push({type:2,index:i});else{let c=-1;for(;(c=a.data.indexOf(A,c+1))!==-1;)m.push({type:7,index:i}),c+=A.length-1}i++}}static createElement(t,r){let o=B.createElement("template");return o.innerHTML=t,o}};function L(e,t,r=e,o){if(t===k)return t;let a=o!==void 0?r._$Co?.[o]:r._$Cl,i=lt(t)?void 0:t._$litDirective$;return a?.constructor!==i&&(a?._$AO?.(!1),i===void 0?a=void 0:(a=new i(e),a._$AT(e,r,o)),o!==void 0?(r._$Co??=[])[o]=a:r._$Cl=a),a!==void 0&&(t=L(e,a._$AS(e,t.values),a,o)),t}var Mt=class{constructor(t,r){this._$AV=[],this._$AN=void 0,this._$AD=t,this._$AM=r}get parentNode(){return this._$AM.parentNode}get _$AU(){return this._$AM._$AU}u(t){let{el:{content:r},parts:o}=this._$AD,a=(t?.creationScope??B).importNode(r,!0);R.currentNode=a;let i=R.nextNode(),n=0,d=0,m=o[0];for(;m!==void 0;){if(n===m.index){let g;m.type===2?g=new mt(i,i.nextSibling,this,t):m.type===1?g=new m.ctor(i,m.name,m.strings,this,t):m.type===6&&(g=new It(i,this,t)),this._$AV.push(g),m=o[++d]}n!==m?.index&&(i=R.nextNode(),n++)}return R.currentNode=B,a}p(t){let r=0;for(let o of this._$AV)o!==void 0&&(o.strings!==void 0?(o._$AI(t,o,r),r+=o.strings.length-2):o._$AI(t[r])),r++}},mt=class e{get _$AU(){return this._$AM?._$AU??this._$Cv}constructor(t,r,o,a){this.type=2,this._$AH=u,this._$AN=void 0,this._$AA=t,this._$AB=r,this._$AM=o,this.options=a,this._$Cv=a?.isConnected??!0}get parentNode(){let t=this._$AA.parentNode,r=this._$AM;return r!==void 0&&t?.nodeType===11&&(t=r.parentNode),t}get startNode(){return this._$AA}get endNode(){return this._$AB}_$AI(t,r=this){t=L(this,t,r),lt(t)?t===u||t==null||t===""?(this._$AH!==u&&this._$AR(),this._$AH=u):t!==this._$AH&&t!==k&&this._(t):t._$litType$!==void 0?this.$(t):t.nodeType!==void 0?this.T(t):Or(t)?this.k(t):this._(t)}O(t){return this._$AA.parentNode.insertBefore(t,this._$AB)}T(t){this._$AH!==t&&(this._$AR(),this._$AH=this.O(t))}_(t){this._$AH!==u&&lt(this._$AH)?this._$AA.nextSibling.data=t:this.T(B.createTextNode(t)),this._$AH=t}$(t){let{values:r,_$litType$:o}=t,a=typeof o=="number"?this._$AC(t):(o.el===void 0&&(o.el=dt.createElement(br(o.h,o.h[0]),this.options)),o);if(this._$AH?._$AD===a)this._$AH.p(r);else{let i=new Mt(a,this),n=i.u(this.options);i.p(r),this.T(n),this._$AH=i}}_$AC(t){let r=sr.get(t.strings);return r===void 0&&sr.set(t.strings,r=new dt(t)),r}k(t){Ht(this._$AH)||(this._$AH=[],this._$AR());let r=this._$AH,o,a=0;for(let i of t)a===r.length?r.push(o=new e(this.O(st()),this.O(st()),this,this.options)):o=r[a],o._$AI(i),a++;a<r.length&&(this._$AR(o&&o._$AB.nextSibling,a),r.length=a)}_$AR(t=this._$AA.nextSibling,r){for(this._$AP?.(!1,!0,r);t!==this._$AB;){let o=rr(t).nextSibling;rr(t).remove(),t=o}}setConnected(t){this._$AM===void 0&&(this._$Cv=t,this._$AP?.(t))}},P=class{get tagName(){return this.element.tagName}get _$AU(){return this._$AM._$AU}constructor(t,r,o,a,i){this.type=1,this._$AH=u,this._$AN=void 0,this.element=t,this.name=r,this._$AM=a,this.options=i,o.length>2||o[0]!==""||o[1]!==""?(this._$AH=Array(o.length-1).fill(new String),this.strings=o):this._$AH=u}_$AI(t,r=this,o,a){let i=this.strings,n=!1;if(i===void 0)t=L(this,t,r,0),n=!lt(t)||t!==this._$AH&&t!==k,n&&(this._$AH=t);else{let d=t,m,g;for(t=i[0],m=0;m<i.length-1;m++)g=L(this,d[o+m],r,m),g===k&&(g=this._$AH[m]),n||=!lt(g)||g!==this._$AH[m],g===u?t=u:t!==u&&(t+=(g??"")+i[m+1]),this._$AH[m]=g}n&&!a&&this.j(t)}j(t){t===u?this.element.removeAttribute(this.name):this.element.setAttribute(this.name,t??"")}},Rt=class extends P{constructor(){super(...arguments),this.type=3}j(t){this.element[this.name]=t===u?void 0:t}},Bt=class extends P{constructor(){super(...arguments),this.type=4}j(t){this.element.toggleAttribute(this.name,!!t&&t!==u)}},Tt=class extends P{constructor(t,r,o,a,i){super(t,r,o,a,i),this.type=5}_$AI(t,r=this){if((t=L(this,t,r,0)??u)===k)return;let o=this._$AH,a=t===u&&o!==u||t.capture!==o.capture||t.once!==o.once||t.passive!==o.passive,i=t!==u&&(o===u||a);a&&this.element.removeEventListener(this.name,this,o),i&&this.element.addEventListener(this.name,this,t),this._$AH=t}handleEvent(t){typeof this._$AH=="function"?this._$AH.call(this.options?.host??this.element,t):this._$AH.handleEvent(t)}},It=class{constructor(t,r,o){this.element=t,this.type=6,this._$AN=void 0,this._$AM=r,this.options=o}get _$AU(){return this._$AM._$AU}_$AI(t){L(this,t)}};var Wr=Nt.litHtmlPolyfillSupport;Wr?.(dt,mt),(Nt.litHtmlVersions??=[]).push("3.3.2");var pr=(e,t,r)=>{let o=r?.renderBefore??t,a=o._$litPart$;if(a===void 0){let i=r?.renderBefore??null;o._$litPart$=a=new mt(t.insertBefore(st(),i),i,void 0,r??{})}return a._$AI(e),a};var Pt=globalThis,_=class extends y{constructor(){super(...arguments),this.renderOptions={host:this},this._$Do=void 0}createRenderRoot(){let t=super.createRenderRoot();return this.renderOptions.renderBefore??=t.firstChild,t}update(t){let r=this.render();this.hasUpdated||(this.renderOptions.isConnected=this.isConnected),super.update(t),this._$Do=pr(r,this.renderRoot,this.renderOptions)}connectedCallback(){super.connectedCallback(),this._$Do?.setConnected(!0)}disconnectedCallback(){super.disconnectedCallback(),this._$Do?.setConnected(!1)}render(){return k}};_._$litElement$=!0,_.finalized=!0,Pt.litElementHydrateSupport?.({LitElement:_});var Vr=Pt.litElementPolyfillSupport;Vr?.({LitElement:_});(Pt.litElementVersions??=[]).push("4.2.2");var Jr=`
 @charset "UTF-8";/*!
  * Bootstrap  v5.3.3 (https://getbootstrap.com/)
  * Copyright 2011-2024 The Bootstrap Authors
@@ -37,7 +37,7 @@ p.small {
 .align-items-center:has(h3 + div, h3 + button) h3 {
     margin-bottom: 0;
 }
-`,cr=xt(Jr+Xr);var b=class extends A{static styles=[cr]};var gr={prefix:"dbl",setPrefix:function(e){this.prefix=e},get:function(e){try{let t=localStorage.getItem(`${this.prefix}${e}`);return t!==null?JSON.parse(t):null}catch{return null}},set:function(e,t){try{localStorage.setItem(`${this.prefix}${e}`,JSON.stringify(t))}catch(r){return console.log(r.message),!1}return!0},remove:function(e){localStorage.removeItem(`${this.prefix}${e}`)},getAllKeys:function(){let e=[];if(localStorage.length>0){let t=new RegExp(`^(${this.prefix})+`,"i");for(let r=0;r<localStorage.length;r++){let o=localStorage.key(r);o=o.replace(t,""),e.push(o)}}return e},getAll:function(){let e=this.getAllKeys(),t=[];return e.forEach(r=>{let o=gr.get(r);!o||!o.uuid||t.push(o)}),t}},bt=gr;var pt=class{constructor(){this.events={},this.debug=!1}_listenerIndex(t,r){return this.events[t].findIndex(o=>o.listener===r)}on(t,r,o=null){if(typeof r=="function"){if(this.events[t]=this.events[t]||[],this.events[t].length>0){let a=this._listenerIndex(t,r);a>-1&&this.events[t].splice(a,1)}return this.events[t].push({listener:r,boundObj:o}),this.off.bind(this,t,r,o)}}off(t,r){if(Array.isArray(this.events[t])){let o=this._listenerIndex(t,r);if(o===-1)return;this.events[t].splice(o,1),this.events[t].length===0&&delete this.events[t]}}once(t,r,o){this.on(t,function a(){this.off(t,a);let i=typeof o>"u"?this:o;r.apply(i,arguments)})}trigger(t){this.debug&&console&&console.log(`EventEmitter triggered: ${t}`);let r=[].slice.call(arguments,1);Array.isArray(this.events[t])&&this.events[t].forEach(o=>{let a=o.boundObj===null?this:o.boundObj;o.listener.apply(a,r)})}};var v=class{uuid="";name="";range="";type="";subtype="";power=0;expendable=!1;brawl=!1;constructor({uuid:t="",name:r="",range:o="",type:a="",subtype:i="",power:n=0,expendable:d=!1,brawl:m=!1}){t?this.uuid=t:this.uuid=crypto.randomUUID(),this.name=r,this.range=o,this.type=a,this.subtype=i,this.power=Number(n),this.expendable=!!d,this.brawl=!!m}get label(){return`${this.range??""}${this.type}${this.power}${this.subtype!==""||this.expendable?"-":""}${this.subtype}${this.expendable?"X":""} ${this.name}${this.brawl?" (Brawl)":""}`}fromForm(t){this.name=t.get("weapon_name"),this.range=t.get("weapon_range"),this.type=t.get("weapon_type"),this.subtype=t.get("weapon_subtype"),this.power=Number(t.get("weapon_power")),this.expendable=t.get("weapon_x")==="1",this.brawl=t.get("weapon_brawl")==="1"}};var q=class{id=0;name="";hardware_id=0;weapon=null;destroyed=!1;constructor({id:t=0,name:r="",hardware_id:o=0,weapon:a=null}){this.id=t,this.name=r,this.hardware_id=o,this.weapon=a?new v(a):null}get label(){return this.weapon?this.weapon.label:this.name}};var T=class{uuid="";name="";mClass=1;modules=[];division="";initiative="";destroyed=!1;constructor({uuid:t="",name:r="",mClass:o=1,modules:a=[]}){t?this.uuid=t:this.uuid=crypto.randomUUID(),this.name=r,this.mClass=o,Array.isArray(a)&&a.forEach(i=>{this.modules.push(new q(i))})}getModule(t){return this.modules.find(r=>r.id===t)??new q({id:t})}setModule(t){let r=t.id,o=this.modules.findIndex(a=>a.id===r);o>-1?this.modules[o]=t:this.modules.push(t),this.modules.sort((a,i)=>a.id-i.id)}getPlayLabel(){return`${this.division!==""?`${this.division} `:""}${this.name}`}};var I=class{uuid="";name="";type="I";weapons=[];hardware=[];units=1;division="";initiative="";destroyed=!1;constructor({uuid:t="",name:r="",type:o="I",weapons:a=[],hardware:i=[],units:n=1}){t?this.uuid=t:this.uuid=crypto.randomUUID(),this.name=r,this.type=o,this.weapons=a.map(d=>new v(d)),this.hardware=i,this.units=n}};var N=class{uuid="";name="";faction="";suit="";macs=[];aus=[];points=0;constructor({uuid:t="",name:r="",faction:o="",macs:a=[],aus:i=[],points:n=0}){t?this.uuid=t:this.uuid=crypto.randomUUID(),this.name=r,this.faction=o,this.macs=a.map(d=>new T(d)),this.aus=i.map(d=>new I(d)),this.points=n}getMac(t){return this.mac.find(r=>r.uuid===t)}addMac(t){this.macs.push(t)}removeMac(t){let r=this.macs.findIndex(o=>o.uuid===t);r>-1&&this.macs.splice(r,1)}getAuxUnit(t){return this.aus.find(r=>r.uuid===t)}addAuxUnit(t){this.aus.push(t)}removeAux(t){let r=this.aus.findIndex(o=>o.uuid===t);r>-1&&this.aus.splice(r,1)}};var ur=[{id:0,name:"Empty",type:["I","V"]},{id:1,name:"Aerodrive",description:"Ignore terrain when moving and checking line of sight both for and against you. Ignore collisions and brawl attacks. Your Motion is 3.",type:["V"]},{id:2,name:"Amplifier",description:"Before each attack, you may increase the power of the weapon being fired by 1, ignoring the normal limits.",type:["M"]},{id:3,name:"Armour",description:"Roll 5+ to ignore each hit. If this unit has two Armour modules, roll 3+ instead.",type:["I","V"]},{id:4,name:"Booster",description:'Once per attack turn, gain Heat equal to class to rotate then move up to 3".',type:["A"]},{id:5,name:"Carrier",description:"Keep up to two infantry AUs off the board, noted as being inside this carrier. On their move activation they may deploy from their carrier unit. If the carrier is destroyed, all AUs inside are also destroyed. Deployed units cannot re-enter the carrier.",type:["M","V"]},{id:6,name:"Casing",description:"When you would take internal damage, hit this module instead.",type:["M"]},{id:7,name:"Catalyst",description:"Your first attack each turn generates 1 less Heat.",type:["M"]},{id:8,name:"Cloak",description:"When you hold as your move, you may set Motion to 6. AUs can do this.",type:["A"]},{id:9,name:"Conductor",description:'At the end of your move turn, you may cause 1 Heat to a visible MAC within 3".',type:["A"]},{id:10,name:"Coolant",description:"Lose 2 Heat in cooldown. When this module is destroyed gain 2 Heat.",type:["M"]},{id:11,name:"Disruptor",description:'At the end of your move turn, you may force a visible MAC within 3" of you to pass a system check or crash.',type:["A"]},{id:12,name:"Dozer",description:"Count as 2 classes larger for collisions you cause.",type:["V"]},{id:13,name:"ECM",description:"At the end of your attack turn, increase your Motion by 1.",type:["M"]},{id:14,name:"Emitter",description:'At the end of your move turn, you may cause 1 Rad to a visible MAC within 3".',type:["A"]},{id:15,name:"Frame",description:"Reduce cost by 1pt.",type:["M"]},{id:16,name:"Gravlock",description:"At the end of your move turn, you may set your Motion to 1. AUs can do this.",type:["A"]},{id:17,name:"Guardian",description:"Lose 1 Rad and 1 Jolt in cooldown.",type:["M"]},{id:18,name:"Gyro",description:"Move through rough and cover as open.",type:["A"]},{id:19,name:"Hooks",description:"When a MAC you are touching moves, you may move with it.",type:["I"]},{id:20,name:"Hotstepper",description:"When you jump and collide, cause an extra hit and 1 Heat to the target.",type:["A"]},{id:21,name:"Hoverfoil",description:"Move through rough and water as open.",type:["A"]},{id:22,name:"Intake",description:"Jumping generates 1 less Heat.",type:["M"]},{id:23,name:"Jet",description:'Each jet allows up to 9" of jumping.',type:["A"]},{id:24,name:"Mesh",description:"If the attack caused fewer than 3 hits, ignore hits to this module.",type:["M"]},{id:25,name:"Plate",description:"Roll 4+ to ignore each hit to this module.",type:["M"]},{id:26,name:"Precog",description:"When your initiative card is drawn, you may gain 1 Heat to shuffle it back into the deck instead of activating.",type:["M"]},{id:27,name:"Prism",description:"At the end of your attack turn, lose 1 Heat for each ranged weapon you fired.",type:["M"]},{id:28,name:"Radiator",description:"Lose 1 Heat in cooldown.",type:["M"]},{id:29,name:"Reflector",description:"If the attack caused 3 or more hits, ignore hits to this module.",type:["M"]},{id:30,name:"Rotor",description:"Rotate an extra time at any point of your move.",type:["M"]},{id:31,name:"Servo",description:"Gain 1 less Heat for shifting or rushing.",type:["M"]},{id:32,name:"Shield",description:"Gain 1 Heat to ignore each hit to this module.",type:["M"]},{id:33,name:"Tether",description:'At the end of your move turn, you may cause 1 Jolt to a visible MAC within 3".',type:["A"]},{id:34,name:"Transport",description:"This unit can rush.",type:["I"]},{id:35,name:"Vent",description:"Lose 2 Heat when you hold in the move phase.",type:["M"]}];var ct=class{id=0;name="";description="";type=[];constructor({id:t=0,name:r="",description:o="",type:a=[]}){this.id=t,this.name=r,this.description=o,this.type=a}};var fr=ur.map(e=>new ct(e)),_=function(e){return fr.find(t=>t.id===e)},hr=function({mac:e=null,auxunit:t=null}){return fr.filter(r=>e?r.type.includes("M")||r.type.includes("A"):t?r.type.includes(t.type)||r.type.includes("A"):!0)},vr=function(e){return _(e)?.name||""};var k=[{id:"I",label:"Infantry",maxunits:5},{id:"V",label:"Vehicle",maxunits:3}];var Yr="1.0",l=new pt,Kr=function(){return new Date().toUTCString()},qt=function(e){return new N(e)},F=function(e){if(!e)return null;let t=bt.get(e);return!t||!t.uuid?null:qt(t)},Ft=function(e){e.updated=Kr(),e.version=Yr,bt.set(e.uuid,e),l.trigger("force:edit")},xr=function(e){bt.remove(e),l.trigger("force:remove",{uuid:e})},gt=function(){let e=[];return bt.getAll().forEach(t=>{let r=qt(t);e.push(r)}),e};var Qr=function(e){let t=[];return!e.mClass===0&&t.push("Mac must have a class."),Object.keys(e.modules).length!==6&&t.push("Macs must have 6 modules."),t},Dt=function(e){let t=[],r=e.type==="I"?1:2,o=e.type==="I"?"Infantry":"Vehicle",a=e.weapons.filter(d=>d?.type);a.length>2&&t.push("Max 2 weapons allowed."),a.forEach(d=>{d.power>r&&t.push(`Weapon "${d.label}" exceeds max Power ${r} for ${o}.`)});let i={};e.hardware.forEach(d=>{d!=null&&(i[d]=(i[d]??0)+1)}),Object.entries(i).forEach(([d,m])=>{if(m>2){let g=_(Number(d));t.push(`Cannot have more than 2 of "${g?.name??d}".`)}}),e.hardware.forEach(d=>{if(d==null)return;let m=_(d);m&&!m.type.includes(e.type)&&!m.type.includes("A")&&t.push(`Hardware "${m.name}" is not compatible with ${o}.`)});let n=k.find(d=>d.id===e.type);return n&&e.units>n.maxunits&&t.push(`${n.label} max formation size is ${n.maxunits}.`),t},wr=function(e){let t=[];if(e.name||t.push("Force must have a name."),e.macs.forEach(r=>{t=t.concat(Qr(r))}),e.aus.forEach(r=>{t=t.concat(Dt(r))}),t.length>0)throw new Error(t.join("<br/>"))},yr=function(e){let t=[];return e.forEach(r=>{t.push(F(r))}),t},Ot=function(e){try{let t=e.indexOf("[{"),r=e.lastIndexOf("}]"),o=e.indexOf(":[{");o!==-1&&o<t&&(t=-1),t===-1?(t=e.indexOf("{"),r=e.lastIndexOf("}"),e=e.substring(t),e=e.substring(0,r+1)):(e=e.substring(t),e=e.substring(0,r+2)),e=e.trim(),e=e.replace(/\},[\r\n]+\{/g,"},{"),e=e.replace(/(?:\r\n|\r|\n)/g,"<br/>");let a=JSON.parse(e);Array.isArray(a)||(a=[a]),a.forEach(i=>{if(typeof i!="object"||!i.uuid)throw new Error("Data appears to be invalid. Try removing any text that isn't part of the backup (i.e. email introduction).");let n=qt(i),d=F(i.uuid);if(d&&d.name!==""&&d.name!==n.name){alert(`You have a force with that unique id but a different name than "${n.name}". Import aborted. Edit the uuid in the import or rename/delete the existing Force`);return}Ft(n),alert(`Imports: "${n.name}"`)}),l.trigger("force:edit")}catch(t){alert(`Error processing backup data: ${t.message}`)}};var kr={ATTRIBUTE:1,CHILD:2,PROPERTY:3,BOOLEAN_ATTRIBUTE:4,EVENT:5,ELEMENT:6},$r=e=>(...t)=>({_$litDirective$:e,values:t}),kt=class{constructor(t){}get _$AU(){return this._$AM._$AU}_$AT(t,r,o){this._$Ct=t,this._$AM=r,this._$Ci=o}_$AS(t,r){return this.update(t,r)}update(t,r){return this.render(...r)}};var ut=class extends kt{constructor(t){if(super(t),this.it=u,t.type!==kr.CHILD)throw Error(this.constructor.directiveName+"() can only be used in child bindings")}render(t){if(t===u||t==null)return this._t=void 0,this.it=t;if(t===y)return t;if(typeof t!="string")throw Error(this.constructor.directiveName+"() called with a non-string value");if(t===this.it)return this._t;this.it=t;let r=[t];return r.raw=r,this._t={_$litType$:this.constructor.resultType,strings:r,values:[]}}};ut.directiveName="unsafeHTML",ut.resultType=1;var zr=$r(ut);var D=class extends b{static styles=[super.styles,p`
+`,cr=xt(Jr+Xr);var b=class extends _{static styles=[cr]};var gr={prefix:"dbl",setPrefix:function(e){this.prefix=e},get:function(e){try{let t=localStorage.getItem(`${this.prefix}${e}`);return t!==null?JSON.parse(t):null}catch{return null}},set:function(e,t){try{localStorage.setItem(`${this.prefix}${e}`,JSON.stringify(t))}catch(r){return console.log(r.message),!1}return!0},remove:function(e){localStorage.removeItem(`${this.prefix}${e}`)},getAllKeys:function(){let e=[];if(localStorage.length>0){let t=new RegExp(`^(${this.prefix})+`,"i");for(let r=0;r<localStorage.length;r++){let o=localStorage.key(r);o=o.replace(t,""),e.push(o)}}return e},getAll:function(){let e=this.getAllKeys(),t=[];return e.forEach(r=>{let o=gr.get(r);!o||!o.uuid||t.push(o)}),t}},bt=gr;var pt=class{constructor(){this.events={},this.debug=!1}_listenerIndex(t,r){return this.events[t].findIndex(o=>o.listener===r)}on(t,r,o=null){if(typeof r=="function"){if(this.events[t]=this.events[t]||[],this.events[t].length>0){let a=this._listenerIndex(t,r);a>-1&&this.events[t].splice(a,1)}return this.events[t].push({listener:r,boundObj:o}),this.off.bind(this,t,r,o)}}off(t,r){if(Array.isArray(this.events[t])){let o=this._listenerIndex(t,r);if(o===-1)return;this.events[t].splice(o,1),this.events[t].length===0&&delete this.events[t]}}once(t,r,o){this.on(t,function a(){this.off(t,a);let i=typeof o>"u"?this:o;r.apply(i,arguments)})}trigger(t){this.debug&&console&&console.log(`EventEmitter triggered: ${t}`);let r=[].slice.call(arguments,1);Array.isArray(this.events[t])&&this.events[t].forEach(o=>{let a=o.boundObj===null?this:o.boundObj;o.listener.apply(a,r)})}};var v=class{uuid="";name="";range="";type="";subtype="";power=0;expendable=!1;brawl=!1;constructor({uuid:t="",name:r="",range:o="",type:a="",subtype:i="",power:n=0,expendable:d=!1,brawl:m=!1}){t?this.uuid=t:this.uuid=crypto.randomUUID(),this.name=r,this.range=o,this.type=a,this.subtype=i,this.power=Number(n),this.expendable=!!d,this.brawl=!!m}get label(){return`${this.range??""}${this.type}${this.power}${this.subtype!==""||this.expendable?"-":""}${this.subtype}${this.expendable?"X":""} ${this.name}${this.brawl?" (Brawl)":""}`}fromForm(t){this.name=t.get("weapon_name"),this.range=t.get("weapon_range"),this.type=t.get("weapon_type"),this.subtype=t.get("weapon_subtype"),this.power=Number(t.get("weapon_power")),this.expendable=t.get("weapon_x")==="1",this.brawl=t.get("weapon_brawl")==="1"}};var F=class{id=0;name="";hardware_id=0;weapon=null;destroyed=!1;constructor({id:t=0,name:r="",hardware_id:o=0,weapon:a=null}){this.id=t,this.name=r,this.hardware_id=o,this.weapon=a?new v(a):null}get label(){return this.weapon?this.weapon.label:this.name}};var T=class{uuid="";name="";mClass=1;modules=[];division="";initiative="";destroyed=!1;constructor({uuid:t="",name:r="",mClass:o=1,modules:a=[]}){t?this.uuid=t:this.uuid=crypto.randomUUID(),this.name=r,this.mClass=o,Array.isArray(a)&&a.forEach(i=>{this.modules.push(new F(i))})}getModule(t){return this.modules.find(r=>r.id===t)??new F({id:t})}setModule(t){let r=t.id,o=this.modules.findIndex(a=>a.id===r);o>-1?this.modules[o]=t:this.modules.push(t),this.modules.sort((a,i)=>a.id-i.id)}getPlayLabel(){return`${this.division!==""?`${this.division} `:""}${this.name}`}};var I=class{uuid="";name="";type="I";weapons=[];hardware=[];units=1;division="";initiative="";destroyed=!1;constructor({uuid:t="",name:r="",type:o="I",weapons:a=[],hardware:i=[],units:n=1}){t?this.uuid=t:this.uuid=crypto.randomUUID(),this.name=r,this.type=o,this.weapons=a.map(d=>new v(d)),this.hardware=i,this.units=n}};var N=class{uuid="";name="";faction="";suit="";macs=[];aus=[];points=0;constructor({uuid:t="",name:r="",faction:o="",macs:a=[],aus:i=[],points:n=0}){t?this.uuid=t:this.uuid=crypto.randomUUID(),this.name=r,this.faction=o,this.macs=a.map(d=>new T(d)),this.aus=i.map(d=>new I(d)),this.points=n}getMac(t){return this.mac.find(r=>r.uuid===t)}addMac(t){this.macs.push(t)}removeMac(t){let r=this.macs.findIndex(o=>o.uuid===t);r>-1&&this.macs.splice(r,1)}getAuxUnit(t){return this.aus.find(r=>r.uuid===t)}addAuxUnit(t){this.aus.push(t)}removeAux(t){let r=this.aus.findIndex(o=>o.uuid===t);r>-1&&this.aus.splice(r,1)}};var ur=[{id:0,name:"Empty",type:["I","V"]},{id:1,name:"Aerodrive",description:"Ignore terrain when moving and checking line of sight both for and against you. Ignore collisions and brawl attacks. Your Motion is 3.",type:["V"]},{id:2,name:"Amplifier",description:"Before each attack, you may increase the power of the weapon being fired by 1, ignoring the normal limits.",type:["M"]},{id:3,name:"Armour",description:"Roll 5+ to ignore each hit. If this unit has two Armour modules, roll 3+ instead.",type:["I","V"]},{id:4,name:"Booster",description:'Once per attack turn, gain Heat equal to class to rotate then move up to 3".',type:["A"]},{id:5,name:"Carrier",description:"Keep up to two infantry AUs off the board, noted as being inside this carrier. On their move activation they may deploy from their carrier unit. If the carrier is destroyed, all AUs inside are also destroyed. Deployed units cannot re-enter the carrier.",type:["M","V"]},{id:6,name:"Casing",description:"When you would take internal damage, hit this module instead.",type:["M"]},{id:7,name:"Catalyst",description:"Your first attack each turn generates 1 less Heat.",type:["M"]},{id:8,name:"Cloak",description:"When you hold as your move, you may set Motion to 6. AUs can do this.",type:["A"]},{id:9,name:"Conductor",description:'At the end of your move turn, you may cause 1 Heat to a visible MAC within 3".',type:["A"]},{id:10,name:"Coolant",description:"Lose 2 Heat in cooldown. When this module is destroyed gain 2 Heat.",type:["M"]},{id:11,name:"Disruptor",description:'At the end of your move turn, you may force a visible MAC within 3" of you to pass a system check or crash.',type:["A"]},{id:12,name:"Dozer",description:"Count as 2 classes larger for collisions you cause.",type:["V"]},{id:13,name:"ECM",description:"At the end of your attack turn, increase your Motion by 1.",type:["M"]},{id:14,name:"Emitter",description:'At the end of your move turn, you may cause 1 Rad to a visible MAC within 3".',type:["A"]},{id:15,name:"Frame",description:"Reduce cost by 1pt.",type:["M"]},{id:16,name:"Gravlock",description:"At the end of your move turn, you may set your Motion to 1. AUs can do this.",type:["A"]},{id:17,name:"Guardian",description:"Lose 1 Rad and 1 Jolt in cooldown.",type:["M"]},{id:18,name:"Gyro",description:"Move through rough and cover as open.",type:["A"]},{id:19,name:"Hooks",description:"When a MAC you are touching moves, you may move with it.",type:["I"]},{id:20,name:"Hotstepper",description:"When you jump and collide, cause an extra hit and 1 Heat to the target.",type:["A"]},{id:21,name:"Hoverfoil",description:"Move through rough and water as open.",type:["A"]},{id:22,name:"Intake",description:"Jumping generates 1 less Heat.",type:["M"]},{id:23,name:"Jet",description:'Each jet allows up to 9" of jumping.',type:["A"]},{id:24,name:"Mesh",description:"If the attack caused fewer than 3 hits, ignore hits to this module.",type:["M"]},{id:25,name:"Plate",description:"Roll 4+ to ignore each hit to this module.",type:["M"]},{id:26,name:"Precog",description:"When your initiative card is drawn, you may gain 1 Heat to shuffle it back into the deck instead of activating.",type:["M"]},{id:27,name:"Prism",description:"At the end of your attack turn, lose 1 Heat for each ranged weapon you fired.",type:["M"]},{id:28,name:"Radiator",description:"Lose 1 Heat in cooldown.",type:["M"]},{id:29,name:"Reflector",description:"If the attack caused 3 or more hits, ignore hits to this module.",type:["M"]},{id:30,name:"Rotor",description:"Rotate an extra time at any point of your move.",type:["M"]},{id:31,name:"Servo",description:"Gain 1 less Heat for shifting or rushing.",type:["M"]},{id:32,name:"Shield",description:"Gain 1 Heat to ignore each hit to this module.",type:["M"]},{id:33,name:"Tether",description:'At the end of your move turn, you may cause 1 Jolt to a visible MAC within 3".',type:["A"]},{id:34,name:"Transport",description:"This unit can rush.",type:["I"]},{id:35,name:"Vent",description:"Lose 2 Heat when you hold in the move phase.",type:["M"]}];var ct=class{id=0;name="";description="";type=[];constructor({id:t=0,name:r="",description:o="",type:a=[]}){this.id=t,this.name=r,this.description=o,this.type=a}};var fr=ur.map(e=>new ct(e)),x=function(e){return fr.find(t=>t.id===e)},hr=function({mac:e=null,auxunit:t=null}){return fr.filter(r=>e?r.type.includes("M")||r.type.includes("A"):t?r.type.includes(t.type)||r.type.includes("A"):!0)},vr=function(e){return x(e)?.name||""};var $=[{id:"I",label:"Infantry",maxunits:5},{id:"V",label:"Vehicle",maxunits:3}];var Yr="1.0",l=new pt,Kr=function(){return new Date().toUTCString()},Ft=function(e){return new N(e)},D=function(e){if(!e)return null;let t=bt.get(e);return!t||!t.uuid?null:Ft(t)},Dt=function(e){e.updated=Kr(),e.version=Yr,bt.set(e.uuid,e),l.trigger("force:edit")},xr=function(e){bt.remove(e),l.trigger("force:remove",{uuid:e})},gt=function(){let e=[];return bt.getAll().forEach(t=>{let r=Ft(t);e.push(r)}),e};var Qr=function(e){let t=[];return!e.mClass===0&&t.push("Mac must have a class."),Object.keys(e.modules).length!==6&&t.push("Macs must have 6 modules."),t},qt=function(e){let t=[],r=e.type==="I"?1:2,o=e.type==="I"?"Infantry":"Vehicle",a=e.weapons.filter(d=>d?.type);a.length>2&&t.push("Max 2 weapons allowed."),a.forEach(d=>{d.power>r&&t.push(`Weapon "${d.label}" exceeds max Power ${r} for ${o}.`)});let i={};e.hardware.forEach(d=>{d!=null&&(i[d]=(i[d]??0)+1)}),Object.entries(i).forEach(([d,m])=>{if(m>2){let g=x(Number(d));t.push(`Cannot have more than 2 of "${g?.name??d}".`)}}),e.hardware.forEach(d=>{if(d==null)return;let m=x(d);m&&!m.type.includes(e.type)&&!m.type.includes("A")&&t.push(`Hardware "${m.name}" is not compatible with ${o}.`)});let n=$.find(d=>d.id===e.type);return n&&e.units>n.maxunits&&t.push(`${n.label} max formation size is ${n.maxunits}.`),t},wr=function(e){let t=[];if(e.name||t.push("Force must have a name."),e.macs.forEach(r=>{t=t.concat(Qr(r))}),e.aus.forEach(r=>{t=t.concat(qt(r))}),t.length>0)throw new Error(t.join("<br/>"))},yr=function(e){let t=[];return e.forEach(r=>{t.push(D(r))}),t},Ot=function(e){try{let t=e.indexOf("[{"),r=e.lastIndexOf("}]"),o=e.indexOf(":[{");o!==-1&&o<t&&(t=-1),t===-1?(t=e.indexOf("{"),r=e.lastIndexOf("}"),e=e.substring(t),e=e.substring(0,r+1)):(e=e.substring(t),e=e.substring(0,r+2)),e=e.trim(),e=e.replace(/\},[\r\n]+\{/g,"},{"),e=e.replace(/(?:\r\n|\r|\n)/g,"<br/>");let a=JSON.parse(e);Array.isArray(a)||(a=[a]),a.forEach(i=>{if(typeof i!="object"||!i.uuid)throw new Error("Data appears to be invalid. Try removing any text that isn't part of the backup (i.e. email introduction).");let n=Ft(i),d=D(i.uuid);if(d&&d.name!==""&&d.name!==n.name){alert(`You have a force with that unique id but a different name than "${n.name}". Import aborted. Edit the uuid in the import or rename/delete the existing Force`);return}Dt(n),alert(`Imports: "${n.name}"`)}),l.trigger("force:edit")}catch(t){alert(`Error processing backup data: ${t.message}`)}};var kr={ATTRIBUTE:1,CHILD:2,PROPERTY:3,BOOLEAN_ATTRIBUTE:4,EVENT:5,ELEMENT:6},$r=e=>(...t)=>({_$litDirective$:e,values:t}),kt=class{constructor(t){}get _$AU(){return this._$AM._$AU}_$AT(t,r,o){this._$Ct=t,this._$AM=r,this._$Ci=o}_$AS(t,r){return this.update(t,r)}update(t,r){return this.render(...r)}};var ut=class extends kt{constructor(t){if(super(t),this.it=u,t.type!==kr.CHILD)throw Error(this.constructor.directiveName+"() can only be used in child bindings")}render(t){if(t===u||t==null)return this._t=void 0,this.it=t;if(t===k)return t;if(typeof t!="string")throw Error(this.constructor.directiveName+"() called with a non-string value");if(t===this.it)return this._t;this.it=t;let r=[t];return r.raw=r,this._t={_$litType$:this.constructor.resultType,strings:r,values:[]}}};ut.directiveName="unsafeHTML",ut.resultType=1;var zr=$r(ut);var q=class extends b{static styles=[super.styles,p`
     :host([selected]) li.list-group-item {
         background-color: lightgoldenrodyellow;
         border-width: 3px;
@@ -45,7 +45,7 @@ p.small {
     `];static properties={selected:{type:Boolean}};constructor({hardware:t,selected:r=!1,macUuid:o="",auUuid:a="",moduleId:i=0}){super(),this.hardware=t,this.selected=r,this.selected&&this.setAttribute("selected","true"),this.macUuid=o,this.auUuid=a,this.moduleId=i}handleSelect(){this.macUuid&&l.trigger("mac:module:update",{hardware:this.hardware,macUuid:this.macUuid,moduleId:this.moduleId}),this.auUuid&&l.trigger("auxunit:hardware:update",{hardware:this.hardware,auUuid:this.auUuid,moduleId:this.moduleId})}render(){return s`<li class="list-group-item" @click=${this.handleSelect}>
             <h4>${this.hardware.name} (${this.hardware.type.join(", ")})</h4>
             ${this.hardware.description!==""?s`<p>${this.hardware.description}</p>`:""}
-        </li>`}};window.customElements.get("mac-hardware-details")||window.customElements.define("mac-hardware-details",D);var Ar=[{id:"S",label:"Short"},{id:"L",label:"Large"},{id:"A",label:"Arc"}];var _r=[{id:"B",label:"Burst"},{id:"P",label:"Piercing"},{id:"G",label:"Guided"},{id:"M",label:"Multi"}];var Er=[{id:"",label:"---"},{id:"T",label:"Thermal"},{id:"J",label:"Jolt"},{id:"R",label:"Rad"}];var E=class extends b{static styles=[super.styles,p`
+        </li>`}};window.customElements.get("mac-hardware-details")||window.customElements.define("mac-hardware-details",q);var Ar=[{id:"S",label:"Short"},{id:"L",label:"Large"},{id:"A",label:"Arc"}];var _r=[{id:"B",label:"Burst"},{id:"P",label:"Piercing"},{id:"G",label:"Guided"},{id:"M",label:"Multi"}];var Er=[{id:"",label:"---"},{id:"T",label:"Thermal"},{id:"J",label:"Jolt"},{id:"R",label:"Rad"}];var E=class extends b{static styles=[super.styles,p`
     :host([selected]) li.list-group-item {
         background-color: lightgoldenrodyellow;
         border-width: 3px;
@@ -110,7 +110,7 @@ p.small {
                 </div>
                 <button type="submit" class="btn btn-primary">Choose Weapon</button>
             </form>
-        </li>`}};window.customElements.get("mac-weapon-details")||window.customElements.define("mac-weapon-details",E);var C=class extends b{constructor({mac:t=null,auxunit:r=null,moduleId:o=0}){super(),this.mac=t,this.auxunit=r,this.moduleId=o,this.module=this.mac?.getModule(o)??null,this.handleUpdate=this.#t.bind(this)}connectedCallback(){super.connectedCallback(),l.on("mac:module:update",this.handleUpdate),l.on("auxunit:hardware:update",this.handleUpdate)}disconnectedCallback(){super.disconnectedCallback(),l.off("mac:module:update",this.handleUpdate),l.off("auxunit:hardware:update",this.handleUpdate)}close(){this.getRootNode().host?.clearColumns(!1,!0)}#t({hardware:t,weapon:r}){this.renderRoot.querySelectorAll("mac-hardware-details, mac-weapon-details").forEach(o=>{if(o.tagName==="MAC-WEAPON-DETAILS"){r?o.setAttribute("selected",!0):o.removeAttribute("selected");return}o?.hardware?.id===t?.id?o.setAttribute("selected",!0):o.removeAttribute("selected")})}#r(){return this.mac?this.module.hardware_id:this.auxunit.hardware[this.moduleId]??0}#o(){return hr({mac:this.mac,auxunit:this.auxunit}).map(r=>new D({hardware:r,selected:r.id==this.#r(),macUuid:this.mac?.uuid,moduleId:this.moduleId,auUuid:this.auxunit?.uuid}))}render(){return s`<ul class="list-group">
+        </li>`}};window.customElements.get("mac-weapon-details")||window.customElements.define("mac-weapon-details",E);var C=class extends b{constructor({mac:t=null,auxunit:r=null,moduleId:o=0}){super(),this.mac=t,this.auxunit=r,this.moduleId=o,this.module=this.mac?.getModule(o)??null,this.handleUpdate=this.#t.bind(this)}connectedCallback(){super.connectedCallback(),l.on("mac:module:update",this.handleUpdate),l.on("auxunit:hardware:update",this.handleUpdate)}disconnectedCallback(){super.disconnectedCallback(),l.off("mac:module:update",this.handleUpdate),l.off("auxunit:hardware:update",this.handleUpdate)}close(){this.getRootNode().host?.clearColumns(!1,!0)}#t({hardware:t,weapon:r}){this.renderRoot.querySelectorAll("mac-hardware-details, mac-weapon-details").forEach(o=>{if(o.tagName==="MAC-WEAPON-DETAILS"){r?o.setAttribute("selected",!0):o.removeAttribute("selected");return}o?.hardware?.id===t?.id?o.setAttribute("selected",!0):o.removeAttribute("selected")})}#r(){return this.mac?this.module.hardware_id:this.auxunit.hardware[this.moduleId]??0}#o(){return hr({mac:this.mac,auxunit:this.auxunit}).map(r=>new q({hardware:r,selected:r.id==this.#r(),macUuid:this.mac?.uuid,moduleId:this.moduleId,auUuid:this.auxunit?.uuid}))}render(){return s`<ul class="list-group">
             ${this.mac?new E({mac:this.mac,moduleId:this.moduleId,selected:this.module.weapon}):""}
             ${this.#o()}
         </ul>
@@ -162,7 +162,7 @@ p.small {
         .module-name {
             flex: 1 1 auto;
         }
-        `];auxunit=null;constructor({auxunit:t,force:r}){super(),this.auxunit=t,this.force=r,this.dataset.uuid=this.auxunit.uuid,this.weaponHandler=this.#r.bind(this),this.hardwareHandler=this.#o.bind(this)}connectedCallback(){super.connectedCallback(),l.on("auxunit:hardware:update",this.hardwareHandler),l.on("auxunit:weapon:update",this.weaponHandler),l.on("force:edit",()=>{this.requestUpdate()})}disconnectedCallback(){super.disconnectedCallback(),l.off("auxunit:hardware:update",this.hardwareHandler),l.off("auxunit:weapon:update",this.weaponHandler)}#t(){l.trigger("auxunit:update",{uuid:this.auxunit.uuid})}#r({auUuid:t,moduleId:r,weapon:o}){t===this.auxunit.uuid&&(this.auxunit.weapons[r]=o,this.requestUpdate(),this.#t())}#o({auUuid:t,moduleId:r,hardware:o=null}){t===this.auxunit.uuid&&(this.auxunit.hardware[r]=o?.id??null,this.requestUpdate(),this.#t())}saveName(t){this.auxunit.name=t.target.value,this.#t()}saveType(t){this.auxunit.type=t.target.value,this.auxunit.units=1,this.requestUpdate(),this.#t()}#e(t){this.auxunit.units=Number(t.target.value),this.requestUpdate(),this.#t()}close(){document.querySelector("mac-force-page")?.clearColumns(!0,!0)}showWeapon(t){t.preventDefault();let r=Number(t.target.dataset.wid??0);document.querySelector("mac-force-page")?.fillColumn(new W({auxunit:this.auxunit,moduleId:r}),3,"Weapon")}showHardware(t){t.preventDefault();let r=Number(t.target.dataset.hid??0);r<0||document.querySelector("mac-force-page")?.fillColumn(new C({auxunit:this.auxunit,moduleId:r}),3,"Hardware")}#a(){this.auxunit.name=At(),this.requestUpdate(),this.#t()}#i(){return k.map(({id:r,label:o})=>s`<option value="${r}" ?selected=${this.auxunit.type==r}>${o}</option>`)}#n(){let t=k.find(o=>o.id===this.auxunit.type),r=[];for(let o=1;o<=t.maxunits;o++)r.push(s`<option value="${o}" ?selected=${this.auxunit.units==o}>${o}</option>`);return r}#s(){let t=Dt(this.auxunit);return t.length===0?"":s`<ul class="alert alert-danger mb-3">
+        `];auxunit=null;constructor({auxunit:t,force:r}){super(),this.auxunit=t,this.force=r,this.dataset.uuid=this.auxunit.uuid,this.weaponHandler=this.#r.bind(this),this.hardwareHandler=this.#o.bind(this)}connectedCallback(){super.connectedCallback(),l.on("auxunit:hardware:update",this.hardwareHandler),l.on("auxunit:weapon:update",this.weaponHandler),l.on("force:edit",()=>{this.requestUpdate()})}disconnectedCallback(){super.disconnectedCallback(),l.off("auxunit:hardware:update",this.hardwareHandler),l.off("auxunit:weapon:update",this.weaponHandler)}#t(){l.trigger("auxunit:update",{uuid:this.auxunit.uuid})}#r({auUuid:t,moduleId:r,weapon:o}){t===this.auxunit.uuid&&(this.auxunit.weapons[r]=o,this.requestUpdate(),this.#t())}#o({auUuid:t,moduleId:r,hardware:o=null}){t===this.auxunit.uuid&&(this.auxunit.hardware[r]=o?.id??null,this.requestUpdate(),this.#t())}saveName(t){this.auxunit.name=t.target.value,this.#t()}saveType(t){this.auxunit.type=t.target.value,this.auxunit.units=1,this.requestUpdate(),this.#t()}#e(t){this.auxunit.units=Number(t.target.value),this.requestUpdate(),this.#t()}close(){document.querySelector("mac-force-page")?.clearColumns(!0,!0)}showWeapon(t){t.preventDefault();let r=Number(t.target.dataset.wid??0);document.querySelector("mac-force-page")?.fillColumn(new W({auxunit:this.auxunit,moduleId:r}),3,"Weapon")}showHardware(t){t.preventDefault();let r=Number(t.target.dataset.hid??0);r<0||document.querySelector("mac-force-page")?.fillColumn(new C({auxunit:this.auxunit,moduleId:r}),3,"Hardware")}#a(){this.auxunit.name=At(),this.requestUpdate(),this.#t()}#i(){return $.map(({id:r,label:o})=>s`<option value="${r}" ?selected=${this.auxunit.type==r}>${o}</option>`)}#n(){let t=$.find(o=>o.id===this.auxunit.type),r=[];for(let o=1;o<=t.maxunits;o++)r.push(s`<option value="${o}" ?selected=${this.auxunit.units==o}>${o}</option>`);return r}#s(){let t=qt(this.auxunit);return t.length===0?"":s`<ul class="alert alert-danger mb-3">
             ${t.map(r=>s`<li>${r}</li>`)}
         </ul>`}#l(){let t=this.auxunit.weapons;return[0,1].map(r=>{let o=t[r];return s`<li>
             <div class="input-group">
@@ -223,7 +223,7 @@ p.small {
                 <button type="button" class="btn btn-secondary btn-sm" @click="${this.openEdit}">Edit</button>
                 <button type="button" class="btn btn-danger btn-sm" @click=${this.delete}>Delete</button>
             </dv>
-        </li>`}};window.customElements.get("mac-au-list")||window.customElements.define("mac-au-list",V);var J=class extends b{static styles=[super.styles,p``];#t=!1;#r="";constructor({force:t=null}){super(),this.force=t,this.macUpdateHandler=this.#o.bind(this),this.auUpdateHandler=this.#e.bind(this)}connectedCallback(){super.connectedCallback(),l.on("mac:update",this.macUpdateHandler),l.on("auxunit:update",this.auUpdateHandler)}disconnectedCallback(){super.disconnectedCallback(),l.off("mac:update",this.macUpdateHandler),l.off("auxunit:update",this.auUpdateHandler)}#o(){this.#t=!0,this.requestUpdate()}#e(){this.#t=!0,this.requestUpdate()}save(t){t.preventDefault(),this.#r="";let r=new FormData(t.target);this.force.name=r.get("force-name").toString();try{wr(this.force),Ft(this.force),this.#t=!1}catch(o){this.#r=o.message}this.requestUpdate()}close(){document.querySelector("mac-force-page")?.clearColumns(),this.remove()}deleteForce(){confirm("Are you sure?")&&(xr(this.force.uuid),this.close())}addMac(){let t=new T({});this.force.addMac(t),this.#t=!0,this.requestUpdate();let r=document.querySelector("mac-force-page");r&&(r.clearColumns(!0,!0),r.fillColumn(new S({mac:t,force:this.force}),2,"Mac"))}deleteMac(t){let r=t.detail?.uuid||"";r!==""&&(this.force.removeMac(r),this.#t=!0,this.requestUpdate(),l.trigger("mac:remove",{uuid:r}))}addAuxUnit(){let t=new I({});this.force.addAuxUnit(t),this.#t=!0,this.requestUpdate();let r=document.querySelector("mac-force-page");r&&(r.clearColumns(!0,!0),r.fillColumn(new U({auxunit:t,force:this.force}),2,"Aux Unit"))}deleteAux(t){let r=t.detail?.uuid||"";r!==""&&(this.force.removeAux(r),this.#t=!0,this.requestUpdate(),l.trigger("aux:remove",{uuid:r}))}#a(t){let r=t.target,o=r.name.replace("g-","");this.force[o]!==r.value&&(this.#t=!0,this.force[o]=r.value,this.requestUpdate())}render(){return s`<div class="d-flex justify-content-between align-items-center mb-3">
+        </li>`}};window.customElements.get("mac-au-list")||window.customElements.define("mac-au-list",V);var J=class extends b{static styles=[super.styles,p``];#t=!1;#r="";constructor({force:t=null}){super(),this.force=t,this.macUpdateHandler=this.#o.bind(this),this.auUpdateHandler=this.#e.bind(this)}connectedCallback(){super.connectedCallback(),l.on("mac:update",this.macUpdateHandler),l.on("auxunit:update",this.auUpdateHandler)}disconnectedCallback(){super.disconnectedCallback(),l.off("mac:update",this.macUpdateHandler),l.off("auxunit:update",this.auUpdateHandler)}#o(){this.#t=!0,this.requestUpdate()}#e(){this.#t=!0,this.requestUpdate()}save(t){t.preventDefault(),this.#r="";let r=new FormData(t.target);this.force.name=r.get("force-name").toString();try{wr(this.force),Dt(this.force),this.#t=!1}catch(o){this.#r=o.message}this.requestUpdate()}close(){document.querySelector("mac-force-page")?.clearColumns(),this.remove()}deleteForce(){confirm("Are you sure?")&&(xr(this.force.uuid),this.close())}addMac(){let t=new T({});this.force.addMac(t),this.#t=!0,this.requestUpdate();let r=document.querySelector("mac-force-page");r&&(r.clearColumns(!0,!0),r.fillColumn(new S({mac:t,force:this.force}),2,"Mac"))}deleteMac(t){let r=t.detail?.uuid||"";r!==""&&(this.force.removeMac(r),this.#t=!0,this.requestUpdate(),l.trigger("mac:remove",{uuid:r}))}addAuxUnit(){let t=new I({});this.force.addAuxUnit(t),this.#t=!0,this.requestUpdate();let r=document.querySelector("mac-force-page");r&&(r.clearColumns(!0,!0),r.fillColumn(new U({auxunit:t,force:this.force}),2,"Aux Unit"))}deleteAux(t){let r=t.detail?.uuid||"";r!==""&&(this.force.removeAux(r),this.#t=!0,this.requestUpdate(),l.trigger("aux:remove",{uuid:r}))}#a(t){let r=t.target,o=r.name.replace("g-","");this.force[o]!==r.value&&(this.#t=!0,this.force[o]=r.value,this.requestUpdate())}render(){return s`<div class="d-flex justify-content-between align-items-center mb-3">
             <h2>Edit Force</h2>
             <button type="button" class="btn btn-secondary btn-sm" @click=${this.close}>Close</button>
         </div>
@@ -453,7 +453,7 @@ ${JSON.stringify(n)}`,f=`mailto:?subject=${encodeURIComponent(`Force backup: ${d
                 display: block;
             }
         }
-        `];constructor(){super(),this.setAttribute("role","main"),this.showCreateHandler=this.#e.bind(this),this.showImportHandler=this.#a.bind(this),this.showExportHandler=this.#i.bind(this),this.forceSaveHandler=this.#n.bind(this)}connectedCallback(){super.connectedCallback(),l.on("force:show:edit",this.showCreateHandler),l.on("force:show:import",this.showImportHandler),l.on("force:show:export",this.showExportHandler),l.on("force:edit",this.forceSaveHandler),l.on("force:remove",()=>{this.clearColumns()}),l.on("mac:remove",({uuid:t})=>{this.#s(t)}),l.on("aux:remove",({uuid:t})=>{this.#l(t)})}disconnectedCallback(){super.disconnectedCallback(),l.off("force:show:edit",this.showCreateHandler),l.off("force:show:import",this.showImportHandler),l.off("force:show:export",this.showExportHandler),l.off("force:edit",this.forceSaveHandler)}#t(t){t.preventDefault();let o=t.currentTarget.dataset.col||1;this.#r(o)}#r(t){let r=this.renderRoot.querySelector(`#col-${t}`);r&&r.innerHTML!==""&&(this.renderRoot.querySelectorAll("li").forEach(o=>o.classList.remove("active")),this.renderRoot.querySelector(`li:has(a[data-col="${t}"])`)?.classList.add("active"),this.renderRoot.querySelectorAll("main > div").forEach(o=>o.classList.remove("active")),r.classList.add("active"))}#o(t){t.preventDefault();let r=t.currentTarget,o=Number(r.dataset.col||1);o===2&&this.clearColumns(!0,!0),o===3&&this.clearColumns(!1,!0)}clearColumns(t=!0,r=!0){if(r&&(this.renderRoot.querySelector("#col-3").innerHTML=""),t&&(this.renderRoot.querySelector("#col-2").innerHTML=""),t&&r){this.#r(1);return}this.#r(2)}fillColumn(t,r=2,o=""){this.clearColumns(r===2,r===3),this.renderRoot.querySelector(`#col-${r}`)?.append(t),this.renderRoot.querySelector(`a[data-col="${r}"]`).innerText=o,this.#r(r)}clearFirstColumn(){this.renderRoot.querySelector("#col-1 > div").innerHTML=""}fillFirstColumn(t){this.renderRoot.querySelector("#col-1 > div").append(t)}#e({uuid:t=""}){this.clearColumns(!0,!0),this.clearFirstColumn();let r;if(t==="")r=new N({});else if(r=F(t),!r)return;let o=new J({force:r});this.fillFirstColumn(o)}#a(){this.clearColumns(!0,!0),this.clearFirstColumn();let t=new Y({});this.fillFirstColumn(t)}#i(){this.clearColumns(!0,!0),this.clearFirstColumn();let t=new X({});this.fillFirstColumn(t)}#n(){this.clearColumns(!0,!0)}#s(t){let r=this.renderRoot.querySelector(`#col-2 mac-mac-edit[data-uuid="${t}"]`);r&&r.remove()}#l(t){let r=this.renderRoot.querySelector(`#col-2 mac-au-edit[data-uuid="${t}"]`);r&&r.remove()}render(){return s`<div>
+        `];constructor(){super(),this.setAttribute("role","main"),this.showCreateHandler=this.#e.bind(this),this.showImportHandler=this.#a.bind(this),this.showExportHandler=this.#i.bind(this),this.forceSaveHandler=this.#n.bind(this)}connectedCallback(){super.connectedCallback(),l.on("force:show:edit",this.showCreateHandler),l.on("force:show:import",this.showImportHandler),l.on("force:show:export",this.showExportHandler),l.on("force:edit",this.forceSaveHandler),l.on("force:remove",()=>{this.clearColumns()}),l.on("mac:remove",({uuid:t})=>{this.#s(t)}),l.on("aux:remove",({uuid:t})=>{this.#l(t)})}disconnectedCallback(){super.disconnectedCallback(),l.off("force:show:edit",this.showCreateHandler),l.off("force:show:import",this.showImportHandler),l.off("force:show:export",this.showExportHandler),l.off("force:edit",this.forceSaveHandler)}#t(t){t.preventDefault();let o=t.currentTarget.dataset.col||1;this.#r(o)}#r(t){let r=this.renderRoot.querySelector(`#col-${t}`);r&&r.innerHTML!==""&&(this.renderRoot.querySelectorAll("li").forEach(o=>o.classList.remove("active")),this.renderRoot.querySelector(`li:has(a[data-col="${t}"])`)?.classList.add("active"),this.renderRoot.querySelectorAll("main > div").forEach(o=>o.classList.remove("active")),r.classList.add("active"))}#o(t){t.preventDefault();let r=t.currentTarget,o=Number(r.dataset.col||1);o===2&&this.clearColumns(!0,!0),o===3&&this.clearColumns(!1,!0)}clearColumns(t=!0,r=!0){if(r&&(this.renderRoot.querySelector("#col-3").innerHTML=""),t&&(this.renderRoot.querySelector("#col-2").innerHTML=""),t&&r){this.#r(1);return}this.#r(2)}fillColumn(t,r=2,o=""){this.clearColumns(r===2,r===3),this.renderRoot.querySelector(`#col-${r}`)?.append(t),this.renderRoot.querySelector(`a[data-col="${r}"]`).innerText=o,this.#r(r)}clearFirstColumn(){this.renderRoot.querySelector("#col-1 > div").innerHTML=""}fillFirstColumn(t){this.renderRoot.querySelector("#col-1 > div").append(t)}#e({uuid:t=""}){this.clearColumns(!0,!0),this.clearFirstColumn();let r;if(t==="")r=new N({});else if(r=D(t),!r)return;let o=new J({force:r});this.fillFirstColumn(o)}#a(){this.clearColumns(!0,!0),this.clearFirstColumn();let t=new Y({});this.fillFirstColumn(t)}#i(){this.clearColumns(!0,!0),this.clearFirstColumn();let t=new X({});this.fillFirstColumn(t)}#n(){this.clearColumns(!0,!0)}#s(t){let r=this.renderRoot.querySelector(`#col-2 mac-mac-edit[data-uuid="${t}"]`);r&&r.remove()}#l(t){let r=this.renderRoot.querySelector(`#col-2 mac-au-edit[data-uuid="${t}"]`);r&&r.remove()}render(){return s`<div>
         <div>
             <ul>
                 <li class="active"><a href="#" data-col=1 @click=${this.#t}>Forces</a></li>
@@ -506,12 +506,7 @@ ${JSON.stringify(n)}`,f=`mailto:?subject=${encodeURIComponent(`Force backup: ${d
         :host {
             padding: 0;
         }
-        .grid-col-2 {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 1rem;
-            margin-bottom: .5rem;
-        }
+
     .module-list li {
         margin: 0;
     }
@@ -520,10 +515,6 @@ ${JSON.stringify(n)}`,f=`mailto:?subject=${encodeURIComponent(`Force backup: ${d
     }
     .module-name.destroyed {
         text-decoration: line-through;
-    }
-
-    label {
-        font-weight: bold;
     }
 
     .input-group {
@@ -535,121 +526,41 @@ ${JSON.stringify(n)}`,f=`mailto:?subject=${encodeURIComponent(`Force backup: ${d
         flex: 0 1 auto;
     }
 
-    dl {
-        margin:0;
-        padding: 0;
-    }
-    dl.attributes {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: .5rem;
-        align-items: center;
-    }
-    dl.attributes dt {
-        font-weight: bold;
-    }
-    dl.attributes dd {
-        margin: 0;
-    }
-    #attr-luck-check, dl.attributes hr {
-        grid-column: span 2;
-    }
-    dl.attributes hr {
-        margin: 0.25rem 0;
-    }
-
     input[type="checkbox"] {
         font-size: 2rem;
         height: 2rem;
         width: 2rem;
     }
 
-    table.weapons {
-        border: 1px solid black;
-        border-collapse: collapse;
-        width: 100%;
-        text-align: left;
-        margin-bottom: .5rem;
-    }
-    table.weapons th, table.weapons td{
-        border: 1px solid black;
-        padding: 0 .25rem;
-    }
-
-    h3 {
-        font-size: 1rem;
-        margin: 0;
-        padding: 0;
-        margin-bottom: .5rem;
-    }
     ul, ol { margin: 0; padding: 0; }
     li { margin: 0; padding: 0; margin-left: 1rem;}
 
-    .fill-in-box {
-        display: inline-block;
-        height: 2rem;
-        width: 2rem;
-        border: 1px solid black;
-        text-align: center;
-        font-size: 1.5rem;
-        line-height: 2rem;
-        border-radius: 1rem;
-    }
-
-    input[type="number"] {
-        width: 100%;
-        height: 2rem;
-        font-size: 1.5rem;
-        border: 1px solid black;
-        text-align: center;
-        border-radius: 5px;
-        max-width: 10rem;
-    }
-
-    .small { font-size: .8rem; }
-
-    .hit-locations {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: .25rem;
-        align-items: center;
-    }
-    .location {
-        white-space: nowrap;
-    }
-    .location strong {
-        font-size: 1.25rem;
-    }
-    .hit-locations .small {
-        grid-column: span 2;
-        padding-left: .25rem;
-        text-align: right;
-    }
-    .hit-locations .small.highlight {
-        color: red;
-    }
-    .hit-locations .wounds {
-        text-align: right;
-    }
-
-    .equipment-list:has(ul:empty) h3 {
-        display: none;
-    }
-
-    .boxes-checks {
-        gap: 1rem;
-        flex-wrap: wrap;
+    [popover] {
+        inset: unset;
+        margin: 0;
+        margin-inline-end: 4px;
+        position-area: left center;
+        border: 1px solid #ccc;
+        border-radius: .375rem;
+        padding: .5rem .75rem;
+        max-width: 20rem;
+        box-shadow: 0 4px 12px rgba(0,0,0,.15);
+        font-size: .875rem;
     }
     `];auxunit=null;constructor({auxunit:t,force:r}){super(),this.auxunit=t,this.force=r,this.id=this.auxunit.uuid}#t(t){this.auxunit.destroyed=t.target.checked,this.requestUpdate()}#r(t){this.auxunit.division=t.target.value,this.dispatchEvent(new CustomEvent("mac-division-change",{bubbles:!0,composed:!0}))}#o(t){this.auxunit.initiative=t.target.value,this.dispatchEvent(new CustomEvent("mac-initiative-change",{bubbles:!0,composed:!0}))}#e(){return this.auxunit.weapons.map(t=>s`<li>
             <div class="input-group">
                 <span class="input-group-text module-name">${t.label}</span>
             </div>
-            </li>`)}#a(){return this.auxunit.hardware.map(t=>{let r=_(t);return r?s`<li>
+            </li>`)}#a(){return this.auxunit.hardware.map((t,r)=>{let o=x(t);if(!o)return"";let a=`au-${this.auxunit.uuid}-hw-${r}-popover`;return s`<li>
             <div class="input-group">
-                <span class="input-group-text module-name">${r.name}</span>
+                <span class="input-group-text module-name">${o.name}</span>
+                ${o.description?s`
+                    <button class="btn btn-outline-secondary px-4" type="button" popovertarget="${a}" style="anchor-name: --${a}" aria-label="Show ${o.name} description">?</button>
+                    <div id="${a}" popover style="position-anchor: --${a}">${o.description}</div>
+                `:""}
             </div>
-            </li>`:""})}#i(){let t=[];for(let r=1;r<=this.auxunit.units;r++){let o=r===this.auxunit.units;t.push(s`<span class="input-group-text">
-                <input class="form-check-input mt-0" type="checkbox" value="1" aria-label="Mark unit destroyed" ${o?`@click=${this.#t}`:""} />`)}return t}#n(){return k.find(r=>r.id===this.auxunit.type)?.label??"--"}render(){return s`<div class="grid-col-2">
+            </li>`})}#i(){let t=[];for(let r=1;r<=this.auxunit.units;r++){let o=r===this.auxunit.units;t.push(s`<span class="input-group-text">
+                <input class="form-check-input mt-0" type="checkbox" value="1" aria-label="Mark unit destroyed" ${o?`@click=${this.#t}`:""} />`)}return t}#n(){return $.find(r=>r.id===this.auxunit.type)?.label??"--"}render(){return s`<div>
             <div class="row mb-3 align-items-center">
                 <div class="input-group">
                     <span class="input-group-text"><strong>Type</strong></span>
@@ -681,12 +592,7 @@ ${JSON.stringify(n)}`,f=`mailto:?subject=${encodeURIComponent(`Force backup: ${d
         :host {
             padding: 0;
         }
-        .grid-col-2 {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 1rem;
-            margin-bottom: .5rem;
-        }
+
     .module-list li {
         margin: 0;
     }
@@ -695,10 +601,6 @@ ${JSON.stringify(n)}`,f=`mailto:?subject=${encodeURIComponent(`Force backup: ${d
     }
     .module-name.destroyed {
         text-decoration: line-through;
-    }
-
-    label {
-        font-weight: bold;
     }
 
     .input-group {
@@ -710,115 +612,35 @@ ${JSON.stringify(n)}`,f=`mailto:?subject=${encodeURIComponent(`Force backup: ${d
         flex: 0 1 auto;
     }
 
-    dl {
-        margin:0;
-        padding: 0;
-    }
-    dl.attributes {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: .5rem;
-        align-items: center;
-    }
-    dl.attributes dt {
-        font-weight: bold;
-    }
-    dl.attributes dd {
-        margin: 0;
-    }
-    #attr-luck-check, dl.attributes hr {
-        grid-column: span 2;
-    }
-    dl.attributes hr {
-        margin: 0.25rem 0;
-    }
-
     input[type="checkbox"] {
         font-size: 2rem;
         height: 2rem;
         width: 2rem;
     }
 
-    table.weapons {
-        border: 1px solid black;
-        border-collapse: collapse;
-        width: 100%;
-        text-align: left;
-        margin-bottom: .5rem;
-    }
-    table.weapons th, table.weapons td{
-        border: 1px solid black;
-        padding: 0 .25rem;
-    }
-
-    h3 {
-        font-size: 1rem;
-        margin: 0;
-        padding: 0;
-        margin-bottom: .5rem;
-    }
     ul, ol { margin: 0; padding: 0; }
     li { margin: 0; padding: 0; margin-left: 1rem;}
 
-    .fill-in-box {
-        display: inline-block;
-        height: 2rem;
-        width: 2rem;
-        border: 1px solid black;
-        text-align: center;
-        font-size: 1.5rem;
-        line-height: 2rem;
-        border-radius: 1rem;
+    [popover] {
+        inset: unset;
+        margin: 0;
+        margin-inline-end: 4px;
+        position-area: left center;
+        border: 1px solid #ccc;
+        border-radius: .375rem;
+        padding: .5rem .75rem;
+        max-width: 20rem;
+        box-shadow: 0 4px 12px rgba(0,0,0,.15);
+        font-size: .875rem;
     }
-
-    input[type="number"] {
-        width: 100%;
-        height: 2rem;
-        font-size: 1.5rem;
-        border: 1px solid black;
-        text-align: center;
-        border-radius: 5px;
-        max-width: 10rem;
-    }
-
-    .small { font-size: .8rem; }
-
-    .hit-locations {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: .25rem;
-        align-items: center;
-    }
-    .location {
-        white-space: nowrap;
-    }
-    .location strong {
-        font-size: 1.25rem;
-    }
-    .hit-locations .small {
-        grid-column: span 2;
-        padding-left: .25rem;
-        text-align: right;
-    }
-    .hit-locations .small.highlight {
-        color: red;
-    }
-    .hit-locations .wounds {
-        text-align: right;
-    }
-
-    .equipment-list:has(ul:empty) h3 {
-        display: none;
-    }
-
-    .boxes-checks {
-        gap: 1rem;
-        flex-wrap: wrap;
-    }
-    `];mac=null;constructor({mac:t,force:r}){super(),this.mac=t,this.force=r,this.id=this.mac.uuid}#t(t){this.mac.destroyed=t.target.checked,this.requestUpdate()}#r(t){let r=Number(t.target.value),o=this.mac.getModule(r);o.destroyed=t.target.checked,this.requestUpdate()}#o(t){this.mac.division=t.target.value,this.dispatchEvent(new CustomEvent("mac-division-change",{bubbles:!0,composed:!0}))}#e(t){this.mac.initiative=t.target.value,this.dispatchEvent(new CustomEvent("mac-initiative-change",{bubbles:!0,composed:!0}))}#a(){return[1,2,3,4,5,6].map(t=>{let r=this.mac.getModule(t);return s`<li data-mid="${t}">
+    `];mac=null;constructor({mac:t,force:r}){super(),this.mac=t,this.force=r,this.id=this.mac.uuid}#t(t){this.mac.destroyed=t.target.checked,this.requestUpdate()}#r(t){let r=Number(t.target.value),o=this.mac.getModule(r);o.destroyed=t.target.checked,this.requestUpdate()}#o(t){this.mac.division=t.target.value,this.dispatchEvent(new CustomEvent("mac-division-change",{bubbles:!0,composed:!0}))}#e(t){this.mac.initiative=t.target.value,this.dispatchEvent(new CustomEvent("mac-initiative-change",{bubbles:!0,composed:!0}))}#a(){return[1,2,3,4,5,6].map(t=>{let r=this.mac.getModule(t),o=r.hardware_id?x(r.hardware_id):null,a=`mac-${this.mac.uuid}-mod-${t}-popover`;return s`<li data-mid="${t}">
             <div class="input-group">
                 <span class="input-group-text">${t}</span>
                 <span class="input-group-text module-name ${r.destroyed?"destroyed":""}">${r.label?r.label:"[Empty]"}</span>
+                ${o?.description?s`
+                    <button class="btn btn-outline-secondary px-4" type="button" popovertarget="${a}" style="anchor-name: --${a}" aria-label="Show ${o.name} description">?</button>
+                    <div id="${a}" popover style="position-anchor: --${a}">${o.description}</div>
+                `:""}
                 <span class="input-group-text">
                     <input class="form-check-input mt-0" type="checkbox" value="1" aria-label="Mark damaged">
                     <input class="form-check-input mt-0 ms-3" type="checkbox" value="${t}" aria-label="Mark destroyed" @click=${this.#r}>
@@ -826,7 +648,7 @@ ${JSON.stringify(n)}`,f=`mailto:?subject=${encodeURIComponent(`Force backup: ${d
             </div>
             </li>`})}#i(){let t=[];for(let r=1;r<=this.mac.mClass;r++){let o=r===this.mac.mClass;t.push(s`<span class="input-group-text">
                 <input class="form-check-input mt-0" type="checkbox" value="1" aria-label="Mark ${o?"destroyed":"damaged"}" ${o?`@click=${this.#t}`:""} />
-            </span>`)}return t}render(){return s`<div class="grid-col-2">
+            </span>`)}return t}render(){return s`<div>
             <div class="row mb-3 align-items-center">
                 <div class="input-group">
                     <span class="input-group-text"><strong>Class</strong></span>
@@ -992,61 +814,11 @@ ${JSON.stringify(n)}`,f=`mailto:?subject=${encodeURIComponent(`Force backup: ${d
             border: 2px solid black;
             padding: 1rem;
         }
-        .grid-col-2 {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 1rem;
-            margin-bottom: .5rem;
-        }
-    dl {
-        margin:0;
-        padding: 0;
-    }
-    dl.attributes {
-        display: grid;
-        grid-template-columns: 1fr 1fr 4fr;
-        gap: .5rem;
-        align-items: top;
-    }
-    dl.attributes dt {
-        font-weight: bold;
-    }
-    dl.attributes dd {
-        margin: 0;
-        grid-column: 2 / span 2
-    }
-    #attr-luck, #attr-handed {
-        grid-column: 2;
-    }
-    #attr-luck-check {
-        grid-column: 3;
-        grid-row: span 2;
-
-    }
-
 
     input[type="checkbox"] {
         margin-inline: 1px;
     }
 
-    table.weapons {
-        border: 1px solid black;
-        border-collapse: collapse;
-        width: 100%;
-        text-align: left;
-        margin-bottom: .5rem;
-    }
-    table.weapons th, table.weapons td{
-        border: 1px solid black;
-        padding: 0 .25rem;
-    }
-
-    h3 {
-        font-size: 1rem;
-        margin: 0;
-        padding: 0;
-        margin-bottom: .5rem;
-    }
     ul, ol { margin: 0; padding: 0; }
     li { margin: 0; padding: 0; margin-left: 1rem;}
 
@@ -1057,32 +829,16 @@ ${JSON.stringify(n)}`,f=`mailto:?subject=${encodeURIComponent(`Force backup: ${d
         border: 1px solid black;
         text-align: center;
     }
-
-    .small { font-size: .8rem; }
-
-    .hit-locations {
-        display: grid;
-        grid-template-columns: 1fr 1fr 5fr;
-        gap: .5rem;
-        align-items: center;
-    }
-    .location {
-        white-space: nowrap;
-    }
-
-    .equipment-list:has(ul:empty) h3 {
-        display: none;
-    }
-    `];auxunit=null;constructor({auxunit:t,force:r}){super(),this.auxunit=t,this.force=r}#t(){return k.find(r=>r.id===this.auxunit.type)?.label??"--"}#r(){return this.auxunit.weapons.map(t=>s`<li>
+    `];auxunit=null;constructor({auxunit:t,force:r}){super(),this.auxunit=t,this.force=r}#t(){return $.find(r=>r.id===this.auxunit.type)?.label??"--"}#r(){return this.auxunit.weapons.map(t=>s`<li>
             <div class="input-group">
                 <span class="input-group-text module-name">${t.label}</span>
             </div>
-            </li>`)}#o(){return this.auxunit.hardware.map(t=>{let r=_(t);return r?s`<li>
+            </li>`)}#o(){return this.auxunit.hardware.map(t=>{let r=x(t);return r?s`<li>
             <div class="input-group">
                 <span class="input-group-text module-name">${r.name}</span>
             </div>
             </li>`:""})}#e(){let t=[];for(let r=1;r<=this.auxunit.units;r++)t.push(s`<span class="input-group-text">
-                <input class="form-check-input mt-0" type="checkbox" value="1" />`);return t}render(){return s`<div class="grid-col-2">
+                <input class="form-check-input mt-0" type="checkbox" value="1" />`);return t}render(){return s`<div>
             <div class="row mb-3 align-items-center">
                 <div class="input-group">
                     <span class="input-group-text"><strong>Type</strong></span>
@@ -1139,13 +895,6 @@ ${JSON.stringify(n)}`,f=`mailto:?subject=${encodeURIComponent(`Force backup: ${d
         }
         .module-name {
             flex: 1 1 auto;
-        }
-
-        .grid-col-2 {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 1rem;
-            margin-bottom: .5rem;
         }
 
     .fill-in-box {
@@ -1208,7 +957,7 @@ ${JSON.stringify(n)}`,f=`mailto:?subject=${encodeURIComponent(`Force backup: ${d
         ${this.force.aus.map(t=>new rt({auxunit:t,force:this.force}))}
         <div>
         </div>
-        `}};window.customElements.get("mac-force-print")||window.customElements.define("mac-force-print",et);var no=new URLSearchParams(window.location.search),Br=no.get("force_id");if(Br){let e=F(Br),t=window.location.pathname.match(/print/),r=window.location.pathname.match(/play/);if(t){let o=new et({force:e});document.querySelector("main").prepend(o)}else if(r){let o=new tt({force:e});document.querySelector(".container").prepend(o)}}document.querySelector("header a.btn-help")?.addEventListener("click",e=>{e.preventDefault(),document.getElementById("help-general").showModal()});})();
+        `}};window.customElements.get("mac-force-print")||window.customElements.define("mac-force-print",et);var no=new URLSearchParams(window.location.search),Br=no.get("force_id");if(Br){let e=D(Br),t=window.location.pathname.match(/print/),r=window.location.pathname.match(/play/);if(t){let o=new et({force:e});document.querySelector("main").prepend(o)}else if(r){let o=new tt({force:e});document.querySelector(".container").prepend(o)}}document.querySelector("header a.btn-help")?.addEventListener("click",e=>{e.preventDefault(),document.getElementById("help-general").showModal()});})();
 /*! Bundled license information:
 
 @lit/reactive-element/css-tag.js:
