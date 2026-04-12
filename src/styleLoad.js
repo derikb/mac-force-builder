@@ -18,7 +18,6 @@ const bootstrapCss = `
 
 const localCss = `
 :root {
-
 }
 :host {
     --app-border-color: black;
@@ -28,6 +27,7 @@ const localCss = `
     --bs-border-color: var(--app-border-color);
     --bs-border-radius-sm: 0;
     --bs-border-radius: 0;
+    --bs-list-group-item-padding-x: .5rem;
 }
 
 .btn {
@@ -53,6 +53,7 @@ const localCss = `
 
 .list-group-item {
     border-width: var(--app-border-width);
+    --bs-list-group-item-padding-x: .5rem;
 }
 
 h2 {

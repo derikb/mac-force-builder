@@ -42,6 +42,7 @@
                 display: flex;
                 justify-content: space-between;
                 align-items: center;
+                gap: 1rem;
             }
             header a {
                 font-size: 1.125rem;
@@ -58,7 +59,7 @@
                 margin: 0rem 0 1.25rem 0;
             }
             /* Close button */
-            button.close, .btn-help {
+            button {
                 float: right;
                 margin: 1rem 0 0 1rem;
                 border-radius: 0;
@@ -68,12 +69,18 @@
                 color: #fff;
                 padding: .5rem 1rem;
                 font-size: 1.1rem;
+                white-space: nowrap;
+                cursor: pointer;
+            }
+            button:hover {
+                color: darkred;
+                background-color: white;
             }
             .btn-help {
                 margin: 0;
             }
 
-            @media(width <= 1000px) {
+            @media(width <= 700px) {
                 body,
                 html,
                 .container {

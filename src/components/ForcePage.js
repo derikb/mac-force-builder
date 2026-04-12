@@ -24,7 +24,7 @@ export default class ForcePage extends BaseElement {
             max-height: 100%;
         }
         :host > div > div {
-            flex: 0;
+            flex: 0 0 auto;
             padding: 0;
             width: 100%;
             max-width: 100%;

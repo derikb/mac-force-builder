@@ -136,12 +136,11 @@ export default class ForceEdit extends BaseElement {
         }
     }
 
-    #dirty (ev) {
+    #updateName (ev) {
         const input = ev.target;
-        const name = input.name.replace('g-', '');
-        if (this.force[name] !== input.value) {
+        if (this.force.name !== input.value) {
             this.#unsaved = true;
-            this.force[name] = input.value;
+            this.force.name = input.value;
             this.requestUpdate();
         }
     }
@@ -157,18 +156,17 @@ export default class ForceEdit extends BaseElement {
                 <div class="row mb-3">
                     <label for="force-name" class="col-sm-4 col-form-label">Force Name</label>
                     <div class="col">
-                    <input type="text" id="force-name" name="force-name" class="form-control" value="${this.force.name}" @blur=${this.#dirty} />
+                    <input type="text" id="force-name" name="force-name" class="form-control" value="${this.force.name}" @blur=${this.#updateName} />
                     </div>
                 </div>
                 ${this.#errors !== '' ? html`<p class="alert alert-danger">${unsafeHTML(this.#errors)}</p>` : ''}
                 ${this.#unsaved ? html`<p class="alert alert-danger">Unsaved Changes</p>` : ''}
                 <div class="d-flex justify-content-between align-items-center mb-3">
-                    <label for="g-points" class="col-auto col-form-label">Points</label>
-                    <div class="col-sm-2">
-                        <input type="text" id="g-points" name="g-points" readonly class="col form-control-plaintext" .value="${calcForceCost(this.force)}" />
-                    </div>
-                    <button type="submit" class="btn btn-primary">Save</button>
                     <div>
+                        <strong>Points:</strong> ${calcForceCost(this.force)}
+                    </div>
+                    <div>
+                        <button type="submit" class="btn btn-primary me-2">Save</button>
                         <button type="button" class="btn btn-danger btn-sm" @click=${this.deleteForce}>Delete</button>
                     </div>
                 </div>
