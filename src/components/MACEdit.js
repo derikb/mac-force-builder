@@ -107,7 +107,7 @@ export default class MACEdit extends BaseElement {
             <div class="input-group">
                 <span class="input-group-text">${id}</span>
                 <span class="input-group-text module-name">${module.label ? module.label : '[Empty]'}</span>
-                <button type="button" class="btn btn-outline-secondary" data-mid="${id}" @click=${this.showHardware}>Edit</button>
+                <button type="button" class="btn btn-secondary" data-mid="${id}" @click=${this.showHardware}>Edit</button>
             </div>
             </li>`;
         });

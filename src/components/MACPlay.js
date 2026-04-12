@@ -38,19 +38,6 @@ export default class MACPlay extends BaseElement {
 
     ul, ol { margin: 0; padding: 0; }
     li { margin: 0; padding: 0; margin-left: 1rem;}
-
-    [popover] {
-        inset: unset;
-        margin: 0;
-        margin-inline-end: 4px;
-        position-area: left center;
-        border: 1px solid #ccc;
-        border-radius: .375rem;
-        padding: .5rem .75rem;
-        max-width: 20rem;
-        box-shadow: 0 4px 12px rgba(0,0,0,.15);
-        font-size: .875rem;
-    }
     `
     ];
 

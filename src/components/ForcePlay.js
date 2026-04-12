@@ -72,7 +72,7 @@ export default class ForcePlay extends BaseElement {
             padding: 0 .5rem 0 .5rem;
             margin: 0;
             list-style-type: none;
-            border-width: 0 0 1px 0;
+            border-width: 0 0 2px 0;
             border-color: black;
             border-style: solid;
             white-space: nowrap;
@@ -81,9 +81,10 @@ export default class ForcePlay extends BaseElement {
             margin: 0;
             padding: 0;
             text-align: center;
-            border: 1px solid grey;
-            border-width: 1px 1px 0px 1px;
-            border-radius: .5rem .5rem 0 0;
+            border-style: solid;
+            border-color: var(--app-border-color);
+            border-width: 1px 4px 0px 1px;
+            border-radius: 0;
             background-color: #eee;
             display: inline-block;
         }
@@ -91,7 +92,7 @@ export default class ForcePlay extends BaseElement {
             background-color: white;
             border-bottom: 0;
             bottom: 1px;
-            transform: translateY(1px);
+            transform: translateY(2px);
         }
         li a {
             text-decoration: none;
@@ -200,8 +201,7 @@ export default class ForcePlay extends BaseElement {
             <ul>
                 ${this.force.macs.map((mac) => {
                     return html`<li class="${this.activeTab == mac.uuid ? 'active' : ''}"><a href="#" data-col=${mac.uuid} @click=${this.#changeTab}>${this.#renderTabTitle(mac)}</a></li>`;
-                })}
-                ${this.force.aus.map((au) => {
+                })}${this.force.aus.map((au) => {
                     return html`<li class="${this.activeTab == au.uuid ? 'active' : ''}"><a href="#" data-col="${au.uuid}" @click=${this.#changeTab}>${this.#renderTabTitle(au)}</a></li>`;
                 })}
             </ul>

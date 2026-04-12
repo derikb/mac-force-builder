@@ -155,7 +155,7 @@ export default class AuxUnitEdit extends BaseElement {
             <div class="input-group">
                 <span class="input-group-text">${id + 1}</span>
                 <span class="input-group-text module-name">${weapon?.label ?? '[Empty]'}</span>
-                <button type="button" class="btn btn-outline-secondary" data-wid="${id}" @click=${this.showWeapon}>Edit</button>
+                <button type="button" class="btn btn-secondary" data-wid="${id}" @click=${this.showWeapon}>Edit</button>
             </div>
             </li>`;
         });
@@ -166,7 +166,7 @@ export default class AuxUnitEdit extends BaseElement {
         return html`<li>
         <div class="input-group">
             <span class="input-group-text module-name">${name ?? '[Empty]'}</span>
-            <button type="button" class="btn btn-outline-secondary" data-hid="${id}" @click=${this.showHardware}>Edit</button>
+            <button type="button" class="btn btn-secondary" data-hid="${id}" @click=${this.showHardware}>Edit</button>
         </div>
         </li>`;
     }
@@ -197,21 +197,22 @@ export default class AuxUnitEdit extends BaseElement {
         </div>
 
         <div class="row mb-3 align-items-center">
-            <div class="col-sm-2"><strong>Type</strong></div>
-            <div class="col-sm-3">
+            <div class="col-sm-4"><strong>Type</strong></div>
+            <div class="col-sm-8">
                 <select class="form-select" @change=${this.saveType}>
                     ${this.#getTypeOptions()}
                 </select>
             </div>
-
-            <div class="col-sm-2"><strong># Units</strong></div>
+        </div>
+        <div class="row mb-3 align-items-center">
+            <div class="col-sm-3"><strong># Units</strong></div>
             <div class="col-sm-3">
                 <select class="form-select" @change=${this.#saveUnits}>
                     ${this.#getUnitOptions()}
                 </select>
             </div>
 
-            <div class="col-sm-2"><strong>Points</strong> ${calcAuxUnitCost(this.auxunit, this.force)}</div>
+            <div class="col-sm-6"><strong>Points</strong> ${calcAuxUnitCost(this.auxunit, this.force)}</div>
             </div>
         </div>
 

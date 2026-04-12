@@ -8,7 +8,6 @@ export default class HardwareDetails extends BaseElement {
         css`
     :host([selected]) li.list-group-item {
         background-color: lightgoldenrodyellow;
-        border-width: 3px;
     }
     `
     ];

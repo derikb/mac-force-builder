@@ -17,6 +17,44 @@ const bootstrapCss = `
 /*# sourceMappingURL=bootstrap.min.css.map */`;
 
 const localCss = `
+:root {
+
+}
+:host {
+    --app-border-color: black;
+    --app-border-width: 1px 4px 4px 1px;
+    font-family: var(--bs-font-monospace);
+    --bs-border-radius: 0;
+    --bs-border-color: var(--app-border-color);
+    --bs-border-radius-sm: 0;
+    --bs-border-radius: 0;
+}
+
+.btn {
+    border-width: var(--app-border-width);
+    --bs-btn-border-color: black;
+}
+.form-control,
+.form-select,
+.input-group,
+.card {
+    border-width: var(--app-border-width);
+}
+.input-group-text {
+    border-width: 1px 1px 4px 1px;
+}
+.input-group > span:last-of-type,
+.input-group > button:last-of-type {
+    border-width: 1px 4px 4px 1px;
+}
+.input-group .btn {
+    border-width: 1px 1px 4px 1px;
+}
+
+.list-group-item {
+    border-width: var(--app-border-width);
+}
+
 h2 {
     font-size: 1.25rem;
 }
@@ -46,6 +84,27 @@ p.small {
 .align-items-center:has(h2 + div, h2 + button) h2,
 .align-items-center:has(h3 + div, h3 + button) h3 {
     margin-bottom: 0;
+}
+
+input[type="checkbox"] {
+        font-size: 2rem;
+        height: 2rem;
+        width: 2rem;
+    }
+
+[popover] {
+    inset: unset;
+    margin: 0;
+    margin-inline-end: 4px;
+    position-area: left center;
+    border-style: solid;
+    border-radius: 0rem;
+    border-width: 1px 4px 4px 1px;
+    border-color: black;
+    padding: .5rem .75rem;
+    max-width: 20rem;
+    box-shadow: 0 4px 12px rgba(0,0,0,.15);
+    font-size: .875rem;
 }
 `;
 

@@ -15,6 +15,7 @@ export default class ForcePage extends BaseElement {
             flex: 1;
             height: 100%;
             max-height: 100%;
+            font-family: var(--bs-font-monospace);
         }
         :host > div {
             display: flex;
@@ -54,7 +55,7 @@ export default class ForcePage extends BaseElement {
             gap: .5rem;
             grid-template-columns: repeat(3, 1fr);
             list-style-type: none;
-            border-width: 0 0 1px 0;
+            border-width: 0 0 2px 0;
             border-color: black;
             border-style: solid;
         }
@@ -62,9 +63,10 @@ export default class ForcePage extends BaseElement {
             margin: 0;
             padding: 0;
             text-align: center;
-            border: 1px solid grey;
-            border-width: 1px 1px 0px 1px;
-            border-radius: .5rem .5rem 0 0;
+            border-style: solid;
+            border-color: var(--app-border-color);
+            border-width: 1px 4px 0px 1px;
+            border-radius: 0;
             background-color: #eee;
             display: flex;
         }
@@ -72,7 +74,7 @@ export default class ForcePage extends BaseElement {
             background-color: white;
             border-bottom: 0;
             bottom: 1px;
-            transform: translateY(1px);
+            transform: translateY(2px);
         }
         li a {
             text-decoration: none;
@@ -83,7 +85,7 @@ export default class ForcePage extends BaseElement {
         }
         li > a + a {
             flex: 0 10 auto;
-            border-inline-start: 1px solid grey;
+            border-inline-start: 4px solid black;
             border-color: inherit;
         }
         li.active a {
@@ -104,12 +106,12 @@ export default class ForcePage extends BaseElement {
             pointer-events: none;
         }
 
+        /** Hide the force list when the edit form is showing */
         main:has(mac-force-edit) mac-force-list {
             display: none;
         }
 
         @media(width <= 1000px) {
-
             :host main {
                 display: block;
                 overflow: auto;
