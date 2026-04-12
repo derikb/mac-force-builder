@@ -76,12 +76,6 @@ p.small {
     margin-bottom: 0;
 }
 
-input[type="checkbox"] {
-        font-size: 2rem;
-        height: 2rem;
-        width: 2rem;
-    }
-
 [popover] {
     inset: unset;
     margin: 0;
@@ -185,7 +179,7 @@ input[type="checkbox"] {
             </li>`})}render(){return s`<div class="row mb-3 align-items-center">
             <label for="macname" class="col-sm-3 col-form-label">Name</label>
             <div class="input-group col-sm-9">
-                <input type="text" id="macname" name="macname" class="form-control" value="${this.mac.name}" @blur=${this.saveName} />
+                <input type="text" id="macname" name="macname" class="form-control" .value="${this.mac.name}" @blur=${this.saveName} />
                 <button type="button" class="btn btn-secondary btn-sm" @click=${this.#o}>Generate Name</button>
             </div>
         </div>
@@ -436,6 +430,13 @@ ${JSON.stringify(n)}`,f=`mailto:?subject=${encodeURIComponent(`Force backup: ${d
             border-right: none;
         }
 
+        .tabs {
+            padding: 0;
+            width: 100%;
+            max-width: 100%;
+            overflow-x: scroll;
+        }
+
         ul {
             padding: 0 .5rem 0 .5rem;
             margin: 0;
@@ -446,6 +447,8 @@ ${JSON.stringify(n)}`,f=`mailto:?subject=${encodeURIComponent(`Force backup: ${d
             border-width: 0 0 2px 0;
             border-color: black;
             border-style: solid;
+            white-space: nowrap;
+            min-width: fit-content;
         }
         li {
             margin: 0;
@@ -515,7 +518,7 @@ ${JSON.stringify(n)}`,f=`mailto:?subject=${encodeURIComponent(`Force backup: ${d
             }
         }
         `];constructor(){super(),this.setAttribute("role","main"),this.showCreateHandler=this.#e.bind(this),this.showImportHandler=this.#a.bind(this),this.showExportHandler=this.#i.bind(this),this.forceSaveHandler=this.#n.bind(this)}connectedCallback(){super.connectedCallback(),l.on("force:show:edit",this.showCreateHandler),l.on("force:show:import",this.showImportHandler),l.on("force:show:export",this.showExportHandler),l.on("force:edit",this.forceSaveHandler),l.on("force:remove",()=>{this.clearColumns()}),l.on("mac:remove",({uuid:t})=>{this.#s(t)}),l.on("aux:remove",({uuid:t})=>{this.#l(t)})}disconnectedCallback(){super.disconnectedCallback(),l.off("force:show:edit",this.showCreateHandler),l.off("force:show:import",this.showImportHandler),l.off("force:show:export",this.showExportHandler),l.off("force:edit",this.forceSaveHandler)}#t(t){t.preventDefault();let o=t.currentTarget.dataset.col||1;this.#r(o)}#r(t){let r=this.renderRoot.querySelector(`#col-${t}`);r&&r.innerHTML!==""&&(this.renderRoot.querySelectorAll("li").forEach(o=>o.classList.remove("active")),this.renderRoot.querySelector(`li:has(a[data-col="${t}"])`)?.classList.add("active"),this.renderRoot.querySelectorAll("main > div").forEach(o=>o.classList.remove("active")),r.classList.add("active"))}#o(t){t.preventDefault();let r=t.currentTarget,o=Number(r.dataset.col||1);o===2&&this.clearColumns(!0,!0),o===3&&this.clearColumns(!1,!0)}clearColumns(t=!0,r=!0){if(r&&(this.renderRoot.querySelector("#col-3").innerHTML=""),t&&(this.renderRoot.querySelector("#col-2").innerHTML=""),t&&r){this.#r(1);return}this.#r(2)}fillColumn(t,r=2,o=""){this.clearColumns(r===2,r===3),this.renderRoot.querySelector(`#col-${r}`)?.append(t),this.renderRoot.querySelector(`a[data-col="${r}"]`).innerText=o,this.#r(r)}clearFirstColumn(){this.renderRoot.querySelector("#col-1 > div").innerHTML=""}fillFirstColumn(t){this.renderRoot.querySelector("#col-1 > div").append(t)}#e({uuid:t=""}){this.clearColumns(!0,!0),this.clearFirstColumn();let r;if(t==="")r=new N({});else if(r=D(t),!r)return;let o=new J({force:r});this.fillFirstColumn(o)}#a(){this.clearColumns(!0,!0),this.clearFirstColumn();let t=new Y({});this.fillFirstColumn(t)}#i(){this.clearColumns(!0,!0),this.clearFirstColumn();let t=new X({});this.fillFirstColumn(t)}#n(){this.clearColumns(!0,!0)}#s(t){let r=this.renderRoot.querySelector(`#col-2 mac-mac-edit[data-uuid="${t}"]`);r&&r.remove()}#l(t){let r=this.renderRoot.querySelector(`#col-2 mac-au-edit[data-uuid="${t}"]`);r&&r.remove()}render(){return s`<div>
-        <div>
+        <div class="tabs">
             <ul>
                 <li class="active"><a href="#" data-col=1 @click=${this.#t}>Forces</a></li>
                 <li>
@@ -595,7 +598,7 @@ ${JSON.stringify(n)}`,f=`mailto:?subject=${encodeURIComponent(`Force backup: ${d
 
     ul, ol { margin: 0; padding: 0; }
     li { margin: 0; padding: 0; margin-left: 1rem;}
-    `];auxunit=null;constructor({auxunit:t,force:r}){super(),this.auxunit=t,this.force=r,this.id=this.auxunit.uuid}#t(t){this.auxunit.destroyed=t.target.checked,this.requestUpdate()}#r(t){this.auxunit.division=t.target.value,this.dispatchEvent(new CustomEvent("mac-division-change",{bubbles:!0,composed:!0}))}#o(t){this.auxunit.initiative=t.target.value,this.dispatchEvent(new CustomEvent("mac-initiative-change",{bubbles:!0,composed:!0}))}#e(){return this.auxunit.weapons.map(t=>s`<li>
+    `];auxunit=null;constructor({auxunit:t,force:r}){super(),this.auxunit=t,this.force=r,this.id=this.auxunit.uuid}#t(t){this.auxunit.destroyed=t.target.checked,this.dispatchEvent(new CustomEvent("mac-destroyed-change",{bubbles:!0,composed:!0})),this.requestUpdate()}#r(t){this.auxunit.division=t.target.value,this.dispatchEvent(new CustomEvent("mac-division-change",{bubbles:!0,composed:!0}))}#o(t){this.auxunit.initiative=t.target.value,this.dispatchEvent(new CustomEvent("mac-initiative-change",{bubbles:!0,composed:!0}))}#e(){return this.auxunit.weapons.map(t=>s`<li>
             <div class="input-group">
                 <span class="input-group-text module-name">${t.label}</span>
             </div>
@@ -608,7 +611,7 @@ ${JSON.stringify(n)}`,f=`mailto:?subject=${encodeURIComponent(`Force backup: ${d
                 `:""}
             </div>
             </li>`})}#i(){let t=[];for(let r=1;r<=this.auxunit.units;r++){let o=r===this.auxunit.units;t.push(s`<span class="input-group-text">
-                <input class="form-check-input mt-0" type="checkbox" value="1" aria-label="Mark unit destroyed" ${o?`@click=${this.#t}`:""} />`)}return t}#n(){return $.find(r=>r.id===this.auxunit.type)?.label??"--"}render(){return s`<div>
+                <input class="form-check-input mt-0" type="checkbox" value="1" aria-label="Mark unit destroyed" @click=${o?this.#t:null} />`)}return t}#n(){return $.find(r=>r.id===this.auxunit.type)?.label??"--"}render(){return s`<div>
             <div class="row mb-3 align-items-center">
                 <div class="input-group">
                     <span class="input-group-text"><strong>Type</strong></span>
@@ -668,7 +671,7 @@ ${JSON.stringify(n)}`,f=`mailto:?subject=${encodeURIComponent(`Force backup: ${d
 
     ul, ol { margin: 0; padding: 0; }
     li { margin: 0; padding: 0; margin-left: 1rem;}
-    `];mac=null;constructor({mac:t,force:r}){super(),this.mac=t,this.force=r,this.id=this.mac.uuid}#t(t){this.mac.destroyed=t.target.checked,this.requestUpdate()}#r(t){let r=Number(t.target.value),o=this.mac.getModule(r);o.destroyed=t.target.checked,this.requestUpdate()}#o(t){this.mac.division=t.target.value,this.dispatchEvent(new CustomEvent("mac-division-change",{bubbles:!0,composed:!0}))}#e(t){this.mac.initiative=t.target.value,this.dispatchEvent(new CustomEvent("mac-initiative-change",{bubbles:!0,composed:!0}))}#a(){return[1,2,3,4,5,6].map(t=>{let r=this.mac.getModule(t),o=r.hardware_id?x(r.hardware_id):null,a=`mac-${this.mac.uuid}-mod-${t}-popover`;return s`<li data-mid="${t}">
+    `];mac=null;constructor({mac:t,force:r}){super(),this.mac=t,this.force=r,this.id=this.mac.uuid}#t(t){this.mac.destroyed=t.target.checked,this.dispatchEvent(new CustomEvent("mac-destroyed-change",{bubbles:!0,composed:!0})),this.requestUpdate()}#r(t){let r=Number(t.target.value),o=this.mac.getModule(r);o.destroyed=t.target.checked,this.requestUpdate()}#o(t){this.mac.division=t.target.value,this.dispatchEvent(new CustomEvent("mac-division-change",{bubbles:!0,composed:!0}))}#e(t){this.mac.initiative=t.target.value,this.dispatchEvent(new CustomEvent("mac-initiative-change",{bubbles:!0,composed:!0}))}#a(){return[1,2,3,4,5,6].map(t=>{let r=this.mac.getModule(t),o=r.hardware_id?x(r.hardware_id):null,a=`mac-${this.mac.uuid}-mod-${t}-popover`;return s`<li data-mid="${t}">
             <div class="input-group">
                 <span class="input-group-text">${t}</span>
                 <span class="input-group-text module-name ${r.destroyed?"destroyed":""}">${r.label?r.label:"[Empty]"}</span>
@@ -682,7 +685,7 @@ ${JSON.stringify(n)}`,f=`mailto:?subject=${encodeURIComponent(`Force backup: ${d
                 </span>
             </div>
             </li>`})}#i(){let t=[];for(let r=1;r<=this.mac.mClass;r++){let o=r===this.mac.mClass;t.push(s`<span class="input-group-text">
-                <input class="form-check-input mt-0" type="checkbox" value="1" aria-label="Mark ${o?"destroyed":"damaged"}" ${o?`@click=${this.#t}`:""} />
+                <input class="form-check-input mt-0" type="checkbox" value="1" aria-label="Mark ${o?"destroyed":"damaged"}" @click=${o?this.#t:null} />
             </span>`)}return t}render(){return s`<div>
             <div class="row mb-3 align-items-center">
                 <div class="input-group">
@@ -778,6 +781,7 @@ ${JSON.stringify(n)}`,f=`mailto:?subject=${encodeURIComponent(`Force backup: ${d
             border-color: black;
             border-style: solid;
             white-space: nowrap;
+            min-width: fit-content;
         }
         li {
             margin: 0;
@@ -824,7 +828,7 @@ ${JSON.stringify(n)}`,f=`mailto:?subject=${encodeURIComponent(`Force backup: ${d
                 display: block;
             }
 
-        `];constructor({force:t}){super(),this.setAttribute("role","main"),this.force=t,this._macPlays=t.macs.map(o=>new Z({mac:o,force:t})),this.force.aus.forEach(o=>{this._macPlays.push(new Q({auxunit:o,force:t}))}),this.activeTab=t.macs.find(()=>!0).uuid;let r=K;[...t.macs,...t.aus].forEach((o,a)=>{o.initiative=r[a]??""})}#t=()=>this.requestUpdate();connectedCallback(){super.connectedCallback(),this.addEventListener("mac-initiative-change",this.#t),this.addEventListener("mac-division-change",this.#t)}disconnectedCallback(){super.disconnectedCallback(),this.removeEventListener("mac-initiative-change",this.#t),this.removeEventListener("mac-division-change",this.#t)}#r(t){t.preventDefault();let o=t.currentTarget.dataset.col||"";this.#o(o)}#o(t){this.activeTab=t,this.requestUpdate()}#e(t){this.force.suit=t.target.value,this.requestUpdate()}#a(){return{spades:"\u2660",hearts:"\u2665",diamonds:"\u2666",clubs:"\u2663"}[this.force.suit]??""}#i(t){let r=this.#a(),o=["hearts","diamonds"].includes(this.force.suit),a=t.initiative?s`<span class="ms-2" style="color:${o?"red":"inherit"}">${r}${t.initiative}</span>`:"",i=t.division?s`<strong class="me-2">${t.division}</strong> `:"";return s`${i}${t.name}${a}`}render(){return s`<div>
+        `];constructor({force:t}){super(),this.setAttribute("role","main"),this.force=t,this._macPlays=t.macs.map(o=>new Z({mac:o,force:t})),this.force.aus.forEach(o=>{this._macPlays.push(new Q({auxunit:o,force:t}))}),this.activeTab=t.macs.find(()=>!0).uuid;let r=K;[...t.macs,...t.aus].forEach((o,a)=>{o.initiative=r[a]??""})}#t=()=>this.requestUpdate();connectedCallback(){super.connectedCallback(),this.addEventListener("mac-initiative-change",this.#t),this.addEventListener("mac-division-change",this.#t),this.addEventListener("mac-destroyed-change",this.#t)}disconnectedCallback(){super.disconnectedCallback(),this.removeEventListener("mac-initiative-change",this.#t),this.removeEventListener("mac-division-change",this.#t),this.removeEventListener("mac-destroyed-change",this.#t)}#r(t){t.preventDefault();let o=t.currentTarget.dataset.col||"";this.#o(o)}#o(t){this.activeTab=t,this.requestUpdate()}#e(t){this.force.suit=t.target.value,this.requestUpdate()}#a(){return{spades:"\u2660",hearts:"\u2665",diamonds:"\u2666",clubs:"\u2663"}[this.force.suit]??""}#i(t){let r=this.#a(),o=["hearts","diamonds"].includes(this.force.suit),a=t.initiative?s`<span class="ms-2" style="color:${o?"red":"inherit"}">${r}${t.initiative}</span>`:"",i=t.division?s`<strong class="me-2">${t.division}</strong> `:"",n=s`${i}${t.name}${a}`;return t.destroyed?s`<s>${n}</s>`:n}render(){return s`<div>
         <div class="header">
         <h1>${this.force.name}</h1>
         <select class="form-select form-select-sm suit-select ${["hearts","diamonds"].includes(this.force.suit)?"red":""}" aria-label="Choose initiative card suit" @change=${this.#e}>

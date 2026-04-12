@@ -56,6 +56,7 @@ export default class AuxUnitPlay extends BaseElement {
 
     #markDestroyed(ev) {
         this.auxunit.destroyed = ev.target.checked;
+        this.dispatchEvent(new CustomEvent('mac-destroyed-change', { bubbles: true, composed: true }));
         this.requestUpdate();
     }
 
@@ -103,7 +104,7 @@ export default class AuxUnitPlay extends BaseElement {
         for (let i = 1; i <= this.auxunit.units; i++) {
             const isLast = i === this.auxunit.units;
             checks.push(html`<span class="input-group-text">
-                <input class="form-check-input mt-0" type="checkbox" value="1" aria-label="Mark unit destroyed" ${isLast ? `@click=${this.#markDestroyed}` : ''} />`);
+                <input class="form-check-input mt-0" type="checkbox" value="1" aria-label="Mark unit destroyed" @click=${isLast ? this.#markDestroyed : null} />`);
         }
         return checks;
     }

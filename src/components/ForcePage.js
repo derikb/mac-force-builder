@@ -48,6 +48,13 @@ export default class ForcePage extends BaseElement {
             border-right: none;
         }
 
+        .tabs {
+            padding: 0;
+            width: 100%;
+            max-width: 100%;
+            overflow-x: scroll;
+        }
+
         ul {
             padding: 0 .5rem 0 .5rem;
             margin: 0;
@@ -58,6 +65,8 @@ export default class ForcePage extends BaseElement {
             border-width: 0 0 2px 0;
             border-color: black;
             border-style: solid;
+            white-space: nowrap;
+            min-width: fit-content;
         }
         li {
             margin: 0;
@@ -279,7 +288,7 @@ export default class ForcePage extends BaseElement {
 
     render () {
         return html`<div>
-        <div>
+        <div class="tabs">
             <ul>
                 <li class="active"><a href="#" data-col=1 @click=${this.#changeTab}>Forces</a></li>
                 <li>

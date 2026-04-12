@@ -76,6 +76,7 @@ export default class ForcePlay extends BaseElement {
             border-color: black;
             border-style: solid;
             white-space: nowrap;
+            min-width: fit-content;
         }
         li {
             margin: 0;
@@ -147,12 +148,14 @@ export default class ForcePlay extends BaseElement {
         super.connectedCallback();
         this.addEventListener('mac-initiative-change', this.#onInitiativeChange);
         this.addEventListener('mac-division-change', this.#onInitiativeChange);
+        this.addEventListener('mac-destroyed-change', this.#onInitiativeChange);
     }
 
     disconnectedCallback () {
         super.disconnectedCallback();
         this.removeEventListener('mac-initiative-change', this.#onInitiativeChange);
         this.removeEventListener('mac-division-change', this.#onInitiativeChange);
+        this.removeEventListener('mac-destroyed-change', this.#onInitiativeChange);
     }
 
     #changeTab (ev) {
@@ -181,7 +184,8 @@ export default class ForcePlay extends BaseElement {
         const isRed = ['hearts', 'diamonds'].includes(this.force.suit);
         const card = unit.initiative ? html`<span class="ms-2" style="color:${isRed ? 'red' : 'inherit'}">${symbol}${unit.initiative}</span>` : '';
         const division = unit.division ? html`<strong class="me-2">${unit.division}</strong> ` : '';
-        return html`${division}${unit.name}${card}`;
+        const content = html`${division}${unit.name}${card}`;
+        return unit.destroyed ? html`<s>${content}</s>` : content;
     }
 
     render () {

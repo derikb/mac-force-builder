@@ -117,7 +117,7 @@ export default class MACEdit extends BaseElement {
         return html`<div class="row mb-3 align-items-center">
             <label for="macname" class="col-sm-3 col-form-label">Name</label>
             <div class="input-group col-sm-9">
-                <input type="text" id="macname" name="macname" class="form-control" value="${this.mac.name}" @blur=${this.saveName} />
+                <input type="text" id="macname" name="macname" class="form-control" .value="${this.mac.name}" @blur=${this.saveName} />
                 <button type="button" class="btn btn-secondary btn-sm" @click=${this.#createName}>Generate Name</button>
             </div>
         </div>

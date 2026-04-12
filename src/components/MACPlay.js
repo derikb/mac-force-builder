@@ -55,6 +55,7 @@ export default class MACPlay extends BaseElement {
 
     #markMACDestroyed(ev) {
         this.mac.destroyed = ev.target.checked;
+        this.dispatchEvent(new CustomEvent('mac-destroyed-change', { bubbles: true, composed: true }));
         this.requestUpdate();
     }
 
@@ -102,7 +103,7 @@ export default class MACPlay extends BaseElement {
         for (let i = 1; i <= this.mac.mClass; i++) {
             const isLast = i === this.mac.mClass;
             checks.push(html`<span class="input-group-text">
-                <input class="form-check-input mt-0" type="checkbox" value="1" aria-label="Mark ${isLast ? 'destroyed' : 'damaged'}" ${isLast ? `@click=${this.#markMACDestroyed}` : ''} />
+                <input class="form-check-input mt-0" type="checkbox" value="1" aria-label="Mark ${isLast ? 'destroyed' : 'damaged'}" @click=${isLast ? this.#markMACDestroyed : null} />
             </span>`);
         }
         return checks;

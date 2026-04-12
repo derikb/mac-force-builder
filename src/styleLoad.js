@@ -86,12 +86,6 @@ p.small {
     margin-bottom: 0;
 }
 
-input[type="checkbox"] {
-        font-size: 2rem;
-        height: 2rem;
-        width: 2rem;
-    }
-
 [popover] {
     inset: unset;
     margin: 0;
