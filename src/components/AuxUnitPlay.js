@@ -118,7 +118,7 @@ export default class AuxUnitPlay extends BaseElement {
 
     render () {
         return html`<div>
-            <div class="row mb-3 align-items-center">
+            <div class="row mb-3 align-items-center g-3">
                 <div class="input-group">
                     <span class="input-group-text"><strong>Type</strong></span>
                     <span class="input-group-text">${this.#getUnitType()}</span>

@@ -14,6 +14,11 @@ export default class WeaponDetails extends BaseElement {
         background-color: lightgoldenrodyellow;
         border-width: 3px;
     }
+
+    .form-check {
+        font-size: 1.5rem;
+        margin-bottom: 1rem;
+    }
     `
     ];
 

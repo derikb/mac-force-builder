@@ -111,7 +111,7 @@ export default class MACPlay extends BaseElement {
 
     render () {
         return html`<div>
-            <div class="row mb-3 align-items-center">
+            <div class="row mb-3 align-items-center g-3">
                 <div class="input-group">
                     <span class="input-group-text"><strong>Class</strong></span>
                     <span class="input-group-text">${this.mac.mClass}</span>

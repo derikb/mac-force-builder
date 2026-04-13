@@ -60,3 +60,4 @@ FIX:
 - Sometimes some weird scrolling action on my phone
   - Also sometimes the pull down to reload doesn't work.
   - Possibly this was something else causing issues with the browser?
+- initiative select should be smaller when you've picked a suit
