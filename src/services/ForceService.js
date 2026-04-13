@@ -134,7 +134,7 @@ const validateAuxUnit = function (auxunit) {
     }
 
     actualWeapons.forEach((w) => {
-        if (w.power > maxPower) {
+        if (w.power > maxPower && !w.brawl) {
             errors.push(`Weapon "${w.label}" exceeds max Power ${maxPower} for ${typeName}.`);
         }
     });

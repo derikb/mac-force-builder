@@ -58,4 +58,5 @@ TODO:
 
 FIX:
 - Sometimes some weird scrolling action on my phone
-- Also sometimes the pull down to reload doesn't work.
+  - Also sometimes the pull down to reload doesn't work.
+  - Possibly this was something else causing issues with the browser?
