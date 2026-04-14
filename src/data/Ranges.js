@@ -5,7 +5,7 @@ export default [
     },
     {
         id: 'L',
-        label: 'Large',
+        label: 'Long',
     },
     {
         id: 'A',
