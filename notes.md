@@ -54,6 +54,8 @@ TODO:
 - improve name generator to add letter/number combos
 - add factions
 - change unsaved alert so it doesn't move the save button
+  - if changes are unsaved, give a warning on "close"
+- What other validations need to be made?
 
 FIX:
 - Sometimes some weird scrolling action on my phone

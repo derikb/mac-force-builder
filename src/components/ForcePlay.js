@@ -134,7 +134,7 @@ export default class ForcePlay extends BaseElement {
         this.force.aus.forEach((auxunit) => {
             this._macPlays.push(new AuxUnitPlay({ auxunit, force }));
         });
-        this.activeTab = force.macs.find(() => true).uuid;
+        this.activeTab = force.macs.find(() => true)?.uuid ?? force.aus.find(() => true)?.uuid;
 
         const initiatives = INITIATIVE_VALUES;
         [...force.macs, ...force.aus].forEach((unit, i) => {
@@ -193,7 +193,7 @@ export default class ForcePlay extends BaseElement {
         <div class="header">
         <h1>${this.force.name}</h1>
         <select class="form-select form-select-sm suit-select ${['hearts', 'diamonds'].includes(this.force.suit) ? 'red' : ''}" aria-label="Choose initiative card suit" @change=${this.#changeSuit} autocomplete="off">
-            <option value="" ?selected=${!this.force.suit}>Initiative suit</option>
+            <option value="" ?selected=${!this.force.suit}>Init. suit</option>
             <option value="spades" ?selected=${this.force.suit === 'spades'}>♠</option>
             <option value="hearts" ?selected=${this.force.suit === 'hearts'}>♥</option>
             <option value="diamonds" ?selected=${this.force.suit === 'diamonds'}>♦</option>

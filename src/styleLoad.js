@@ -87,6 +87,10 @@ p.small {
     margin-bottom: 0;
 }
 
+s {
+    text-decoration-thickness: 3px;
+}
+
 [popover] {
     inset: unset;
     margin: 0;
