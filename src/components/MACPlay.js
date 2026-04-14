@@ -118,12 +118,12 @@ export default class MACPlay extends BaseElement {
                 </div>
                 <div class="input-group">
                     <label for="division" class="input-group-text">Division</label>
-                    <select name="division" class="form-select" @change=${this.#setDivision}>
+                    <select name="division" class="form-select" @change=${this.#setDivision} autocomplete="off">
                         ${['--', 'A','B','C'].map((v) => html`<option value="${v}" ?selected=${this.mac.division === v}>${v}</option>`)}</select>
                 </div>
                 <div class="input-group">
                     <label for="initiative" class="input-group-text">Initiative</label>
-                    <select name="initiative" class="form-select" @change=${this.#setInitiative}>
+                    <select name="initiative" class="form-select" @change=${this.#setInitiative} autocomplete="off">
                         ${['--', ...INITIATIVE_VALUES].map((v) => html`<option value="${v}" ?selected=${this.mac.initiative === v}>${v}</option>`)}</select>
                 </div>
             </div>

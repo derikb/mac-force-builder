@@ -1,5 +1,6 @@
 import { html } from 'lit';
 import BaseElement from './BaseElement.js';
+import { emitter } from '../services/ForceService.js';
 import WeaponDetails from './WeaponDetails.js';
 
 export default class WeaponAUPane extends BaseElement {
@@ -10,14 +11,22 @@ export default class WeaponAUPane extends BaseElement {
         super();
         this.auxunit = auxunit;
         this.moduleId = moduleId;
+
+        this.handleUpdate = this.#handleUpdate.bind(this);
     }
 
     connectedCallback () {
         super.connectedCallback();
+        emitter.on('auxunit:weapon:update', this.handleUpdate);
     }
 
     disconnectedCallback () {
         super.disconnectedCallback();
+        emitter.off('auxunit:weapon:update', this.handleUpdate);
+    }
+
+    #handleUpdate () {
+        this.getRootNode().host?.clearColumns(false, true);
     }
 
     render () {

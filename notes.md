@@ -51,7 +51,6 @@ Play info:
 
 
 TODO:
-- setup play page so when all internal damages are checked on a mac the tab name is striked through
 - improve name generator to add letter/number combos
 - add weapon name generator
 - add factions

@@ -52,6 +52,7 @@ export default class HardwareList extends BaseElement {
                 el.removeAttribute('selected');
             }
         });
+        this.close();
     }
 
     #getCurrentHardwareId() {

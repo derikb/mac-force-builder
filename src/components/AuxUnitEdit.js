@@ -191,7 +191,7 @@ export default class AuxUnitEdit extends BaseElement {
         return html`<div class="row mb-3 align-items-center">
             <label for="auname" class="col-sm-3 col-form-label">Name</label>
             <div class="input-group col-sm-9">
-                <input type="text" id="auname" name="auname" class="form-control" value="${this.auxunit.name}" @blur=${this.saveName} />
+                <input type="text" id="auname" name="auname" class="form-control" value="${this.auxunit.name}" @blur=${this.saveName} autocomplete="off" />
                 <button type="button" class="btn btn-secondary btn-sm" @click=${this.#createName}>Generate Name</button>
             </div>
         </div>
@@ -199,7 +199,7 @@ export default class AuxUnitEdit extends BaseElement {
         <div class="row mb-3 align-items-center">
             <div class="col-sm-4"><strong>Type</strong></div>
             <div class="col-sm-8">
-                <select class="form-select" @change=${this.saveType}>
+                <select class="form-select" @change=${this.saveType} autocomplete="off">
                     ${this.#getTypeOptions()}
                 </select>
             </div>
@@ -207,7 +207,7 @@ export default class AuxUnitEdit extends BaseElement {
         <div class="row mb-3 align-items-center">
             <div class="col-sm-3"><strong># Units</strong></div>
             <div class="col-sm-3">
-                <select class="form-select" @change=${this.#saveUnits}>
+                <select class="form-select" @change=${this.#saveUnits} autocomplete="off">
                     ${this.#getUnitOptions()}
                 </select>
             </div>

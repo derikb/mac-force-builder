@@ -156,7 +156,7 @@ export default class ForceEdit extends BaseElement {
                 <div class="row mb-3">
                     <label for="force-name" class="col-sm-4 col-form-label">Force Name</label>
                     <div class="col">
-                    <input type="text" id="force-name" name="force-name" class="form-control" value="${this.force.name}" @blur=${this.#updateName} />
+                    <input type="text" id="force-name" name="force-name" class="form-control" value="${this.force.name}" @blur=${this.#updateName} autocomplete="off" />
                     </div>
                 </div>
                 ${this.#errors !== '' ? html`<p class="alert alert-danger">${unsafeHTML(this.#errors)}</p>` : ''}

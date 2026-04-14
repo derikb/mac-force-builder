@@ -74,7 +74,7 @@ export default class AuxUnitPrint extends BaseElement {
         const checks = [];
         for (let i = 1; i <= this.auxunit.units; i++) {
             checks.push(html`<span class="input-group-text">
-                <input class="form-check-input mt-0" type="checkbox" value="1" />`);
+                <input class="form-check-input mt-0" type="checkbox" value="1" autocomplete="off" />`);
         }
         return checks;
     }

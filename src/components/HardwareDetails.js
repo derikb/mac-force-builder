@@ -6,7 +6,7 @@ export default class HardwareDetails extends BaseElement {
     static styles = [
         super.styles,
         css`
-    :host([selected]) li.list-group-item {
+    :host([selected]) div.list-group-item {
         background-color: lightgoldenrodyellow;
     }
     `
@@ -32,9 +32,10 @@ export default class HardwareDetails extends BaseElement {
         this.macUuid = macUuid;
         this.auUuid = auUuid;
         this.moduleId = moduleId;
+        this.role = 'listitem';
     }
 
-    handleSelect () {
+    #handleSelect () {
         if (this.macUuid) {
             emitter.trigger('mac:module:update', { hardware: this.hardware, macUuid: this.macUuid, moduleId: this.moduleId });
         }
@@ -44,10 +45,10 @@ export default class HardwareDetails extends BaseElement {
     }
 
     render () {
-        return html`<li class="list-group-item" @click=${this.handleSelect}>
+        return html`<div class="list-group-item" @click=${this.#handleSelect}>
             <h4>${this.hardware.name} (${this.hardware.type.join(', ')})</h4>
             ${this.hardware.description !== '' ? html`<p>${this.hardware.description}</p>` : ''}
-        </li>`;
+        </div>`;
     }
 }
 

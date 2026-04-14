@@ -192,7 +192,7 @@ export default class ForcePlay extends BaseElement {
         return html`<div>
         <div class="header">
         <h1>${this.force.name}</h1>
-        <select class="form-select form-select-sm suit-select ${['hearts', 'diamonds'].includes(this.force.suit) ? 'red' : ''}" aria-label="Choose initiative card suit" @change=${this.#changeSuit}>
+        <select class="form-select form-select-sm suit-select ${['hearts', 'diamonds'].includes(this.force.suit) ? 'red' : ''}" aria-label="Choose initiative card suit" @change=${this.#changeSuit} autocomplete="off">
             <option value="" ?selected=${!this.force.suit}>Initiative suit</option>
             <option value="spades" ?selected=${this.force.suit === 'spades'}>♠</option>
             <option value="hearts" ?selected=${this.force.suit === 'hearts'}>♥</option>

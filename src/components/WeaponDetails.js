@@ -10,7 +10,7 @@ export default class WeaponDetails extends BaseElement {
     static styles = [
         super.styles,
         css`
-    :host([selected]) li.list-group-item {
+    :host([selected]) div.list-group-item {
         background-color: lightgoldenrodyellow;
         border-width: 3px;
     }
@@ -49,9 +49,10 @@ export default class WeaponDetails extends BaseElement {
         if (this.selected) {
             this.setAttribute('selected', 'true');
         }
+        this.role = 'listitem';
     }
 
-    handleSelect (ev) {
+    #handleSelect (ev) {
         ev.preventDefault();
         const data = new FormData(ev.target);
         this.weapon.fromForm(data);
@@ -110,21 +111,21 @@ export default class WeaponDetails extends BaseElement {
     render () {
         const brawlLimitReached = this.#countOtherBrawlWeapons() >= 2 && !this._isBrawl;
         const existingBrawl = this._isBrawl ? this.#getExistingBrawlWeapon() : null;
-        return html`<li class="list-group-item">
+        return html`<div class="list-group-item">
             <h4>Weapon</h4>
-            <form @submit=${this.handleSelect}>
+            <form @submit=${this.#handleSelect}>
                 <div class="row mb-3">
                     <label class="col-form-label col-sm-3" for="weapon_name">Name</label>
                     <div class="col-sm-9">
                         <input type="text" id="weapon_name" class="form-control" name="weapon_name"
                             .value=${existingBrawl ? existingBrawl.name : this.weapon.name}
-                            ?readonly=${!!existingBrawl} />
+                            ?readonly=${!!existingBrawl} autocomplete="off" />
                     </div>
                 </div>
                 <div class="row mb-3">
                     <label class="col-form-label col-sm-2" for="weapon_power">Power</label>
                     <div class="col-sm-4">
-                        <select id="weapon_power" name="weapon_power" class="form-select" ?disabled=${this._isBrawl}>
+                        <select id="weapon_power" name="weapon_power" class="form-select" ?disabled=${this._isBrawl} autocomplete="off">
                             ${this._isBrawl
                                     ? html`<option value="2" selected>2</option>`
                                     : this.#calcWeaponPowerOptions().map((p) => {
@@ -135,7 +136,7 @@ export default class WeaponDetails extends BaseElement {
                     </div>
                     <label class="col-form-label col-sm-2" for="weapon_range">Range</label>
                     <div class="col-sm-4">
-                        <select id="weapon_range" name="weapon_range" class="form-select" ?disabled=${this._isBrawl}>
+                        <select id="weapon_range" name="weapon_range" class="form-select" ?disabled=${this._isBrawl} autocomplete="off">
                             ${Ranges.map((r) => {
                                 return html`<option value="${r.id}" ?selected=${this.weapon.range == r.id}>${r.label}</option>`;
                             })}
@@ -145,7 +146,7 @@ export default class WeaponDetails extends BaseElement {
                 <div class="row mb-3">
                     <label class="col-form-label col-sm-2" for="weapon_type">Type</label>
                     <div class="col-sm-4">
-                    <select id="weapon_type" name="weapon_type" class="form-select" ?disabled=${!!existingBrawl}>
+                    <select id="weapon_type" name="weapon_type" class="form-select" ?disabled=${!!existingBrawl} autocomplete="off">
                         ${WeaponTypes.map((r) => {
                             const selected = existingBrawl ? r.id === existingBrawl.type : this.weapon.type == r.id;
                             return html`<option value="${r.id}" ?selected=${selected}>${r.label}</option>`;
@@ -154,7 +155,7 @@ export default class WeaponDetails extends BaseElement {
                     </div>
                     <label class="col-form-label col-sm-2" for="weapon_subtype">Subtype</label>
                     <div class="col-sm-4">
-                    <select id="weapon_subtype" name="weapon_subtype" class="form-select" ?disabled=${!!existingBrawl}>
+                    <select id="weapon_subtype" name="weapon_subtype" class="form-select" ?disabled=${!!existingBrawl} autocomplete="off">
                         ${WeaponSubtypes.map((r) => {
                             const selected = existingBrawl ? r.id === existingBrawl.subtype : this.weapon.subtype == r.id;
                             return html`<option value="${r.id}" ?selected=${selected}>${r.label}</option>`;
@@ -183,7 +184,7 @@ export default class WeaponDetails extends BaseElement {
                 </div>
                 <button type="submit" class="btn btn-primary">Choose Weapon</button>
             </form>
-        </li>`;
+        </div>`;
     }
 }
 
