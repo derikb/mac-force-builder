@@ -118,7 +118,7 @@ export default class AuxUnitEdit extends BaseElement {
     }
 
     #createName () {
-        this.auxunit.name = getName();
+        this.auxunit.name = getName(this.auxunit.type);
         this.requestUpdate();
         this.#triggerAuxUnitUpdate();
     }

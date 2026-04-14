@@ -52,8 +52,8 @@ Play info:
 
 TODO:
 - improve name generator to add letter/number combos
-- add weapon name generator
 - add factions
+- change unsaved alert so it doesn't move the save button
 
 FIX:
 - Sometimes some weird scrolling action on my phone

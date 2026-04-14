@@ -5,6 +5,7 @@ import Ranges from '../data/Ranges.js';
 import WeaponTypes from '../data/WeaponTypes.js';
 import WeaponSubtypes from '../data/WeaponSubtypes.js';
 import Weapon from '../models/Weapon.js';
+import { getWeaponName } from '../services/NameService.js';
 
 export default class WeaponDetails extends BaseElement {
     static styles = [
@@ -92,6 +93,11 @@ export default class WeaponDetails extends BaseElement {
         return this.mac.modules.find((m) => m.id !== this.moduleId && m.weapon?.brawl)?.weapon ?? null;
     }
 
+    #createName () {
+        this.weapon.name = getWeaponName();
+        this.requestUpdate();
+    }
+
     #calcWeaponPowerOptions() {
         let maxPower = 0;
         if (this.mac) {
@@ -117,9 +123,14 @@ export default class WeaponDetails extends BaseElement {
                 <div class="row mb-3">
                     <label class="col-form-label col-sm-3" for="weapon_name">Name</label>
                     <div class="col-sm-9">
-                        <input type="text" id="weapon_name" class="form-control" name="weapon_name"
-                            .value=${existingBrawl ? existingBrawl.name : this.weapon.name}
-                            ?readonly=${!!existingBrawl} autocomplete="off" />
+                        <div class="input-group">
+                            <input type="text" id="weapon_name" class="form-control" name="weapon_name"
+                                .value=${existingBrawl ? existingBrawl.name : this.weapon.name}
+                                ?readonly=${!!existingBrawl} autocomplete="off" />
+                            <button type="button" class="btn btn-secondary"
+                                ?disabled=${!!existingBrawl}
+                                @click=${this.#createName}>Generate</button>
+                        </div>
                     </div>
                 </div>
                 <div class="row mb-3">

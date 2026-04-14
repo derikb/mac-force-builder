@@ -88,7 +88,7 @@ export default class MACEdit extends BaseElement {
     }
 
     #createName () {
-        this.mac.name = getName();
+        this.mac.name = getName(this.mac.mClass);
         this.requestUpdate();
         this.#triggerMacUpdate();
     }

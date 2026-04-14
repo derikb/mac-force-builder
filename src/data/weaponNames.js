@@ -1,0 +1,90 @@
+export default {
+    key: 'weapon',
+    label: 'Weapon',
+    surname: [
+        // Projectile & Ballistic
+        'Railgun',
+        'Buckshot',
+        'Broadside',
+        'Ricochet',
+        'Barrage',
+        'Salvo',
+        'Volley',
+        'Fusillade',
+        'Cannonade',
+        'Scattershot',
+
+        // Energy & Plasma
+        'Plasmashot',
+        'Ion Burst',
+        'Arc Bolt',
+        'Photon Lance',
+        'Laser Pulse',
+        'Beam Cannon',
+        'Thermal Ray',
+        'Radflare',
+        'Volt Strike',
+        'Fusion Bolt',
+
+        // Explosive & Area
+        'Hellfire',
+        'Shrapnel',
+        'Detonator',
+        'Cluster Round',
+        'Incendiary',
+        'Fragburst',
+        'Concussive',
+        'Flashbang',
+        'Napalm Round',
+
+        // Action Verbs / Dynamic
+        'Piercer',
+        'Shredder',
+        'Striker',
+        'Blaster',
+        'Lacerator',
+        'Raker',
+        'Splitter',
+        'Severer',
+        'Ripper',
+        'Crusher',
+        'Decimator',
+        'Pulverizer',
+
+        // Missile & Guided
+        'Sidewinder',
+        'Tomahawk',
+        'Hellbolt',
+        'Tracer',
+        'Seeker',
+        'Homing Round',
+        'Warhead',
+        'Foxhound',
+        'Interceptor',
+        'Killshot',
+
+        // Melee / Brawl
+        'Razorblade',
+        'Clawstrike',
+        'Fangbite',
+        'Knuckleduster',
+        'Ironpunch',
+        'Slasher',
+        'Maul',
+        'Skewer',
+        'Haymaker',
+        'Bludgeon',
+
+        // Sci-Fi / Exotic
+        'Disruptor',
+        'Nullifier',
+        'Phase Cannon',
+        'Gravity Spike',
+        'Warp Spike',
+        'Pulse Driver',
+        'Shock Coil',
+        'Static Burst',
+        'Vortex Round',
+        'Entropy Bolt',
+    ]
+};
