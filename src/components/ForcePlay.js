@@ -3,6 +3,7 @@ import { html, css } from 'lit';
 import BaseElement from './BaseElement.js';
 import AuxUnitPlay from './AuxUnitPlay.js';
 import MACPlay from './MACPlay.js';
+import MAC from '../models/MAC.js';
 import { INITIATIVE_VALUES } from '../data/initiatives.js';
 
 export default class ForcePlay extends BaseElement {
@@ -68,7 +69,7 @@ export default class ForcePlay extends BaseElement {
             border-right: none;
         }
 
-        ul {
+        .tabs ul {
             padding: 0 .5rem 0 .5rem;
             margin: 0;
             list-style-type: none;
@@ -78,7 +79,7 @@ export default class ForcePlay extends BaseElement {
             white-space: nowrap;
             min-width: fit-content;
         }
-        li {
+        .tabs li {
             margin: 0;
             padding: 0;
             text-align: center;
@@ -89,23 +90,23 @@ export default class ForcePlay extends BaseElement {
             background-color: #eee;
             display: inline-block;
         }
-        li.active {
+        .tabs li.active {
             background-color: white;
             border-bottom: 0;
             bottom: 1px;
             transform: translateY(2px);
         }
-        li a {
+        .tabs li a {
             text-decoration: none;
             padding: .5rem 1rem;
             display: inline-block;
             width: 100%;
             color: inherit;
         }
-        li.active a {
+        .tabs li.active a {
             color: black;
         }
-        li:last-of-type {
+        .tabs li:last-of-type {
             margin-right: .5rem;
         }
 
@@ -144,11 +145,25 @@ export default class ForcePlay extends BaseElement {
 
     #onInitiativeChange = () => this.requestUpdate();
 
+    #onCommanderChange = (ev) => {
+        const { uuid } = ev.detail;
+        this.force.macs.forEach((mac) => {
+            if (mac.uuid !== uuid) mac.commander = false;
+        });
+        this._macPlays.forEach((play) => {
+            if (play instanceof MACPlay) {
+                play.requestUpdate();
+            }
+        });
+        this.requestUpdate();
+    };
+
     connectedCallback () {
         super.connectedCallback();
         this.addEventListener('mac-initiative-change', this.#onInitiativeChange);
         this.addEventListener('mac-division-change', this.#onInitiativeChange);
         this.addEventListener('mac-destroyed-change', this.#onInitiativeChange);
+        this.addEventListener('mac-commander-change', this.#onCommanderChange);
     }
 
     disconnectedCallback () {
@@ -156,6 +171,7 @@ export default class ForcePlay extends BaseElement {
         this.removeEventListener('mac-initiative-change', this.#onInitiativeChange);
         this.removeEventListener('mac-division-change', this.#onInitiativeChange);
         this.removeEventListener('mac-destroyed-change', this.#onInitiativeChange);
+        this.removeEventListener('mac-commander-change', this.#onCommanderChange);
     }
 
     #changeTab (ev) {
@@ -179,12 +195,55 @@ export default class ForcePlay extends BaseElement {
         return { spades: '♠', hearts: '♥', diamonds: '♦', clubs: '♣' }[this.force.suit] ?? '';
     }
 
+    #getDivisionErrors () {
+        const allUnits = [...this.force.macs, ...this.force.aus];
+        const totalUnits = allUnits.length;
+        const maxPerDivision = Math.floor(totalUnits / 2);
+
+        const byDivision = {};
+        for (const unit of allUnits) {
+            const d = unit.division;
+            if (!d || d === '--') {
+                continue;
+            }
+            if (!byDivision[d]) {
+                byDivision[d] = { macs: 0, total: 0 };
+            }
+            byDivision[d].total++;
+            if (unit instanceof MAC) {
+                byDivision[d].macs++;
+            }
+        }
+
+        const errors = [];
+        for (const [div, counts] of Object.entries(byDivision)) {
+            if (counts.macs === 0) {
+                errors.push(`Division ${div} has no MACs`);
+            }
+            if (counts.total > maxPerDivision) {
+                errors.push(`Division ${div} has too many units (${counts.total} of ${totalUnits} total)`);
+            }
+        }
+        return errors;
+    }
+
+    #renderValidation () {
+        const errors = this.#getDivisionErrors();
+        if (errors.length === 0) return '';
+        return html`<div class="alert alert-warning mx-2 py-2" role="alert">
+            <ul class="mb-0 ps-3">
+                ${errors.map((e) => html`<li>${e}</li>`)}
+            </ul>
+        </div>`;
+    }
+
     #renderTabTitle(unit) {
         const symbol = this.#suitSymbol();
         const isRed = ['hearts', 'diamonds'].includes(this.force.suit);
         const card = unit.initiative ? html`<span class="ms-2" style="color:${isRed ? 'red' : 'inherit'}">${symbol}${unit.initiative}</span>` : '';
         const division = unit.division ? html`<strong class="me-2">${unit.division}</strong> ` : '';
-        const content = html`${division}${unit.name}${card}`;
+        const commander = unit.commander ? '*' : '';
+        const content = html`${division}${unit.name}${commander}${card}`;
         return unit.destroyed ? html`<s>${content}</s>` : content;
     }
 
@@ -201,6 +260,7 @@ export default class ForcePlay extends BaseElement {
         </select>
         <a href="/index.html">Back</a>
         </div>
+        ${this.#renderValidation()}
         <div class="tabs">
             <ul>
                 ${this.force.macs.map((mac) => {

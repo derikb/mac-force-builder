@@ -76,6 +76,11 @@ export default class MACPlay extends BaseElement {
         this.dispatchEvent(new CustomEvent('mac-initiative-change', { bubbles: true, composed: true }));
     }
 
+    #markCommander(ev) {
+        this.mac.commander = ev.target.checked;
+        this.dispatchEvent(new CustomEvent('mac-commander-change', { bubbles: true, composed: true, detail: { uuid: this.mac.uuid } }));
+    }
+
     #getModuleFields() {
         return [1,2,3,4,5,6].map((id) => {
             const module = this.mac.getModule(id);
@@ -132,9 +137,17 @@ export default class MACPlay extends BaseElement {
                 <ol class="list-unstyled module-list mb-3">
                     ${this.#getModuleFields()}
                 </ol>
+            </div>
+            <div class="row mb-3 align-items-center g-3">
                 <div class="input-group">
                     <span class="input-group-text">Internal Damage</span>
                     ${this.#getInternalChecks()}
+                </div>
+                <div class="input-group">
+                    <span class="input-group-text">Commander</span>
+                    <span class="input-group-text">
+                        <input class="form-check-input mt-0" type="checkbox" aria-label="Mark MAC as commander of force" .checked=${this.mac.commander ?? false} @change=${this.#markCommander} />
+                    </span>
                 </div>
             </div>
         `;

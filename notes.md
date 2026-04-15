@@ -53,14 +53,13 @@ Play info:
 
 
 TODO:
-- add factions
 - if changes are unsaved, give a warning on "close"
 - What other validations need to be made?
-  - division validation
   - at least 3 MACs
   - max 1 AU per MAC
-- add some way to mark a mac as a commander
 - more name options
+- set eslint to require braces with if
+- add factions
 
 FIX:
 - Sometimes some weird scrolling action on my phone

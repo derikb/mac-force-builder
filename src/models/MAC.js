@@ -9,6 +9,7 @@ export default class MAC {
     division = '';
     initiative = '';
     destroyed = false;
+    commander = false;
 
     constructor ({
         uuid = '',
