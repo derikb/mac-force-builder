@@ -45,20 +45,24 @@ Play info:
 - name
 - cost
 - division (a/b/c)
+  - Each division must have a MAC
+  - No division may have more than half the units
 - initiative
 - internal damage (1-3)
 - module damage (2 checks)
 
 
 TODO:
-- improve name generator to add letter/number combos
 - add factions
-- change unsaved alert so it doesn't move the save button
-  - if changes are unsaved, give a warning on "close"
+- if changes are unsaved, give a warning on "close"
 - What other validations need to be made?
+  - division validation
+  - at least 3 MACs
+  - max 1 AU per MAC
+- add some way to mark a mac as a commander
+- more name options
 
 FIX:
 - Sometimes some weird scrolling action on my phone
   - Also sometimes the pull down to reload doesn't work.
   - Possibly this was something else causing issues with the browser?
-- initiative select should be smaller when you've picked a suit

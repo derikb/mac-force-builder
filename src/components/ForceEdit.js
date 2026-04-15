@@ -150,7 +150,10 @@ export default class ForceEdit extends BaseElement {
             <h2>Edit Force</h2>
             <button type="button" class="btn btn-secondary btn-sm" @click=${this.close}>Close</button>
         </div>
-        <div class="card mt-4">
+        <div class="alert alert-danger mb-0 p-2 ${this.#unsaved ? '' : 'invisible'}">
+            <p>Unsaved Changes</p>
+        </div>
+        <div class="card ${this.#unsaved ? 'border-danger-subtle' : ''}">
         <div class="card-body">
             <form @submit="${this.save}" class="mb-4">
                 <div class="row mb-3">
@@ -159,8 +162,6 @@ export default class ForceEdit extends BaseElement {
                     <input type="text" id="force-name" name="force-name" class="form-control" value="${this.force.name}" @blur=${this.#updateName} autocomplete="off" />
                     </div>
                 </div>
-                ${this.#errors !== '' ? html`<p class="alert alert-danger">${unsafeHTML(this.#errors)}</p>` : ''}
-                ${this.#unsaved ? html`<p class="alert alert-danger">Unsaved Changes</p>` : ''}
                 <div class="d-flex justify-content-between align-items-center mb-3">
                     <div>
                         <strong>Points:</strong> ${calcForceCost(this.force)}
@@ -170,6 +171,7 @@ export default class ForceEdit extends BaseElement {
                         <button type="button" class="btn btn-danger btn-sm" @click=${this.deleteForce}>Delete</button>
                     </div>
                 </div>
+                ${this.#errors !== '' ? html`<p class="alert alert-danger">${unsafeHTML(this.#errors)}</p>` : ''}
             </form>
             <div class="d-flex justify-content-between align-items-center mb-4">
                 <h3>MACs</h3>
