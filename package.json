@@ -21,6 +21,7 @@
     "@eslint/js": "^10.0.1",
     "@stylistic/eslint-plugin": "^5.10.0",
     "bootstrap": "^5.3.8",
+    "commit-and-tag-version": "^12.7.1",
     "esbuild": "^0.28.0",
     "eslint": "^10.2.0",
     "globals": "^17.4.0"
