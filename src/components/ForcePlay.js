@@ -148,7 +148,9 @@ export default class ForcePlay extends BaseElement {
     #onCommanderChange = (ev) => {
         const { uuid } = ev.detail;
         this.force.macs.forEach((mac) => {
-            if (mac.uuid !== uuid) mac.commander = false;
+            if (mac.uuid !== uuid) {
+                mac.commander = false;
+            }
         });
         this._macPlays.forEach((play) => {
             if (play instanceof MACPlay) {
@@ -200,6 +202,16 @@ export default class ForcePlay extends BaseElement {
         const totalUnits = allUnits.length;
         const maxPerDivision = Math.floor(totalUnits / 2);
 
+        const errors = [];
+
+        if (this.force.macs.length < 3) {
+            errors.push(`Force must have at least 3 MACs (currently ${this.force.macs.length})`);
+        }
+
+        if (this.force.aus.length > this.force.macs.length) {
+            errors.push(`Too many AuxUnits: maximum 1 per MAC (${this.force.aus.length} AUs for ${this.force.macs.length} MACs)`);
+        }
+
         const byDivision = {};
         for (const unit of allUnits) {
             const d = unit.division;
@@ -215,7 +227,6 @@ export default class ForcePlay extends BaseElement {
             }
         }
 
-        const errors = [];
         for (const [div, counts] of Object.entries(byDivision)) {
             if (counts.macs === 0) {
                 errors.push(`Division ${div} has no MACs`);
@@ -229,7 +240,9 @@ export default class ForcePlay extends BaseElement {
 
     #renderValidation () {
         const errors = this.#getDivisionErrors();
-        if (errors.length === 0) return '';
+        if (errors.length === 0) {
+            return '';
+        }
         return html`<div class="alert alert-warning mx-2 py-2" role="alert">
             <ul class="mb-0 ps-3">
                 ${errors.map((e) => html`<li>${e}</li>`)}

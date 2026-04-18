@@ -70,6 +70,9 @@ export default class ForceEdit extends BaseElement {
     }
 
     close () {
+        if (this.#unsaved && !confirm('You have unsaved changes. Are you sure you want to cancel them?')) {
+            return;
+        }
         document.querySelector('mac-force-page')?.clearColumns();
         this.remove();
     }

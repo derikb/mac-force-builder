@@ -53,15 +53,10 @@ Play info:
 
 
 TODO:
-- if changes are unsaved, give a warning on "close"
-- What other validations need to be made?
-  - at least 3 MACs
-  - max 1 AU per MAC
-- more name options
-- set eslint to require braces with if
-- add factions
+- ?
 
 FIX:
 - Sometimes some weird scrolling action on my phone
   - Also sometimes the pull down to reload doesn't work.
   - Possibly this was something else causing issues with the browser?
+  - Maybe its just duck duck go?

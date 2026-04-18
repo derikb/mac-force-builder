@@ -32,6 +32,10 @@ export default [
                 'error',
                 'always'
             ],
+            'curly': [
+                'error',
+                'all',
+            ],
             '@stylistic/js/no-trailing-spaces': ['error', { skipBlankLines: true }],
             camelcase: ['off'],
             'prefer-const': ['error'],

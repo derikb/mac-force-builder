@@ -9,7 +9,7 @@
     "start": "esbuild --serve=8087 --servedir=./www ./src/index.js --outdir=./www --loader:.svg=dataurl --loader:.html=file --bundle",
     "build": "esbuild ./src/index.js --outdir=./www --loader:.svg=dataurl --loader:.html=file --minify --sourcemap --bundle",
     "release": "commit-and-tag-version -a",
-    "lint": "eslint"
+    "lint": "eslint src/**"
   },
   "author": "Derik A Badman",
   "license": "ISC",
