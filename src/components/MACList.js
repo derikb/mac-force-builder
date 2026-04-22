@@ -1,9 +1,36 @@
-import { html } from 'lit';
+import { html, css } from 'lit';
 import MACEdit from './MACEdit.js';
 import BaseElement from './BaseElement.js';
 import { emitter } from '../services/ForceService.js';
 
 export default class MACList extends BaseElement {
+    static styles = [
+        super.styles,
+        css`
+        :host {
+            container-type: inline-size;
+        }
+
+        li.list-group-item > div:first-child {
+            margin-bottom: 1rem;
+        }
+        li.list-group-item > div:last-child {
+            text-align: right;
+        }
+
+        @container (width > 375px) {
+            li.list-group-item {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+            }
+            li.list-group-item > div:first-child {
+                margin-bottom: 0;
+            }
+        }
+        `
+    ];
+
     /** @prop {MAC} */
     mac = null;
     constructor ({
@@ -51,7 +78,7 @@ export default class MACList extends BaseElement {
     }
 
     render () {
-        return html`<li class="list-group-item d-flex justify-content-between align-items-center">
+        return html`<li class="list-group-item">
             <div>${this.mac.name || 'Unnamed'}</div>
             <div>
                 <button type="button" class="btn btn-secondary btn-sm" @click="${this.openEdit}">Edit</button>

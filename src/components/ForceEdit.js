@@ -13,7 +13,30 @@ import { calcForceCost } from '../CostCalculator.js';
 export default class ForceEdit extends BaseElement {
     static styles = [
         super.styles,
-        css``
+        css`
+        :host > div {
+            container-type: inline-size;
+        }
+
+        .flex-row > div:first-child {
+            margin-bottom: 1rem;
+        }
+        .flex-row > *:last-child {
+            text-align: right;
+        }
+
+        @container (width > 375px) {
+            .flex-row {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+            }
+            .flex-row > *:first-child {
+                margin-bottom: 0;
+            }
+        }
+
+        `
     ];
 
     #unsaved = false;
@@ -149,7 +172,7 @@ export default class ForceEdit extends BaseElement {
     }
 
     render () {
-        return html`<div class="d-flex justify-content-between align-items-center mb-3">
+        return html`<div><div class="d-flex justify-content-between align-items-center mb-3">
             <h2>Edit Force</h2>
             <button type="button" class="btn btn-secondary btn-sm" @click=${this.close}>Close</button>
         </div>
@@ -165,7 +188,7 @@ export default class ForceEdit extends BaseElement {
                     <input type="text" id="force-name" name="force-name" class="form-control" value="${this.force.name}" @blur=${this.#updateName} autocomplete="off" />
                     </div>
                 </div>
-                <div class="d-flex justify-content-between align-items-center mb-3">
+                <div class="flex-row mb-3">
                     <div>
                         <strong>Points:</strong> ${calcForceCost(this.force)}
                     </div>
@@ -176,22 +199,23 @@ export default class ForceEdit extends BaseElement {
                 </div>
                 ${this.#errors !== '' ? html`<p class="alert alert-danger">${unsafeHTML(this.#errors)}</p>` : ''}
             </form>
-            <div class="d-flex justify-content-between align-items-center mb-4">
+            <div class="flex-row mb-4">
                 <h3>MACs</h3>
-                <button type="button" class="btn btn-primary btn-sm" @click=${this.addMac}>Add MAC</button>
+                <div><button type="button" class="btn btn-primary btn-sm" @click=${this.addMac}>Add MAC</button></div>
             </div>
             <ul id="macs" class="list-group mb-3" @macdelete=${this.deleteMac}>
                 ${this.force.macs.map((mac) => new MACList({ mac, force: this.force }))}
             </ul>
 
-            <div class="d-flex justify-content-between align-items-center mb-4">
+            <div class="flex-row mb-4">
                 <h3>Auxiliary Units</h3>
-                <button type="button" class="btn btn-primary btn-sm" @click=${this.addAuxUnit}>Add AU</button>
+                <div><button type="button" class="btn btn-primary btn-sm" @click=${this.addAuxUnit}>Add AU</button></div>
             </div>
             <ul id="auxs" class="list-group" @auxdelete=${this.deleteAux}>
                 ${this.force.aus.map((auxunit) => new AuxUnitList({ auxunit, force: this.force }))}
             </ul>
-        </div></div>`;
+        </div></div>
+        </div>`;
     }
 }
 

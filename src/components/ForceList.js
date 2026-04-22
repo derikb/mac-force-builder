@@ -6,12 +6,29 @@ export default class ForceList extends BaseElement {
     static styles = [
         super.styles,
         css`
-        @media (max-width: 600px) {
-            .d-flex {
-                display: block !important;
+        :host > div { container-type: inline-size; }
+
+        li.list-group-item > div:first-child,
+        .header > h2 {
+            margin-bottom: 1rem;
+        }
+        li.list-group-item > div:last-child,
+        .header > div:last-child {
+            text-align: right;
+        }
+
+        @container (width > 400px) {
+            li.list-group-item,
+            .header {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
             }
-            .d-flex > div {
-                margin-top: .5rem;
+            .header > h2 {
+                margin-bottom: 0;
+            }
+            li.list-group-item > div:first-child {
+                margin-bottom: 0;
             }
         }
         `
@@ -71,8 +88,8 @@ export default class ForceList extends BaseElement {
     }
 
     #renderForceItem (force) {
-        return html`<li class="list-group-item d-flex justify-content-between align-items-center" data-uuid="${force.uuid}">
-            ${force.name}
+        return html`<li class="list-group-item" data-uuid="${force.uuid}">
+            <div>${force.name}</div>
             <div>
                 <button type="button" class="btn btn-secondary btn-sm me-2" @click="${this.showEdit}">Edit</button>
                 <!-- <a href="/print.html?force_id=${force.uuid}" class="btn btn-secondary btn-sm me-2" target="_blank">Print</a> -->
@@ -82,7 +99,7 @@ export default class ForceList extends BaseElement {
     }
 
     render () {
-        return html`<div class="d-flex justify-content-between align-items-center">
+        return html`<div><div class="header">
             <h2>Saved Forces</h2>
             <div>
                 <button type="button" class="btn btn-primary btn-sm me-2" @click=${this.showCreate}>Create</button>
@@ -93,7 +110,8 @@ export default class ForceList extends BaseElement {
         <p class="small mt-3">Warning: Forces are saved to your current browser only. Make backups using the "Export" button to avoid data loss.</p>
         <ul class="list-group mb-4">
             ${this.forces.map(this.#renderForceItem.bind(this))}
-        </ul>`;
+        </ul>
+        </div>`;
     }
 }
 
