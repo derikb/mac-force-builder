@@ -16,9 +16,51 @@ export default class WeaponDetails extends BaseElement {
         border-width: 3px;
     }
 
+    h4 {
+        font-weight: bold;
+    }
+
+    form {
+        container-type: inline-size;
+    }
+
     .form-check {
-        font-size: 1.5rem;
+        font-size: 1.25rem;
         margin-bottom: 1rem;
+    }
+
+    .col-form-label {
+        width: 34%;
+    }
+    .col-form-label[for="weapon_name"] {
+        width: 100%;
+    }
+    .col-form-input {
+        width: 66%;
+    }
+    .col-form-input:has(.input-group) {
+        width: 100%;
+    }
+    .col-form-input:has(.form-check) {
+        width: 100%;
+    }
+
+    @container (width > 375px) {
+        .col-form-label {
+            width: 16.667%;
+        }
+        .col-form-label[for="weapon_name"] {
+            width: 25%;
+        }
+        .col-form-input {
+            width: 33.333%;
+        }
+        .col-form-input:has(.input-group) {
+            width: 75%;
+        }
+        .col-form-input:has(.form-check) {
+            width: 50%;
+        }
     }
     `
     ];
@@ -122,7 +164,7 @@ export default class WeaponDetails extends BaseElement {
             <form @submit=${this.#handleSelect}>
                 <div class="row mb-3">
                     <label class="col-form-label col-sm-3" for="weapon_name">Name</label>
-                    <div class="col-sm-9">
+                    <div class="col-sm-9 col-form-input">
                         <div class="input-group">
                             <input type="text" id="weapon_name" class="form-control" name="weapon_name"
                                 .value=${existingBrawl ? existingBrawl.name : this.weapon.name}
@@ -135,7 +177,7 @@ export default class WeaponDetails extends BaseElement {
                 </div>
                 <div class="row mb-3">
                     <label class="col-form-label col-sm-2" for="weapon_power">Power</label>
-                    <div class="col-sm-4">
+                    <div class="col-sm-4 col-form-input">
                         <select id="weapon_power" name="weapon_power" class="form-select" ?disabled=${this._isBrawl} autocomplete="off">
                             ${this._isBrawl
                                     ? html`<option value="2" selected>2</option>`
@@ -146,7 +188,7 @@ export default class WeaponDetails extends BaseElement {
                         </select>
                     </div>
                     <label class="col-form-label col-sm-2" for="weapon_range">Range</label>
-                    <div class="col-sm-4">
+                    <div class="col-sm-4 col-form-input">
                         <select id="weapon_range" name="weapon_range" class="form-select" ?disabled=${this._isBrawl} autocomplete="off">
                             ${Ranges.map((r) => {
                                 return html`<option value="${r.id}" ?selected=${this.weapon.range == r.id}>${r.label}</option>`;
@@ -156,7 +198,7 @@ export default class WeaponDetails extends BaseElement {
                 </div>
                 <div class="row mb-3">
                     <label class="col-form-label col-sm-2" for="weapon_type">Type</label>
-                    <div class="col-sm-4">
+                    <div class="col-sm-4 col-form-input">
                     <select id="weapon_type" name="weapon_type" class="form-select" ?disabled=${!!existingBrawl} autocomplete="off">
                         ${WeaponTypes.map((r) => {
                             const selected = existingBrawl ? r.id === existingBrawl.type : this.weapon.type == r.id;
@@ -165,7 +207,7 @@ export default class WeaponDetails extends BaseElement {
                     </select>
                     </div>
                     <label class="col-form-label col-sm-2" for="weapon_subtype">Subtype</label>
-                    <div class="col-sm-4">
+                    <div class="col-sm-4 col-form-input">
                     <select id="weapon_subtype" name="weapon_subtype" class="form-select" ?disabled=${!!existingBrawl} autocomplete="off">
                         ${WeaponSubtypes.map((r) => {
                             const selected = existingBrawl ? r.id === existingBrawl.subtype : this.weapon.subtype == r.id;
@@ -175,7 +217,7 @@ export default class WeaponDetails extends BaseElement {
                     </div>
                 </div>
                 <div class="row mb-3">
-                <div class="col-sm-6">
+                <div class="col-sm-6 col-form-input">
                     <div class="form-check">
                         <input class="form-check-input" type="checkbox" value="1" id="weapon_brawl" name="weapon_brawl"
                             ?checked=${this._isBrawl}
@@ -184,7 +226,7 @@ export default class WeaponDetails extends BaseElement {
                         <label class="form-check-label" for="weapon_brawl">Brawl${brawlLimitReached ? ' (limit reached)' : ''}</label>
                     </div>
                 </div>
-                <div class="col-sm-6">
+                <div class="col-sm-6 col-form-input">
                     <div class="form-check">
                         <input class="form-check-input" type="checkbox" value="1" id="weapon_x" name="weapon_x"
                             ?checked=${existingBrawl ? existingBrawl.expendable : this.weapon.expendable}
