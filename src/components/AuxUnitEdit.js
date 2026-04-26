@@ -180,6 +180,22 @@ export default class AuxUnitEdit extends BaseElement {
         </ul>`;
     }
 
+    #removeWeapon (ev) {
+        ev.preventDefault();
+        const id = Number(ev.target.dataset.wid ?? 0);
+        this.auxunit.weapons[id] = null;
+        this.requestUpdate();
+        this.#triggerAuxUnitUpdate();
+    }
+
+    #removeHardware (ev) {
+        ev.preventDefault();
+        const id = Number(ev.target.dataset.hid ?? 0);
+        this.auxunit.hardware.splice(id, 1);
+        this.requestUpdate();
+        this.#triggerAuxUnitUpdate();
+    }
+
     #getWeaponFields() {
         const weapons = this.auxunit.weapons;
         return [0, 1].map((id) => {
@@ -189,17 +205,21 @@ export default class AuxUnitEdit extends BaseElement {
                 <span class="input-group-text">${id + 1}</span>
                 <span class="input-group-text module-name">${weapon?.label ?? '[Empty]'}</span>
                 <button type="button" class="btn btn-secondary" data-wid="${id}" @click=${this.showWeapon}>Edit</button>
+                <button type="button" class="btn btn-danger" data-wid="${id}" @click=${this.#removeWeapon} ?disabled=${!weapon}>Clear</button>
             </div>
             </li>`;
         });
     }
 
     #hardWareInput(id = 0, hardware = 0) {
-        const name = getHardwareName(hardware);
+        const name = (hardware <= 0)
+            ? null
+            : getHardwareName(hardware);
         return html`<li>
         <div class="input-group">
             <span class="input-group-text module-name">${name ?? '[Empty]'}</span>
             <button type="button" class="btn btn-secondary" data-hid="${id}" @click=${this.showHardware}>Edit</button>
+            <button type="button" class="btn btn-danger" data-hid="${id}" @click=${this.#removeHardware}>Remove</button>
         </div>
         </li>`;
     }
