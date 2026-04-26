@@ -6,6 +6,9 @@ export default class HardwareDetails extends BaseElement {
     static styles = [
         super.styles,
         css`
+        :host {
+            cursor: pointer;
+        }
     :host([selected]) div.list-group-item {
         background-color: lightgoldenrodyellow;
     }
