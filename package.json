@@ -1,6 +1,6 @@
 {
   "name": "mac-force-builder",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Force builder for the MAC Attack tabletop miniatures game.",
   "main": "index.js",
   "scripts": {
@@ -25,5 +25,10 @@
     "esbuild": "^0.28.0",
     "eslint": "^10.2.0",
     "globals": "^17.4.0"
+  },
+  "commit-and-tag-version": {
+    "scripts": {
+      "prerelease": "npm run build && git add www/index.js www/index.js.map"
+    }
   }
 }
