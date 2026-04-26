@@ -9,8 +9,41 @@ export default class MACEdit extends BaseElement {
     static styles = [
         super.styles,
         css`
+        :host > div {
+            container-type: inline-size;
+        }
+        .col-form-label {
+            width: 34%;
+        }
+        .col-form-input {
+            width: 66%;
+        }
+        .col-form-input:has(.input-group) {
+            width: 100%;
+        }
+        .col-form-input + .col-form-label,
+        .col-form-input + .col-form-label + .col-form-input {
+            margin-top: 1rem;
+        }
         .module-name {
             flex: 1 1 auto;
+        }
+
+        @container (width > 375px) {
+            .col-form-label {
+                width: 16.667%;
+            }
+            .col-form-input {
+                width: 33.333%;
+            }
+            .col-form-input:has(.input-group) {
+                width: 75%;
+            }
+            .col-form-input + .col-form-label,
+            .col-form-input + .col-form-label + .col-form-input {
+
+                margin-top: 0;
+            }
         }
         `
     ];
@@ -114,23 +147,30 @@ export default class MACEdit extends BaseElement {
     }
 
     render () {
-        return html`<div class="row mb-3 align-items-center">
+        return html`<div>
+        <div class="row mb-3 align-items-center">
             <label for="macname" class="col-sm-3 col-form-label">Name</label>
-            <div class="input-group col-sm-9">
-                <input type="text" id="macname" name="macname" class="form-control" .value="${this.mac.name}" @blur=${this.saveName} autocomplete="off" />
-                <button type="button" class="btn btn-secondary btn-sm" @click=${this.#createName}>Generate Name</button>
+            <div class="col-form-input col-sm-9">
+                <div class="input-group">
+                    <input type="text" id="macname" name="macname" class="form-control" .value="${this.mac.name}" @blur=${this.saveName} autocomplete="off" />
+                    <button type="button" class="btn btn-secondary btn-sm" @click=${this.#createName}>Generate Name</button>
+                </div>
             </div>
         </div>
 
         <div class="row mb-3 align-items-center">
-            <div class="col-sm-3"><strong>Class</strong></div>
-            <div class="col-sm-6">
-                <select class="form-select" @change=${this.saveClass} autocomplete="off">
+            <label for="macclass" class="col-sm-3 col-form-label">Class</label>
+            <div class="col-form-input col-sm-6">
+                <select id="macclass" class="form-select" @change=${this.saveClass} autocomplete="off">
                     ${this.#getClassOptions()}
                 </select>
             </div>
 
-            <div class="col-sm-3"><strong>Points</strong> ${calcMACCost(this.mac, this.force)}</div>
+            <div class="col-form-label col-sm-3">
+                <strong>Points</strong>
+            </div>
+            <div class="col-form-input">
+                ${calcMACCost(this.mac, this.force)}
             </div>
         </div>
 
@@ -140,7 +180,8 @@ export default class MACEdit extends BaseElement {
                 ${this.#getModuleFields()}
             </ol>
         </div>
-        <button type="button" class="btn btn-secondary btn-sm" @click=${this.close}>Close</button>`;
+        <button type="button" class="btn btn-secondary btn-sm" @click=${this.close}>Close</button>
+        </div>`;
     }
 }
 

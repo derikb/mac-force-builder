@@ -44,6 +44,10 @@ export default class WeaponDetails extends BaseElement {
     .col-form-input:has(.form-check) {
         width: 100%;
     }
+    .col-form-input + .col-form-label,
+    .col-form-input + .col-form-label + .col-form-input {
+        margin-top: 1rem;
+    }
 
     @container (width > 375px) {
         .col-form-label {
@@ -60,6 +64,11 @@ export default class WeaponDetails extends BaseElement {
         }
         .col-form-input:has(.form-check) {
             width: 50%;
+        }
+        .col-form-input + .col-form-label,
+        .col-form-input + .col-form-label + .col-form-input {
+
+            margin-top: 0;
         }
     }
     `

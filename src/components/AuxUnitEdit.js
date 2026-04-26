@@ -12,8 +12,41 @@ export default class AuxUnitEdit extends BaseElement {
     static styles = [
         super.styles,
         css`
+        :host > div {
+            container-type: inline-size;
+        }
+        .col-form-label {
+            width: 34%;
+        }
+        .col-form-input {
+            width: 66%;
+        }
+        .col-form-input:has(.input-group) {
+            width: 100%;
+        }
+        .col-form-input + .col-form-label,
+        .col-form-input + .col-form-label + .col-form-input {
+            margin-top: 1rem;
+        }
         .module-name {
             flex: 1 1 auto;
+        }
+
+        @container (width > 375px) {
+            .col-form-label {
+                width: 16.667%;
+            }
+            .col-form-input {
+                width: 33.333%;
+            }
+            .col-form-input:has(.input-group) {
+                width: 75%;
+            }
+            .col-form-input + .col-form-label,
+            .col-form-input + .col-form-label + .col-form-input {
+
+                margin-top: 0;
+            }
         }
         `
     ];
@@ -188,31 +221,37 @@ export default class AuxUnitEdit extends BaseElement {
     }
 
     render () {
-        return html`<div class="row mb-3 align-items-center">
+        return html`<div>
+        <div class="row mb-3 align-items-center">
             <label for="auname" class="col-sm-3 col-form-label">Name</label>
-            <div class="input-group col-sm-9">
-                <input type="text" id="auname" name="auname" class="form-control" value="${this.auxunit.name}" @blur=${this.saveName} autocomplete="off" />
-                <button type="button" class="btn btn-secondary btn-sm" @click=${this.#createName}>Generate Name</button>
+            <div class="col-form-input col-sm-9">
+                <div class="input-group">
+                    <input type="text" id="auname" name="auname" class="form-control" value="${this.auxunit.name}" @blur=${this.saveName} autocomplete="off" />
+                    <button type="button" class="btn btn-secondary btn-sm" @click=${this.#createName}>Generate Name</button>
+                </div>
             </div>
         </div>
 
         <div class="row mb-3 align-items-center">
-            <div class="col-sm-4"><strong>Type</strong></div>
-            <div class="col-sm-8">
-                <select class="form-select" @change=${this.saveType} autocomplete="off">
+            <label for="autype" class="col-sm-3 col-form-label">Type</label>
+            <div class="col-form-input col-sm-8">
+                <select id="autype" class="form-select" @change=${this.saveType} autocomplete="off">
                     ${this.#getTypeOptions()}
                 </select>
             </div>
         </div>
         <div class="row mb-3 align-items-center">
-            <div class="col-sm-3"><strong># Units</strong></div>
-            <div class="col-sm-3">
-                <select class="form-select" @change=${this.#saveUnits} autocomplete="off">
+            <label for="auunits" class="col-sm-3 col-form-label"># Units</label>
+            <div class="col-form-input col-sm-3">
+                <select id="auunits" class="form-select" @change=${this.#saveUnits} autocomplete="off">
                     ${this.#getUnitOptions()}
                 </select>
             </div>
 
-            <div class="col-sm-6"><strong>Points</strong> ${calcAuxUnitCost(this.auxunit, this.force)}</div>
+            <div class="col-form-label col-sm-3"><strong>Points</strong>
+            </div>
+            <div class="col-form-input">
+                ${calcAuxUnitCost(this.auxunit, this.force)}
             </div>
         </div>
 
@@ -231,7 +270,8 @@ export default class AuxUnitEdit extends BaseElement {
             </ol>
             <button type="button" class="btn btn-secondary" @click=${this.#addHardware}>Add Hardware</button>
         </div>
-        <button type="button" class="btn btn-secondary btn-sm" @click=${this.close}>Close</button>`;
+        <button type="button" class="btn btn-secondary btn-sm" @click=${this.close}>Close</button>
+        </div>`;
     }
 }
 
