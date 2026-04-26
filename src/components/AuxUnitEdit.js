@@ -183,7 +183,7 @@ export default class AuxUnitEdit extends BaseElement {
     #removeWeapon (ev) {
         ev.preventDefault();
         const id = Number(ev.target.dataset.wid ?? 0);
-        this.auxunit.weapons[id] = null;
+        delete this.auxunit.weapons[id];
         this.requestUpdate();
         this.#triggerAuxUnitUpdate();
     }

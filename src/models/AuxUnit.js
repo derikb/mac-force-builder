@@ -29,7 +29,9 @@ export default class AuxUnit {
         this.name = name;
         this.type = type;
         this.weapons = weapons.map((obj) => {
-            return new Weapon(obj);
+            if (obj) {
+                return new Weapon(obj);
+            }
         });
         this.hardware = hardware;
         this.units = units;
