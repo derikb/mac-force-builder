@@ -10,7 +10,7 @@ export default class HardwareDetails extends BaseElement {
             cursor: pointer;
         }
     :host([selected]) div.list-group-item {
-        background-color: lightgoldenrodyellow;
+        background-color: var(--app-selected-color);
     }
     `
     ];

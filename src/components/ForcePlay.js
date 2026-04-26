@@ -74,7 +74,7 @@ export default class ForcePlay extends BaseElement {
             margin: 0;
             list-style-type: none;
             border-width: 0 0 2px 0;
-            border-color: black;
+            border-color: var(--app-border-color);
             border-style: solid;
             white-space: nowrap;
             min-width: fit-content;
@@ -87,11 +87,11 @@ export default class ForcePlay extends BaseElement {
             border-color: var(--app-border-color);
             border-width: 1px 4px 0px 1px;
             border-radius: 0;
-            background-color: #eee;
+            background-color: var(--app-tab-color-inactive);
             display: inline-block;
         }
         .tabs li.active {
-            background-color: white;
+            background-color: var(--app-tab-color-active);
             border-bottom: 0;
             bottom: 1px;
             transform: translateY(2px);
@@ -104,7 +104,7 @@ export default class ForcePlay extends BaseElement {
             color: inherit;
         }
         .tabs li.active a {
-            color: black;
+            color: var(--app-tab-link-color-active);
         }
         .tabs li:last-of-type {
             margin-right: .5rem;
@@ -117,7 +117,6 @@ export default class ForcePlay extends BaseElement {
             :host main > div {
                 border: none;
                 width: 100%;
-                background-color: white;
                 display: none;
             }
             :host main > div.active {

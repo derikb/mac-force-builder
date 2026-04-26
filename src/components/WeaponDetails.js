@@ -12,7 +12,7 @@ export default class WeaponDetails extends BaseElement {
         super.styles,
         css`
     :host([selected]) div.list-group-item {
-        background-color: lightgoldenrodyellow;
+        background-color: var(--app-selected-color);
         border-width: 3px;
     }
 

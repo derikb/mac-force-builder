@@ -21,6 +21,10 @@ const localCss = `
 }
 :host {
     --app-border-color: black;
+    --app-selected-color: lightgoldenrodyellow;
+    --app-tab-color-active: #fff;
+    --app-tab-color-inactive: #eee;
+    --app-tab-link-color-active: #000;
     --app-border-width: 1px 4px 4px 1px;
     font-family: var(--bs-font-monospace);
     --bs-border-radius: 0;
