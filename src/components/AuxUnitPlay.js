@@ -72,6 +72,9 @@ export default class AuxUnitPlay extends BaseElement {
 
     #getWeapons() {
         return this.auxunit.weapons.map((weapon) => {
+            if (!weapon) {
+                return '';
+            }
             return html`<li>
             <div class="input-group">
                 <span class="input-group-text module-name">${weapon.label}</span>
