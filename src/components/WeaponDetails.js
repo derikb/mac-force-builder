@@ -149,6 +149,34 @@ export default class WeaponDetails extends BaseElement {
         this.requestUpdate();
     }
 
+    #randomize () {
+        const powers = this.#calcWeaponPowerOptions();
+        const pick = (arr) => arr[Math.floor(Math.random() * arr.length)];
+
+        this.weapon.name = getWeaponName();
+        this.weapon.range = pick(Ranges).id;
+        this.weapon.type = pick(WeaponTypes).id;
+        this.weapon.subtype = pick(WeaponSubtypes).id;
+        this.weapon.power = pick(powers);
+        this.weapon.expendable = Math.random() < 0.5;
+
+        const brawlLimitReached = this.#countOtherBrawlWeapons() >= 2;
+        this.weapon.brawl = !brawlLimitReached && Math.random() < 0.25;
+        this._isBrawl = this.weapon.brawl;
+        if (this.weapon.brawl) {
+            this.weapon.power = 2;
+            const existingBrawl = this.#getExistingBrawlWeapon();
+            if (existingBrawl) {
+                this.weapon.name = existingBrawl.name;
+                this.weapon.type = existingBrawl.type;
+                this.weapon.subtype = existingBrawl.subtype;
+                this.weapon.expendable = existingBrawl.expendable;
+            }
+        }
+
+        this.requestUpdate();
+    }
+
     #calcWeaponPowerOptions() {
         let maxPower = 0;
         if (this.mac) {
@@ -245,6 +273,7 @@ export default class WeaponDetails extends BaseElement {
                 </div>
                 </div>
                 <button type="submit" class="btn btn-primary">Choose Weapon</button>
+                <button type="button" class="btn btn-secondary ms-2" @click=${this.#randomize}>Randomize</button>
             </form>
         </div>`;
     }
