@@ -4,6 +4,8 @@ import HardwareList from './HardwareList.js';
 import { calcMACCost } from '../CostCalculator.js';
 import BaseElement from './BaseElement.js';
 import { getName } from '../services/NameService.js';
+import { getAllHardware, makeRandomWeapon, calcWeaponPowerOptions } from '../services/HardwareService.js';
+import Module from '../models/Module.js';
 
 export default class MACEdit extends BaseElement {
     static styles = [
@@ -126,6 +128,50 @@ export default class MACEdit extends BaseElement {
         this.#triggerMacUpdate();
     }
 
+    #randomizeMAC () {
+        const pick = (arr) => arr[Math.floor(Math.random() * arr.length)];
+
+        this.mac.mClass = pick([1, 2, 3]);
+        this.mac.name = getName(this.mac.mClass);
+
+        const hardware = getAllHardware({ mac: this.mac });
+
+        let brawlCount = 0;
+        let firstBrawlWeapon = null;
+        const makeWeapon = (moduleId) => {
+            const weapon = makeRandomWeapon({
+                maxPower: calcWeaponPowerOptions({ mac: this.mac, moduleId }).length,
+                allowBrawl: brawlCount < 2,
+                existingBrawl: firstBrawlWeapon,
+            });
+            if (weapon.brawl) {
+                brawlCount++;
+                if (!firstBrawlWeapon) { firstBrawlWeapon = weapon; }
+            }
+            return weapon;
+        };
+
+        [1, 2, 3, 4, 5, 6].forEach((id) => {
+            let module;
+            if (id === 1) {
+                const weapon = makeWeapon(1);
+                module = new Module({ id, name: weapon.label, weapon });
+            } else {
+                if (Math.random() < 0.5) {
+                    const weapon = makeWeapon(id);
+                    module = new Module({ id, name: weapon.label, weapon });
+                } else {
+                    const hw = pick(hardware);
+                    module = new Module({ id, name: hw.name, hardware_id: hw.id });
+                }
+            }
+            this.mac.setModule(module);
+        });
+
+        this.requestUpdate();
+        this.#triggerMacUpdate();
+    }
+
     #getClassOptions () {
         const options = [1,2,3].map((i) => {
             return html`<option value="${i}" ?selected=${this.mac.mClass == i}>${i}</option>`;
@@ -180,6 +226,7 @@ export default class MACEdit extends BaseElement {
                 ${this.#getModuleFields()}
             </ol>
         </div>
+        <button type="button" class="btn btn-secondary btn-sm me-2" @click=${this.#randomizeMAC}>Randomize</button>
         <button type="button" class="btn btn-secondary btn-sm" @click=${this.close}>Close</button>
         </div>`;
     }

@@ -1,6 +1,7 @@
 import { html, css } from 'lit';
 import BaseElement from './BaseElement.js';
 import { emitter } from '../services/ForceService.js';
+import { makeRandomWeapon, calcWeaponPowerOptions } from '../services/HardwareService.js';
 import Ranges from '../data/Ranges.js';
 import WeaponTypes from '../data/WeaponTypes.js';
 import WeaponSubtypes from '../data/WeaponSubtypes.js';
@@ -150,47 +151,14 @@ export default class WeaponDetails extends BaseElement {
     }
 
     #randomize () {
-        const powers = this.#calcWeaponPowerOptions();
-        const pick = (arr) => arr[Math.floor(Math.random() * arr.length)];
-
-        this.weapon.name = getWeaponName();
-        this.weapon.range = pick(Ranges).id;
-        this.weapon.type = pick(WeaponTypes).id;
-        this.weapon.subtype = pick(WeaponSubtypes).id;
-        this.weapon.power = pick(powers);
-        this.weapon.expendable = Math.random() < 0.5;
-
-        const brawlLimitReached = this.#countOtherBrawlWeapons() >= 2;
-        this.weapon.brawl = !brawlLimitReached && Math.random() < 0.25;
+        const powers = calcWeaponPowerOptions({ mac: this.mac, moduleId: this.moduleId, auxunit: this.auxunit });
+        this.weapon = makeRandomWeapon({
+            maxPower: powers.length,
+            allowBrawl: this.#countOtherBrawlWeapons() < 2,
+            existingBrawl: this.#getExistingBrawlWeapon(),
+        });
         this._isBrawl = this.weapon.brawl;
-        if (this.weapon.brawl) {
-            this.weapon.power = 2;
-            const existingBrawl = this.#getExistingBrawlWeapon();
-            if (existingBrawl) {
-                this.weapon.name = existingBrawl.name;
-                this.weapon.type = existingBrawl.type;
-                this.weapon.subtype = existingBrawl.subtype;
-                this.weapon.expendable = existingBrawl.expendable;
-            }
-        }
-
         this.requestUpdate();
-    }
-
-    #calcWeaponPowerOptions() {
-        let maxPower = 0;
-        if (this.mac) {
-            const mClass = this.mac.mClass;
-            maxPower = this.moduleId === 1
-                ? mClass + 1
-                : mClass;
-        }
-        if (this.auxunit) {
-            maxPower = this.auxunit.type === 'I'
-                ? 1
-                : 2;
-        }
-        return Array.from({ length: maxPower }, (_, i) => i + 1);
     }
 
     render () {
@@ -218,7 +186,7 @@ export default class WeaponDetails extends BaseElement {
                         <select id="weapon_power" name="weapon_power" class="form-select" ?disabled=${this._isBrawl} autocomplete="off">
                             ${this._isBrawl
                                     ? html`<option value="2" selected>2</option>`
-                                    : this.#calcWeaponPowerOptions().map((p) => {
+                                    : calcWeaponPowerOptions({ mac: this.mac, moduleId: this.moduleId, auxunit: this.auxunit }).map((p) => {
                                         return html`<option value="${p}" ?selected=${this.weapon.power == p}>${p}</option>`;
                                     })
                             }
