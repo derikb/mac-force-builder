@@ -3,6 +3,8 @@ import EventEmitter from '../models/EventEmitter.js';
 import Force from '../models/Force.js';
 import { getHardware } from './HardwareService.js';
 import AuxUnitTypes from '../data/AuxUnitTypes.js';
+import MAC from '../models/MAC.js';
+import AuxUnit from '../models/AuxUnit.js';
 
 const appVersion = '1.0';
 
@@ -108,6 +110,20 @@ const setLocalStoragePrefix = function (prefix) {
         throw Error('LocalStorage prefix is empty.');
     }
     Storage.setPrefix(prefix);
+};
+
+const cloneMac = function (mac) {
+    const data = JSON.parse(JSON.stringify(mac));
+    data.modules.forEach((m) => { if (m.weapon) { m.weapon.uuid = ''; } });
+    const clone = new MAC({ ...data, uuid: '' });
+    return clone;
+};
+
+const cloneAuxUnit = function (au) {
+    const data = JSON.parse(JSON.stringify(au));
+    data.weapons.forEach((w) => { if (w) { w.uuid = ''; } });
+    const clone = new AuxUnit({ ...data, uuid: '' });
+    return clone;
 };
 
 const validateMac = function (mac) {
@@ -257,6 +273,8 @@ export {
     emitter,
     getForce,
     saveForce,
+    cloneMac,
+    cloneAuxUnit,
     validateForce,
     validateAuxUnit,
     removeForceLocal,

@@ -1,4 +1,4 @@
-import { removeForceLocal, saveForce, emitter, validateForce } from '../services/ForceService.js';
+import { removeForceLocal, saveForce, emitter, validateForce, cloneMac, cloneAuxUnit } from '../services/ForceService.js';
 import { html, css } from 'lit';
 import { unsafeHTML } from 'lit/directives/unsafe-html.js';
 import MAC from '../models/MAC.js';
@@ -125,6 +125,17 @@ export default class ForceEdit extends BaseElement {
         }
     }
 
+    cloneMac (ev) {
+        const uuid = ev.detail?.uuid || '';
+        const original = this.force.macs.find((m) => m.uuid === uuid);
+        if (original) {
+            const clone = cloneMac(original);
+            this.force.addMac(clone);
+            this.#unsaved = true;
+            this.requestUpdate();
+        }
+    }
+
     deleteMac (ev) {
         const uuid = ev.detail?.uuid || '';
         if (uuid !== '') {
@@ -149,6 +160,17 @@ export default class ForceEdit extends BaseElement {
                 2,
                 'Aux Unit'
             );
+        }
+    }
+
+    cloneAux (ev) {
+        const uuid = ev.detail?.uuid || '';
+        const original = this.force.aus.find((a) => a.uuid === uuid);
+        if (original) {
+            const clone = cloneAuxUnit(original);
+            this.force.addAuxUnit(clone);
+            this.#unsaved = true;
+            this.requestUpdate();
         }
     }
 
@@ -203,7 +225,7 @@ export default class ForceEdit extends BaseElement {
                 <h3>MACs</h3>
                 <div><button type="button" class="btn btn-primary btn-sm" @click=${this.addMac}>Add MAC</button></div>
             </div>
-            <ul id="macs" class="list-group mb-3" @macdelete=${this.deleteMac}>
+            <ul id="macs" class="list-group mb-3" @macclone=${this.cloneMac} @macdelete=${this.deleteMac}>
                 ${this.force.macs.map((mac) => new MACList({ mac, force: this.force }))}
             </ul>
 
@@ -211,7 +233,7 @@ export default class ForceEdit extends BaseElement {
                 <h3>Auxiliary Units</h3>
                 <div><button type="button" class="btn btn-primary btn-sm" @click=${this.addAuxUnit}>Add AU</button></div>
             </div>
-            <ul id="auxs" class="list-group" @auxdelete=${this.deleteAux}>
+            <ul id="auxs" class="list-group" @auxclone=${this.cloneAux} @auxdelete=${this.deleteAux}>
                 ${this.force.aus.map((auxunit) => new AuxUnitList({ auxunit, force: this.force }))}
             </ul>
         </div></div>

@@ -60,6 +60,10 @@ export default class MACList extends BaseElement {
         }
     }
 
+    clone () {
+        this.dispatchEvent(new CustomEvent('macclone', { bubbles: true, composed: true, detail: { uuid: this.mac.uuid } }));
+    }
+
     delete () {
         this.dispatchEvent(new CustomEvent('macdelete', { bubbles: true, composed: true, detail: { uuid: this.mac.uuid } }));
     }
@@ -82,6 +86,7 @@ export default class MACList extends BaseElement {
             <div>${this.mac.name || 'Unnamed'}</div>
             <div>
                 <button type="button" class="btn btn-secondary btn-sm" @click="${this.openEdit}">Edit</button>
+                <button type="button" class="btn btn-secondary btn-sm" @click=${this.clone}>Clone</button>
                 <button type="button" class="btn btn-danger btn-sm" @click=${this.delete}>Delete</button>
             </dv>
         </li>`;
