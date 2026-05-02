@@ -6,7 +6,7 @@ export default class AuxUnit {
     type = 'I';
     /** @var {Array<Weapon>} */
     weapons = [];
-    /** @var {Array<Number> hardware ids} */
+    /** @var {Array<Number>} hardware ids */
     hardware = [];
     units = 1;
     division = '';
