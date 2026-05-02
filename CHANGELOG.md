@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [1.2.2](https://github.com/derikb/mac-force-builder/compare/v1.2.1...v1.2.2) (2026-05-02)
+
+
+### Bug Fixes
+
+* **points:** AU brawl weapons only cost 1pt ([b75f902](https://github.com/derikb/mac-force-builder/commit/b75f9021839156a4f8588f8565f569e6d90a7b25)), closes [#9](https://github.com/derikb/mac-force-builder/issues/9)
+
 ## [1.2.1](https://github.com/derikb/mac-force-builder/compare/v1.2.0...v1.2.1) (2026-05-02)
 
 
