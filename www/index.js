@@ -240,7 +240,7 @@ s {
             ${this.mac?new B({mac:this.mac,moduleId:this.moduleId,selected:this.module.weapon}):""}
             ${this.#o()}
         </ul>
-        <button type="button" class="btn btn-secondary btn-sm mt-3" @click=${this.close}>Close</button>`}};window.customElements.get("mac-hardware-list")||window.customElements.define("mac-hardware-list",U);var fo=function(e){return{1:12,2:16,3:20}[e]??0},er=function(e){if(!e)return 0;let t=fo(e.mClass),r=e.modules.filter(o=>o.hardware_id===15);return t=t-r.length,t},ar=function(e){if(!e)return 0;let t=e.type==="I"?1:2;return t+=e.hardware.reduce((r,o)=>r+(o>0?1:0),0),t+=e.weapons.reduce((r,o)=>r+(o?.power??0),0),t*e.units},Ut=function(e){let t=0;return e.macs.forEach(r=>{t+=er(r,e)}),e.aus.forEach(r=>{t+=ar(r,e)}),t};var R=class extends c{static styles=[super.styles,p`
+        <button type="button" class="btn btn-secondary btn-sm mt-3" @click=${this.close}>Close</button>`}};window.customElements.get("mac-hardware-list")||window.customElements.define("mac-hardware-list",U);var fo=function(e){return{1:12,2:16,3:20}[e]??0},er=function(e){if(!e)return 0;let t=fo(e.mClass),r=e.modules.filter(o=>o.hardware_id===15);return t=t-r.length,t},ar=function(e){if(!e)return 0;let t=1;return t+=e.hardware.reduce((r,o)=>r+(o>0?1:0),0),t+=e.weapons.reduce((r,o)=>r+(o?.power??0),0),t*e.units},Ut=function(e){let t=0;return e.macs.forEach(r=>{t+=er(r,e)}),e.aus.forEach(r=>{t+=ar(r,e)}),t};var R=class extends c{static styles=[super.styles,p`
         :host > div {
             container-type: inline-size;
         }

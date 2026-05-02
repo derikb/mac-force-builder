@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [1.2.1](https://github.com/derikb/mac-force-builder/compare/v1.2.0...v1.2.1) (2026-05-02)
+
+
+### Bug Fixes
+
+* **points:** AU points off by 1 for vehicles ([102c1e6](https://github.com/derikb/mac-force-builder/commit/102c1e636d664ba6357adf42f8a064f13f0bcc2a)), closes [#8](https://github.com/derikb/mac-force-builder/issues/8)
+
 ## [1.2.0](https://github.com/derikb/mac-force-builder/compare/v1.1.0...v1.2.0) (2026-04-29)
 
 
