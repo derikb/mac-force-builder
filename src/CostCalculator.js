@@ -27,7 +27,7 @@ const calcAuxUnitCost = function (auxunit) {
     if (!auxunit) {
         return 0;
     }
-    let total = auxunit.type === 'I' ? 1 : 2;
+    let total = 1;
     total += auxunit.hardware.reduce((accumulator, hardwareId) => {
         return accumulator + (hardwareId > 0 ? 1 : 0);
     }, 0);
