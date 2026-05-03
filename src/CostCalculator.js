@@ -32,7 +32,7 @@ const calcAuxUnitCost = function (auxunit) {
         return accumulator + (hardwareId > 0 ? 1 : 0);
     }, 0);
     total += auxunit.weapons.reduce((accumulator, weapon) => {
-        if (weapon.brawl) {
+        if (weapon?.brawl) {
             return accumulator + 1;
         }
         return accumulator + (weapon?.power ?? 0);
