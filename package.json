@@ -1,6 +1,6 @@
 {
   "name": "mac-force-builder",
-  "version": "1.2.2",
+  "version": "1.2.3",
   "description": "Force builder for the MAC Attack tabletop miniatures game.",
   "main": "index.js",
   "scripts": {

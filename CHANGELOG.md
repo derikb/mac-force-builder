@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [1.2.3](https://github.com/derikb/mac-force-builder/compare/v1.2.2...v1.2.3) (2026-05-03)
+
+
+### Bug Fixes
+
+* bug in au calculator ([1669c5a](https://github.com/derikb/mac-force-builder/commit/1669c5acde1dbc28f38c72a458ad693eefce5777))
+
 ## [1.2.2](https://github.com/derikb/mac-force-builder/compare/v1.2.1...v1.2.2) (2026-05-02)
 
 
