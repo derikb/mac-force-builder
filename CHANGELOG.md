@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [1.3.0](https://github.com/derikb/mac-force-builder/compare/v1.2.3...v1.3.0) (2026-05-03)
+
+
+### Features
+
+* **play:** add checks for expendable weapons ([8de4fdc](https://github.com/derikb/mac-force-builder/commit/8de4fdcbb225d497ccd6cd998871478d099f23a6))
+* **play:** use accordion in narrow screens ([1935fca](https://github.com/derikb/mac-force-builder/commit/1935fcaea9cbf78cb215ace8999a8fd9c3f4d600))
+
 ## [1.2.3](https://github.com/derikb/mac-force-builder/compare/v1.2.2...v1.2.3) (2026-05-03)
 
 
