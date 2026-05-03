@@ -1,5 +1,4 @@
 import { html, css } from 'lit';
-// import AuxUnitPlay from './AuxUnitPlay.js';
 import BaseElement from './BaseElement.js';
 import AuxUnitPlay from './AuxUnitPlay.js';
 import MACPlay from './MACPlay.js';
@@ -69,6 +68,10 @@ export default class ForcePlay extends BaseElement {
             border-right: none;
         }
 
+        .tabs {
+            display: none;
+        }
+
         .tabs ul {
             padding: 0 .5rem 0 .5rem;
             margin: 0;
@@ -110,20 +113,43 @@ export default class ForcePlay extends BaseElement {
             margin-right: .5rem;
         }
 
-            :host main {
-                display: block;
-                overflow: auto;
-            }
-            :host main > div {
-                border: none;
-                width: 100%;
+        :host main {
+            display: block;
+            overflow: auto;
+        }
+
+        details > summary {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: .75rem 1rem;
+            cursor: pointer;
+            background-color: var(--app-tab-color-inactive);
+            border-top: 1px solid var(--app-border-color);
+            border-bottom: 1px solid var(--app-border-color);
+            font-size: 1rem;
+            list-style: none;
+        }
+        details > summary::-webkit-details-marker {
+            display: none;
+        }
+        details[open] > div {
+            overflow: auto;
+            padding: 1rem;
+        }
+        details[open] > summary {
+            background-color: var(--app-tab-color-active);
+            color: var(--app-tab-link-color-active);
+        }
+
+        @media (min-width: 768px) {
+            details > summary {
                 display: none;
             }
-            :host main > div.active {
+            .tabs {
                 display: block;
             }
-
-        `
+        }        `
     ];
 
     constructor ({ force }) {
@@ -184,6 +210,14 @@ export default class ForcePlay extends BaseElement {
 
     #switchToTab (which) {
         this.activeTab = which;
+        this.requestUpdate();
+    }
+
+    #onSummaryClick (ev) {
+        ev.preventDefault();
+        const details = ev.currentTarget.closest('details');
+        const unitId = details.dataset.unit;
+        this.activeTab = this.activeTab === unitId ? null : unitId;
         this.requestUpdate();
     }
 
@@ -252,14 +286,15 @@ export default class ForcePlay extends BaseElement {
     #renderTabTitle(unit) {
         const symbol = this.#suitSymbol();
         const isRed = ['hearts', 'diamonds'].includes(this.force.suit);
-        const card = unit.initiative ? html`<span class="ms-2" style="color:${isRed ? 'red' : 'inherit'}">${symbol}${unit.initiative}</span>` : '';
-        const division = unit.division ? html`<strong class="me-2">${unit.division}</strong> ` : '';
+        const card = unit.initiative ? html`<span class="me-2" style="color:${isRed ? 'red' : 'inherit'}">${symbol}${unit.initiative}</span>` : '';
+        const division = unit.division ? html`<strong class="ms-2">${unit.division}</strong> ` : '';
         const commander = unit.commander ? '*' : '';
-        const content = html`${division}${unit.name}${commander}${card}`;
+        const content = html`<span>${card}${unit.name}${commander}</span>${division}`;
         return unit.destroyed ? html`<s>${content}</s>` : content;
     }
 
     render () {
+        const units = [...this.force.macs, ...this.force.aus];
         return html`<div>
         <div class="header">
         <h1>${this.force.name}</h1>
@@ -283,8 +318,13 @@ export default class ForcePlay extends BaseElement {
             </ul>
         </div>
     <main>
-    ${this._macPlays.map((el) => {
-        return html`<div id="col-${el.id}" class="${this.activeTab == el.id ? 'active' : ''}">${el}</div>`;
+    ${this._macPlays.map((el, i) => {
+        const unit = units[i];
+        const isActive = this.activeTab == el.id;
+        return html`<details id="col-${el.id}" data-unit=${el.id} ?open=${isActive}>
+            <summary @click=${this.#onSummaryClick}>${this.#renderTabTitle(unit)}</summary>
+            <div>${el}</div>
+        </details>`;
     })}
     </main>
     </div>`;
