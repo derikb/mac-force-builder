@@ -109,6 +109,34 @@ s {
     box-shadow: 0 4px 12px rgba(0,0,0,.15);
     font-size: .875rem;
 }
+
+.circle-check {
+  appearance: none;
+  border: 2px solid var(--app-border-color);
+  border-radius: 50%;
+  cursor: pointer;
+  position: relative;
+}
+
+.circle-check:checked::before,
+.circle-check:checked::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 60%;
+  height: 2px;
+  background: var(--bs-body-color);
+  transform-origin: center;
+}
+
+.circle-check:checked::before {
+  transform: translate(-50%, -50%) rotate(45deg);
+}
+
+.circle-check:checked::after {
+  transform: translate(-50%, -50%) rotate(-45deg);
+}
 `;
 
 const bootstrap = unsafeCSS(bootstrapCss + localCss);

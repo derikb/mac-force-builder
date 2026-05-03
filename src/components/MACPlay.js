@@ -94,6 +94,10 @@ export default class MACPlay extends BaseElement {
                     <button class="btn btn-outline-secondary px-4" type="button" popovertarget="${popoverId}" style="anchor-name: --${popoverId}" aria-label="Show ${hardware.name} description">?</button>
                     <div id="${popoverId}" popover style="position-anchor: --${popoverId}">${hardware.description}</div>
                 ` : ''}
+                ${module.weapon?.expendable
+                    ? html`<span class="input-group-text"><input class="circle-check" type="checkbox" aria-label="Mark expended"></span>`
+                    : ''
+                }
                 <span class="input-group-text">
                     <input class="form-check-input mt-0" type="checkbox" value="1" aria-label="Mark damaged">
                     <input class="form-check-input mt-0 ms-3" type="checkbox" value="${id}" aria-label="Mark destroyed" @click=${this.#markDestroyed}>

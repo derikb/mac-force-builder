@@ -39,6 +39,7 @@ export default class AuxUnitPlay extends BaseElement {
 
     ul, ol { margin: 0; padding: 0; }
     li { margin: 0; padding: 0; margin-left: 1rem;}
+
     `
     ];
 
@@ -75,9 +76,21 @@ export default class AuxUnitPlay extends BaseElement {
             if (!weapon) {
                 return '';
             }
+            const expendable = new Array(Number(this.auxunit.units));
+            if (weapon.expendable) {
+                console.log(expendable);
+                expendable.fill(
+                    html`<span class="input-group-text"><input class="circle-check" type="checkbox" aria-label="Mark expended"></span>`,
+                    0,
+                    this.auxunit.units,
+                );
+                console.log(expendable);
+            }
             return html`<li>
             <div class="input-group">
                 <span class="input-group-text module-name">${weapon.label}</span>
+                ${expendable}
+                </span>
             </div>
             </li>`;
         });
